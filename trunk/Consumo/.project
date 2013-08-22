@@ -1,7 +1,7 @@
 # Gambas Project File 3.0
-# Compiled with Gambas 3.4.0
+# Compiled with Gambas 3.4.90
 Title=Sistema de Control de Consumo
-Startup=conexion2
+Startup=Form1
 Profiling=1
 Version=0.0.3
 Component=gb.image
