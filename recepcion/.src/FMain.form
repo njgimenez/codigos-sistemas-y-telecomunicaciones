@@ -8,7 +8,7 @@
     MoveScaled(3,26,196,58)
     Font = Font["DejaVu Serif,Bold"]
     Background = &HFFFFFF&
-    Count = 6
+    Count = 7
     Index = 0
     Text = ("VISITAS:")
     { CheckBox6 CheckBox
@@ -664,6 +664,29 @@
       MoveScaled(138,2,4,3)
       Font = Font["Bold"]
     }
+    Index = 6
+    Text = ("Reportes")
+    { Label110 Label
+      MoveScaled(3,3,9,4)
+      Font = Font["DejaVu Serif,Bold,+1"]
+      Text = ("Pisos")
+    }
+    { CboxConsulta ComboBox
+      MoveScaled(13,3,10,4)
+      List = [("PB"), ("1"), ("2"), ("3"), ("")]
+    }
+    { Label111 Label
+      MoveScaled(3,9,8,4)
+      Text = ("Desde")
+    }
+    { DateBox1 DateBox
+      MoveScaled(13,9,18,4)
+    }
+    { Button17 Button
+      MoveScaled(13,14,18,5)
+      Text = ("IMPRIMIR")
+      Picture = Picture["icon:/22/print"]
+    }
     Index = 0
   }
   { Label8 Label
@@ -733,7 +756,6 @@
   }
   { PictureBox1 PictureBox
     MoveScaled(1,1,28,21)
-    Picture = Picture["Mision niño jesus.jpg"]
     Stretch = True
   }
   { DrawingArea1 DrawingArea

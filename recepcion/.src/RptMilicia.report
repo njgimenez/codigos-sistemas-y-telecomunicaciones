@@ -1,0 +1,11 @@
+# Gambas Form File 3.0
+
+{ Report Report
+  #MoveScaled(0,0,83,80)
+  Padding = ReportPadding["Top:10mm;Bottom:10mm;Left:10mm;Right:10mm"]
+  Paper = Printer.Letter
+  Orientation = Printer.Landscape
+  Index = 0
+  Text = ("")
+  Index = 0
+}
