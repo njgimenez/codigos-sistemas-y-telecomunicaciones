@@ -1,0 +1,50 @@
+' Gambas class file
+
+Public query As String
+Public result As Result
+Public usuarionombre As String
+Public usuarioapellido As String
+Public nombreusuario As String
+
+
+Public Sub Button1_Click()
+  Dim tipou As String
+  
+  If str_claveusuario.Text = "" And str_usuario.Text = ""
+  Label4.Visible = True
+  Else
+  Label4.Visible = False
+  
+  tipou = "RECEPCIONISTA"
+  
+  conexion.Connect()
+  
+  query = "Select * from usuarios where nombreusuario='" & UCase$(str_usuario.Text) & "' and claveusuario='" & str_claveusuario.Text & "' and tipousuario='" & tipou & "'" 
+  Result = conexion.Con.Exec(query)
+  
+  If Result.Available Then
+  usuarionombre = Result!nombres
+  usuarioapellido = Result!apellidos
+  nombreusuario = Result!nombreusuario
+  End If
+  
+  If Result.Count = 0 Then 
+    Message.info("Usuario o Contraseña no coinciden")
+  Else
+  FMain.Show
+  inicio.Close
+  End If
+  End If
+  
+  End
+Public Sub Form_Open()
+
+  
+
+End
+
+Public Sub DrawingArea4_Draw()
+
+  
+
+End

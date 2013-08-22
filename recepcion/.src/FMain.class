@@ -1,0 +1,1728 @@
+' Gambas class file
+
+Public query As String
+Public result As Result
+Public codigovisitas As String
+Public visitassuma As Integer
+
+
+Public Sub Form_Open()
+
+llenarcombos
+
+CheckBox6.Value = True
+moddepartamento.Text = "departamentos"
+TextBox3.Text = "hospitalizacion"
+Label44.Caption = "administrativa"
+visitaspediatrico
+pacientes
+Label83.Caption = inicio.usuarionombre
+Label84.Caption = inicio.usuarioapellido
+Label85.Caption = inicio.nombreusuario
+
+Timer1.Enabled = True
+
+End
+
+
+Public Sub existente()
+
+conexion.Connect()
+Query = " Select * from listadovisitantes where cedula = '" & str_cedulab.Text & "'" 
+Result = conexion.Con.Exec(Query)
+
+  If result.Available Then
+  DrawingArea2.Visible = True
+  DrawingArea1.Visible = False
+  Label41.Caption = Result!nombres
+  Label45.Caption = Result!apellidos
+  Label46.Caption = Result!cedula
+  IconPanel1.Index = 0
+  Else
+  DrawingArea2.Visible = False
+  str_nombresv.Enabled = True
+  str_apellidosv.Enabled = True
+  str_telefonov.Enabled = True
+  str_direccionv.Enabled = True
+  date_fecharegistrov.Enabled = True
+  combo_estado.Enabled = True
+  Combo_municipio.Enabled = True
+  Label20.Caption = "VISITANTE NO REGISTRADO"
+  b_guardarvisitante.Enabled = True
+  str_cedulav.Text = str_cedulab.Text
+  Panel1.Visible = True
+  ScrollArea1.Visible = True
+  DrawingArea1.Visible = True
+  Panel1.SetFocus
+  str_nombresv.SetFocus
+  
+  End If
+
+End
+
+
+
+
+Public Sub b_guardarvisitante_Click()
+  
+  Dim Preg As Integer
+
+  Preg = 0
+
+  Preg = Message.Question(" ¿DESEA AGREGAR UN NUEVO VISITANTE?", "SI", "NO")
+  If Preg = 1
+  conexion.Connect()
+  
+  query = "insert into listadovisitantes (nombres, apellidos, cedula, fecharegistro, numtelefono, direccion,estado,municipio)values('" & UCase$(str_nombresv.Text) & " ', '" & UCase$(str_apellidosv.Text) & " ', '" & str_cedulav.Text & "'," &
+  " '" & Format$(date_fecharegistrov.Value, "dd/mm/yy") & "','" & str_telefonov.Text & "', '" & str_direccionv.Text & "','" & combo_estado.Text & "','" & Combo_municipio.Text & "')"
+  Result = conexion.Con.Exec(query)
+  
+  If Result.Available Then
+    Message.Info("Visitante agregado")
+  Endif
+   b_guardarvisitante.Enabled = False
+   DrawingArea1.Visible = False
+End If
+End
+Public Sub B_buscarvisitante_Click()
+  If str_cedulab.Text = "" Or Len(str_cedulab.Text) < 7 Then
+    Message.Info("Ingrese correctamente la cedula cedula")
+    DrawingArea2.Visible = False
+  Else
+    existente
+  Endif
+End
+Public Sub limpiar()
+  
+  str_cedulab.Text = ""
+  str_cedulav.Text = ""
+  str_nombresv.Text = ""
+  str_apellidosv.Text = ""
+  str_cedulav.Text = ""
+  str_direccionv.Text = ""
+  str_telefonov.Text = ""
+  date_fecharegistrov.Value = ""
+  Label20.Text = ""
+ str_nombresv.Enabled = False
+  str_apellidosv.Enabled = False
+  str_cedulav.Enabled = False
+  str_telefonov.Enabled = False
+  str_direccionv.Enabled = False
+  date_fecharegistrov.Enabled = False
+  
+End
+
+Public Sub b_limpiardatosvisitantes_Click()
+
+  limpiar
+  str_cedulab.SetFocus
+End
+
+Public Sub Button13_Click()
+
+Dim Preg As Integer
+
+Preg = 0
+
+Preg = Message.Question(" ¿DESEA INGRESAR UN NUEVO VISITANTE?", "SI", "NO")
+If Preg = 1
+
+If Label46.Text = "" Or label45.Text = "" Or Label41.Text = "" Then
+Message.Info("Ingrese datos obligatorios del visitante")
+Else
+codigovisitante
+str_nombrevisitantea.Caption = Label41.Text & "" & "" & label45.Text
+str_personavisitara.Enabled = True
+str_departamentoa.Enabled = True
+str_horaa.Enabled = True
+Date_fechaa.Enabled = True
+str_observaciona.Enabled = True
+Button2.Enabled = True
+CheckBox1.Value = True
+End If
+End If
+End
+
+Public Sub Button12_Click()
+
+Dim Preg As Integer
+
+Preg = 0
+
+Preg = Message.Question(" ¿DESEA INGRESAR UN NUEVO VISITANTE?", "SI", "NO")
+If Preg = 1
+
+
+If Label46.Text = "" Or label45.Text = "" Or Label41.Text = "" Then
+Message.Info("Ingrese datos obligatorios del visitante")
+Else  
+codigovisitante
+TextBox3.Text = "hospitalizacion"
+str_nombrevisitanteh.Caption = Label41.Text & "" & label45.Text
+str_nombrepaciente.Enabled = True
+str_pisoh.Enabled = True
+str_areah.Enabled = True
+str_habitacionh.Enabled = True
+str_horah.Enabled = True
+Date_fechah.Enabled = True
+str_observacionh.Enabled = True
+str_camah.Enabled = True
+Button6.Enabled = True
+Button11.Enabled = True
+CheckBox5.Value = True
+End If
+End If
+End
+
+Public Sub str_cedulab_KeyRelease()
+
+  If str_cedulab.Text = "" Then
+    limpiar
+    DrawingArea1.Visible = False
+    DrawingArea2.Visible = False
+    str_nombrevisitantea.Text = ""
+    str_nombrevisitanteh.Text = ""
+    str_nombrevisitanted.Text = ""
+  Endif
+End
+
+
+
+Public Sub Button5_Click()
+str_codigoa.Text = ""
+str_personavisitara.Text = ""
+str_departamentoa.text = ""
+str_horaa.Text = ""
+Date_fechaa.Value = ""
+str_observaciona.text = ""
+str_nombrevisitantea.Text = ""
+str_personavisitara.Enabled = False
+str_departamentoa.Enabled = False
+str_horaa.Enabled = False
+Date_fechaa.Enabled = False
+str_observaciona.Enabled = False
+End
+
+Public Sub Button4_Click()
+Dim Preg As Integer
+
+Preg = 0
+
+Preg = Message.Question(" ¿DESEA INGRESAR UN NUEVO VISITANTE?", "SI", "NO")
+If Preg = 1
+
+If Label46.Text = "" Or label45.Text = "" Or Label41.Text = "" Then
+Message.Info("Ingrese datos obligatorios del visitante")
+Else
+codigovisitante
+moddepartamento.Text = "departamentos"
+str_nombrevisitanted.Caption = Label41.Text & "" & label45.Text
+str_personavisitard.Enabled = True
+str_departamentod.Enabled = True
+str_horad.Enabled = True
+Date_fechad.Enabled = True
+str_observaciond.Enabled = True
+str_pisod.Enabled = True
+Button3.Enabled = True
+CheckBox7.Value = True
+End If
+End If
+End
+
+
+Public Sub Button1_Click()
+
+str_personavisitard.Text = ""
+str_pisod.Text = ""
+str_departamentod.text = ""
+str_horad.Text = ""
+Date_fechad.Value = ""
+str_observaciond.text = ""
+str_nombrevisitanted.Text = ""
+
+str_personavisitara.Enabled = False
+str_departamentoa.Enabled = False
+str_horaa.Enabled = False
+Date_fechaa.Enabled = False
+str_observaciona.Enabled = False
+str_pisod.Enabled = False
+End
+
+Public Sub Button7_Click()
+
+str_nombrepaciente.Enabled = False
+str_nombrepaciente.Text = ""
+str_pisoh.Enabled = False
+str_pisoh.Text = ""
+str_areah.Enabled = False
+str_areah.Text = ""
+str_habitacionh.Enabled = False
+str_habitacionh.Text = ""
+str_horah.Enabled = False
+str_horah.Text = ""
+Date_fechah.Enabled = False
+Date_fechah.Value = ""
+str_observacionh.Enabled = False
+str_observacionh.Text = ""
+str_camah.Enabled = False
+str_camah.Text = ""
+str_nombrevisitanteh.Text = ""
+End
+
+Public Sub Button2_Click()
+
+If str_codigoa.Text = "" Or str_cedulab.Text = ""
+Message.Info("LLENAR TODAS LAS CASILLAS")
+
+Else
+ conexion.Connect()
+ Label44.Caption = "administrativa"
+ str_pisoa.Text = "PB"
+  
+  query = "insert into visitas (codigovisita, cedulavisitante,personavisitar,piso, modulo, departamento,fechavisita, horaentrada, observacion, retirado, nombrevisitante, recepcionista)Values('" & str_codigoa.Text & "'," &
+  "'" & label46.Text & "', '" & UCase$(str_personavisitara.Text) & "', '" & str_pisoa.Text & "', '" & UCase$(Label44.Text) & "','" & UCase$(str_departamentoa.Text) & "','" & Format$(date_fechaa.Value, "dd/mm/yy") & "', " &
+  "'" & str_horaa.Text & "','" & UCase$(str_observaciona.Text) & "', '" & 0 & "', '" & UCase$(str_nombrevisitantea.Text) & "','" & UCase$(Label85.Text) & "')" 
+  Result = conexion.Con.Exec(query)
+  
+str_codigoa.Text = ""
+str_personavisitara.Text = ""
+str_departamentoa.text = ""
+str_horaa.Text = ""
+Date_fechaa.Value = ""
+str_observaciona.text = ""
+str_nombrevisitantea.Text = ""
+str_personavisitara.Enabled = False
+str_departamentoa.Enabled = False
+str_horaa.Enabled = False
+Date_fechaa.Enabled = False
+str_observaciona.Enabled = False
+Button2.Enabled = False
+DrawingArea2.Visible = False
+limpiar
+End If  
+visitas
+areaadministrativa
+visitaspediatrico
+End
+
+
+Public Sub codigovisitante()
+  
+  Dim i As Integer
+  Dim $Query As String
+  Dim $Result As Result
+  Dim $codigo As String
+  Dim $n As Integer
+  Dim seccion As String
+
+  
+  
+  i = 1
+  Conexion.Connect()
+  $query = "Select codigovisita from visitas"
+  $result = Conexion.Con.Exec($query)
+  
+  If $result.Count == 0
+    $codigo = "00000"
+   Else
+    $n = $result.Count + i
+  End If
+  
+  If $n < 10
+    $codigo = "0000" & $n
+  Else            
+    If $n >= 10 And $n < 100
+    $codigo = "000" & $n
+  Else
+    $codigo = "00" & $n
+  End If
+  End If
+  str_codigoa.Text = $codigo
+
+  
+End
+
+Public Sub Button3_Click()
+
+If str_codigoa.Text = "" Or str_cedulab.Text = ""
+Message.Info("LLENAR TODAS LAS CASILLAS")
+Else
+  conexion.Connect()
+  query = "insert into visitas (codigovisita, cedulavisitante,personavisitar,piso, departamento,fechavisita, horaentrada, observacion,modulo, retirado, nombrevisitante,recepcionista)Values('" & str_codigoa.Text & "'," &
+  "'" & label46.Text & "', '" & UCase$(str_personavisitard.Text) & "', '" & str_pisod.Text & "','" & UCase$(str_departamentod.Text) & "','" & Format$(date_fechad.Value, "dd/mm/yy") & "', " &
+  "'" & str_horad.Text & "','" & UCase$(str_observaciond.Text) & "','" & UCase$(Label49.Text) & "', '" & 0 & "', '" & UCase$(str_nombrevisitanted.Text) & "', '" & UCase$(Label85.Text) & "')" 
+  Result = conexion.Con.Exec(query)
+
+
+str_personavisitard.Text = ""
+str_pisod.Text = ""
+str_departamentod.text = ""
+str_horad.Text = ""
+Date_fechad.Value = ""
+str_observaciond.text = ""
+str_nombrevisitanted.Text = ""
+
+str_personavisitard.Enabled = False
+str_departamentod.Enabled = False
+str_horad.Enabled = False
+Date_fechad.Enabled = False
+str_observaciond.Enabled = False
+str_pisod.Enabled = False
+Button3.Enabled = False
+limpiar
+DrawingArea2.Visible = False
+End If
+visitas
+departamentos
+visitaspediatrico
+End
+
+
+Public Sub CheckBox1_Click()
+ If CheckBox1.Value = True
+    Grid_areaadministrativa.Visible = True
+    Label25.Visible = True
+    Label47.Visible = True
+    TextBox1.Visible = True
+    areaadministrativa
+  Else
+  Grid_areaadministrativa.Visible = False
+   Label25.Visible = False
+    Label47.Visible = False
+
+    TextBox1.Visible = False
+End If
+End
+Public Sub Button6_Click()
+
+  If str_cedulab.Text = "" Or str_codigoa.Text = ""
+  Message.Info("LLENAR TODAS LAS CASILLAS")
+  Else
+  conexion.Connect()
+  query = "insert into visitas(codigovisita, cedulavisitante,personavisitar,piso, area, habitacion, cama,fechavisita, horaentrada, observacion, modulo, retirado,nombrevisitante,  recepcionista)values('" & str_codigoa.Text & "'," &
+  "'" & label46.Text & "', '" & UCase$(str_nombrepaciente.Text) & "','" & str_pisoh.Text & "', '" & UCase$(str_areah.Text) & "','" & str_habitacionh.Text & "','" & str_camah.Text & "', '" & Format$(date_fechah.Value, "dd/mm/yy") & "'," &
+  "'" & str_horah.Text & "','" & UCase$(str_observacionh.text) & "','" & UCase$(textbox3.text) & "', '" & 0 & "','" & UCase$(str_nombrevisitanteh.text) & "','" & UCase$(Label85.Text) & "')"
+  Result = conexion.Con.Exec(query)
+  
+ sumavisitaspacientes
+ 
+conexion.Connect()
+ 
+query = "UPDATE listadopacientes SET visitas='" & FMain.visitassuma & "' where codigo='" & codigovisitas & "'"
+result = Conexion.Con.Exec(query)
+
+
+str_nombrepaciente.Enabled = False
+str_nombrepaciente.Text = ""
+str_pisoh.Enabled = False
+str_pisoh.Text = ""
+str_areah.Enabled = False
+str_areah.Text = ""
+str_habitacionh.Enabled = False
+str_habitacionh.Text = ""
+str_horah.Enabled = False
+str_horah.Text = ""
+Date_fechah.Enabled = False
+Date_fechah.Value = ""
+str_observacionh.Enabled = False
+str_observacionh.Text = ""
+str_camah.Enabled = False
+str_camah.Text = ""
+str_nombrevisitanteh.Text = ""
+Button6.Enabled = False
+DrawingArea2.Visible = False
+Button11.Enabled = False
+DrawingArea7.Visible = False
+limpiar
+End If
+visitas
+hospitalizacion
+visitaspediatrico
+pacientes
+End
+
+
+
+Public Sub Grid_areaadministrativa_Click()
+
+Dim i As Integer
+Dim Preg As Integer
+
+If Grid_areaadministrativa[Grid_areaadministrativa.Row, 0].text = ""
+Return
+End If
+
+  query = "SELECT *  FROM visitas Where codigovisita = '" & Grid_areaadministrativa[Grid_areaadministrativa.Row, 0].text & "' AND cedulavisitante='" & Grid_areaadministrativa[Grid_areaadministrativa.Row, i].text & "' "
+  result = conexion.Con.Exec(query)
+
+  Preg = 0
+      Preg = Message.Question("¿El visitante se retira?", "Si", "No")
+
+ If Preg = 1 Then
+   TextBox1.Text = ""
+   str_horasalida.Text = Time
+   Label50.Caption = Grid_areaadministrativa[Grid_areaadministrativa.Row, 0].Text
+   conexion.Connect()
+   query = "UPDATE visitas SET retirado='" & 1 & "', horasalida='" & Mid$(str_horasalida.Text, 1, 5) & "' where codigovisita='" & Label50.Text & "'"
+   result = Conexion.Con.Exec(query)
+   areaadministrativa
+   visitaspediatrico
+ Endif
+
+End
+
+Public Sub areaadministrativa()
+  
+Dim $linea As Integer
+
+Grid_areaadministrativa.columns.count = 9
+Grid_areaadministrativa.rows.count = 50 
+Grid_areaadministrativa.columns.width = 100 
+Grid_areaadministrativa.rows.height = 20
+
+Grid_areaadministrativa.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
+Grid_areaadministrativa.columns[0].text = "Cod. Visita" 
+Grid_areaadministrativa.columns[0].width = 50
+Grid_areaadministrativa.columns[1].text = "C.I Visitante" 
+Grid_areaadministrativa.columns[1].width = 90
+Grid_areaadministrativa.columns[2].text = "Nombre Visitante" 
+Grid_areaadministrativa.columns[2].width = 250
+Grid_areaadministrativa.columns[3].text = "Persona a visitar" 
+Grid_areaadministrativa.columns[3].width = 200
+Grid_areaadministrativa.columns[4].text = "Piso" 
+Grid_areaadministrativa.columns[4].width = 50
+Grid_areaadministrativa.columns[5].text = "Departamento" 
+Grid_areaadministrativa.columns[5].width = 100
+Grid_areaadministrativa.columns[6].text = "Fecha entrada" 
+Grid_areaadministrativa.columns[6].width = 100
+Grid_areaadministrativa.columns[7].text = "Hora entrada" 
+Grid_areaadministrativa.columns[7].width = 100
+Grid_areaadministrativa.columns[8].text = "Observacion" 
+Grid_areaadministrativa.columns[8].width = 300
+  
+conexion.Connect()
+
+query = "select * from visitas where modulo='" & UCase$(Label44.Text) & "' and retirado= '" & 0 & "' order by horaentrada " 
+Result = conexion.Con.exec(query)
+Grid_areaadministrativa.Clear
+Grid_areaadministrativa.rows.count = Result.count + 1 
+For $linea = 0 To Result.Count - 1 Step 1      
+Grid_areaadministrativa[$linea, 0].text = Result!codigovisita
+Grid_areaadministrativa[$linea, 1].text = Result!cedulavisitante
+Grid_areaadministrativa[$linea, 2].text = Result!nombrevisitante
+Grid_areaadministrativa[$linea, 3].text = Result!personavisitar
+Grid_areaadministrativa[$linea, 4].text = Result!piso
+Grid_areaadministrativa[$linea, 5].text = Result!departamento
+Grid_areaadministrativa[$linea, 6].text = Result!fechavisita
+Grid_areaadministrativa[$linea, 7].text = Result!horaentrada
+Grid_areaadministrativa[$linea, 8].text = Result!observacion
+Result.MoveNext()
+Next 
+
+Label47.text = Result.Count
+  
+End 
+
+Public Sub llenarcombos() 
+
+
+Dim i As Integer
+
+conexion.Connect()
+
+Query = "select * from departamentos where piso='" & LCase$(str_pisoa.Text) & "'"
+Result = conexion.Con.Exec(Query)    
+str_departamentoa.Clear
+For i = 0 To Result.Count - 1 Step 1
+str_departamentoa.Add(Result!departamento) 
+str_departamentoa.Refresh()
+Result.MoveNext()
+UCase$(str_departamentoa.Text)
+Next
+
+Query = "select * from areas where piso='" & LCase$(str_pisoh.Text) & "'"
+Result = conexion.Con.Exec(Query)    
+str_areah.Clear
+For i = 0 To Result.Count - 1 Step 1
+str_areah.Add(Result!area) 
+str_areah.Refresh()
+Result.MoveNext()
+UCase$(str_areah.Text)
+
+Next
+
+Query = "select * from estados"
+Result = conexion.Con.Exec(Query)    
+Combo_estado.Clear
+For i = 0 To Result.Count - 1 Step 1
+Combo_estado.Add(Result!nombre) 
+Combo_estado.Refresh()
+Result.MoveNext()
+Next
+End
+
+Public Sub hospitalizacion()
+
+Dim $linea As Integer
+Grid_hospitalizacion.columns.count = 11
+Grid_hospitalizacion.rows.count = 50 
+Grid_hospitalizacion.columns.width = 100 
+Grid_hospitalizacion.rows.height = 20
+
+Grid_hospitalizacion.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
+Grid_hospitalizacion.columns[0].text = "Cod. Visita" 
+Grid_hospitalizacion.columns[0].width = 70
+Grid_hospitalizacion.columns[1].text = "Cedula Visitante" 
+Grid_hospitalizacion.columns[1].width = 90
+Grid_hospitalizacion.columns[2].text = "Nombre Visitante" 
+Grid_hospitalizacion.columns[2].width = 250
+Grid_hospitalizacion.columns[3].text = "Paciente" 
+Grid_hospitalizacion.columns[3].width = 200
+Grid_hospitalizacion.columns[4].text = "Piso" 
+Grid_hospitalizacion.columns[4].width = 50
+Grid_hospitalizacion.columns[5].text = "Área" 
+Grid_hospitalizacion.columns[5].width = 100
+Grid_hospitalizacion.columns[6].text = "Hab." 
+Grid_hospitalizacion.columns[6].width = 50
+Grid_hospitalizacion.columns[7].text = "Cama" 
+Grid_hospitalizacion.columns[7].width = 50
+Grid_hospitalizacion.columns[8].text = "Fecha de Visita" 
+Grid_hospitalizacion.columns[8].width = 100
+Grid_hospitalizacion.columns[9].text = "Hora de Visita" 
+Grid_hospitalizacion.columns[9].width = 100
+Grid_hospitalizacion.columns[10].text = "Observacion" 
+Grid_hospitalizacion.columns[10].width = 300
+  
+conexion.Connect()
+
+query = "select * from visitas where retirado= '" & 0 & "' and modulo='" & UCase$(textbox3.Text) & "' order by  horaentrada " 
+Result = conexion.Con.exec(query)
+
+Grid_hospitalizacion.Clear
+Grid_hospitalizacion.rows.count = Result.count + 1 
+For $linea = 0 To Result.Count - 1 Step 1   
+Grid_hospitalizacion[$linea, 0].text = Result!codigovisita
+Grid_hospitalizacion[$linea, 1].text = Result!cedulavisitante
+Grid_hospitalizacion[$linea, 2].text = Result!nombrevisitante
+Grid_hospitalizacion[$linea, 3].text = Result!personavisitar
+Grid_hospitalizacion[$linea, 4].text = Result!piso
+Grid_hospitalizacion[$linea, 5].text = Result!area
+Grid_hospitalizacion[$linea, 6].text = Result!habitacion
+Grid_hospitalizacion[$linea, 7].text = Result!cama
+Grid_hospitalizacion[$linea, 8].text = Result!fechavisita
+Grid_hospitalizacion[$linea, 9].text = Result!horaentrada
+Grid_hospitalizacion[$linea, 10].text = Result!observacion
+Result.MoveNext()
+Next 
+
+Label43.text = Result.Count
+  
+End 
+
+
+
+
+Public Sub CheckBox5_Click()
+
+If CheckBox5.Value = True
+  hospitalizacion
+  Grid_hospitalizacion.Visible = True
+  Label42.Visible = True
+  Label43.Visible = True
+
+  TextBox2.Visible = True
+
+  Else
+  Grid_hospitalizacion.Visible = False
+   Label42.Visible = False
+   Label43.Visible = False
+
+   TextBox2.Visible = False
+
+End If
+
+End
+
+
+Public Sub str_pisoh_Click()
+  llenarcombos
+End
+
+Public Sub str_habitacionh_KeyRelease()
+
+ Dim i As Integer
+Query = "select * from camas where habitacion='" & LCase$(str_habitacionh.Text) & "'"
+Result = conexion.Con.Exec(Query)    
+str_camah.Clear
+For i = 0 To Result.Count - 1 Step 1
+str_camah.Add(Result!cama) 
+str_camah.Refresh()
+Result.MoveNext()
+
+
+Next
+
+
+End
+
+Public Sub str_horaa_DblClick()
+
+  str_horaa.Text = Format$(Time, "hh:nn")
+
+End
+
+Public Sub str_horah_DblClick()
+
+str_horah.Text = Format$(Time, "hh:nn")
+
+End
+
+
+Public Sub Grid_hospitalizacion_Click()
+
+Dim i As Integer
+Dim Preg As Integer
+
+If Grid_hospitalizacion[Grid_hospitalizacion.Row, 0].text = ""
+Return
+End If
+
+  query = "SELECT *  FROM visitas Where codigovisita = '" & Grid_hospitalizacion[Grid_hospitalizacion.Row, 0].text & "' AND cedulavisitante='" & Grid_hospitalizacion[Grid_hospitalizacion.Row, i].text & "' "
+  result = conexion.Con.Exec(query)
+
+  Preg = 0
+      Preg = Message.Question("¿El visitante se retira?", "Si", "No")
+
+ If Preg = 1 Then
+   str_horasalida.Text = Time
+   Label48.Caption = Grid_hospitalizacion[Grid_hospitalizacion.Row, 0].Text
+   conexion.Connect()
+   query = "UPDATE visitas SET retirado='" & 1 & "', horasalida='" & Mid$(str_horasalida.Text, 1, 5) & "' where codigovisita='" & Label48.Text & "'"
+   result = Conexion.Con.Exec(query)
+   hospitalizacion
+   visitaspediatrico
+ Endif
+
+End
+
+Public Sub CheckBox6_Click()
+
+  If CheckBox6.Value = True
+  Label51.Visible = True
+  visitas
+  Else
+  Label51.Visible = False
+  Grid_visitas.Visible = False
+  End If
+End
+Public Sub str_horad_DblClick()
+str_horad.Text = Format$(Time, "hh:nn")
+End
+
+Public Sub departamentos()
+  
+Dim $linea As Integer
+
+Grid_departamentos.columns.count = 9
+Grid_departamentos.rows.count = 50 
+Grid_departamentos.columns.width = 100 
+Grid_departamentos.rows.height = 20
+
+Grid_departamentos.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
+Grid_departamentos.columns[0].text = "Cod. Visita" 
+Grid_departamentos.columns[0].width = 70
+Grid_departamentos.columns[1].text = "Cedula Visitante" 
+Grid_departamentos.columns[1].width = 90
+Grid_departamentos.columns[2].text = "Nombre Visitante" 
+Grid_departamentos.columns[2].width = 250
+Grid_departamentos.columns[3].text = "Paciente" 
+Grid_departamentos.columns[3].width = 200
+Grid_departamentos.columns[4].text = "Piso" 
+Grid_departamentos.columns[4].width = 50
+Grid_departamentos.columns[5].text = "Departamento" 
+Grid_departamentos.columns[5].width = 100
+Grid_departamentos.columns[6].text = "Fecha entrada" 
+Grid_departamentos.columns[6].width = 50
+Grid_departamentos.columns[7].text = "Hora entrada" 
+Grid_departamentos.columns[7].width = 50
+Grid_departamentos.columns[8].text = "Observacion" 
+Grid_departamentos.columns[8].width = 300
+  
+conexion.Connect()
+
+query = "select * from visitas where retirado= '" & 0 & "' and modulo='" & UCase$(moddepartamento.Text) & "' order by  horaentrada " 
+Result = conexion.Con.exec(query)
+
+Grid_departamentos.Clear
+Grid_departamentos.rows.count = Result.count + 1 
+For $linea = 0 To Result.Count - 1 Step 1   
+Grid_departamentos[$linea, 0].text = Result!codigovisita
+Grid_departamentos[$linea, 1].text = Result!cedulavisitante
+Grid_departamentos[$linea, 2].text = Result!nombrevisitante
+Grid_departamentos[$linea, 3].text = Result!personavisitar
+Grid_departamentos[$linea, 4].text = Result!piso
+Grid_departamentos[$linea, 5].text = Result!departamento
+Grid_departamentos[$linea, 6].text = Result!fechavisita
+Grid_departamentos[$linea, 7].text = Result!horaentrada
+Grid_departamentos[$linea, 8].text = Result!observacion
+Result.MoveNext()
+Next 
+Label53.text = Result.Count
+Grid_departamentos.Visible = True
+End
+
+
+
+
+
+Public Sub CheckBox7_Click()
+
+  If CheckBox7.Value = True
+  Label52.Visible = True
+  Label53.Visible = True
+  TextBox4.Visible = True
+  departamentos
+  Grid_departamentos.Visible = True
+Else
+  Label52.Visible = False
+  Label53.Visible = False
+  TextBox4.Visible = False
+  Grid_departamentos.Visible = False
+End If
+End
+
+
+
+Public Sub str_pisod_Click()
+Dim i As Integer
+
+conexion.Connect()
+Query = "select * from departamentos where piso='" & LCase$(str_pisod.Text) & "'"
+Result = conexion.Con.Exec(Query)    
+str_departamentod.Clear
+For i = 0 To Result.Count - 1 Step 1
+str_departamentod.Add(Result!departamento) 
+str_departamentod.Refresh()
+Result.MoveNext()
+UCase$(str_departamentod.Text)
+Next
+
+End
+
+Public Sub Grid_departamentos_Click()
+
+Dim i As Integer
+Dim Preg As Integer
+
+If Grid_departamentos[Grid_departamentos.Row, 0].text = ""
+Return
+End If
+
+  query = "SELECT *  FROM visitas Where codigovisita = '" & Grid_departamentos[Grid_departamentos.Row, 0].text & "' AND cedulavisitante='" & Grid_departamentos[Grid_departamentos.Row, i].text & "' "
+  result = conexion.Con.Exec(query)
+
+  Preg = 0
+      Preg = Message.Question("¿El visitante se retira?", "Si", "No")
+
+ If Preg = 1 Then
+   str_horasalida.Text = Time
+   Label54.Caption = Grid_departamentos[Grid_departamentos.Row, 0].Text
+   conexion.Connect()
+   query = "UPDATE visitas SET retirado='" & 1 & "', horasalida='" & Mid$(str_horasalida.Text, 1, 5) & "' where codigovisita='" & Label54.Text & "'"
+   result = Conexion.Con.Exec(query)
+   departamentos
+   visitaspediatrico
+ Endif
+
+
+End
+
+Public Sub TextBox1_KeyRelease()
+
+Dim $linea As Integer
+Dim busqueda As String
+
+busqueda = UCase$(TextBox1.Text)
+
+If TextBox1.Text = ""
+areaadministrativa
+Else
+Query = "select * From visitas where nombrevisitante Like '%" & busqueda & "%' and modulo='" & Label44.Text & "' and retirado='" & 0 & "'" 
+Result = Conexion.Con.Exec(Query)
+For $linea = 0 To Result.Count - 1 Step 1      
+Grid_areaadministrativa[$linea, 0].text = Result!codigovisita
+Grid_areaadministrativa[$linea, 1].text = Result!cedulavisitante
+Grid_areaadministrativa[$linea, 2].text = Result!nombrevisitante
+Grid_areaadministrativa[$linea, 3].text = Result!personavisitar
+Grid_areaadministrativa[$linea, 4].text = Result!piso
+Grid_areaadministrativa[$linea, 5].text = Result!departamento
+Grid_areaadministrativa[$linea, 6].text = Result!fechavisita
+Grid_areaadministrativa[$linea, 7].text = Result!horaentrada
+Grid_areaadministrativa[$linea, 8].text = Result!observacion
+Result.MoveNext()
+Next
+End If
+
+End
+Public Sub TextBox1_MouseUp()
+    TextBox1.Text = ""
+End
+
+Public Sub TextBox2_MouseUp()
+   TextBox2.Text = ""
+End
+
+
+Public Sub TextBox2_KeyPress()
+
+Select Case Key.Code
+        Case 65 To 90
+        Case 32
+        Case Key.BackSpace
+        Case Key.Delete
+        Case Key.Tab
+        Case Else
+        Stop Event
+    End Select   
+  
+
+End
+Public Sub TextBox2_KeyRelease()
+
+Dim $linea As Integer
+Dim busqueda As String
+
+busqueda = UCase$(TextBox2.Text)
+If TextBox2.Text = ""
+hospitalizacion
+Else
+Query = "select * From visitas where nombrevisitante Like '%" & busqueda & "%' and modulo='" & textbox3.Text & "' and retirado='" & 0 & "'" 
+Result = Conexion.Con.Exec(Query)
+For $linea = 0 To Result.Count - 1 Step 1   
+Grid_hospitalizacion[$linea, 0].text = Result!codigovisita
+Grid_hospitalizacion[$linea, 1].text = Result!cedulavisitante
+Grid_hospitalizacion[$linea, 2].text = Result!nombrevisitante
+Grid_hospitalizacion[$linea, 3].text = Result!personavisitar
+Grid_hospitalizacion[$linea, 4].text = Result!piso
+Grid_hospitalizacion[$linea, 5].text = Result!area
+Grid_hospitalizacion[$linea, 6].text = Result!habitacion
+Grid_hospitalizacion[$linea, 7].text = Result!cama
+Grid_hospitalizacion[$linea, 8].text = Result!fechavisita
+Grid_hospitalizacion[$linea, 9].text = Result!horaentrada
+Grid_hospitalizacion[$linea, 10].text = Result!observacion
+Result.MoveNext()
+Next 
+End If
+
+End
+
+
+Public Sub TextBox4_KeyRelease()
+
+Dim $linea As Integer
+Dim busqueda As String
+
+busqueda = UCase$(TextBox4.Text)
+If TextBox4.Text = ""
+departamentos
+Else
+Query = "select * From visitas where nombrevisitante Like '%" & busqueda & "%' and modulo='" & Label49.Text & "' and retirado='" & 0 & "'" 
+Result = Conexion.Con.Exec(Query)
+For $linea = 0 To Result.Count - 1 Step 1   
+Grid_departamentos[$linea, 0].text = Result!codigovisita
+Grid_departamentos[$linea, 1].text = Result!cedulavisitante
+Grid_departamentos[$linea, 2].text = Result!nombrevisitante
+Grid_departamentos[$linea, 3].text = Result!personavisitar
+Grid_departamentos[$linea, 4].text = Result!piso
+Grid_departamentos[$linea, 5].text = Result!departamento
+Grid_departamentos[$linea, 6].text = Result!fechavisita
+Grid_departamentos[$linea, 7].text = Result!horaentrada
+Grid_departamentos[$linea, 8].text = Result!observacion
+Result.MoveNext()
+Next 
+End If
+
+
+End
+
+
+
+Public Sub TextBox4_MouseUp()
+
+      TextBox4.Text = ""
+
+End
+
+
+Public Sub Combo_estado_Click()
+Dim i As Integer
+
+conexion.Connect()
+
+Query = "select * from municipios where estado='" & combo_estado.text & "'"
+Result = conexion.Con.Exec(Query)    
+Combo_municipio.Clear
+For i = 0 To Result.Count - 1 Step 1
+Combo_municipio.Add(Result!nombre) 
+Combo_municipio.Refresh()
+Result.MoveNext()
+Next
+End
+Public Sub visitas()
+  
+Dim $linea As Integer
+Grid_visitas.columns.count = 12
+Grid_visitas.rows.count = 50 
+Grid_visitas.columns.width = 100 
+Grid_visitas.rows.height = 20
+
+Grid_visitas.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
+Grid_visitas.columns[0].text = "Codigo" 
+Grid_visitas.columns[0].width = 70    
+Grid_visitas.columns[1].text = "C.I" 
+Grid_visitas.columns[1].width = 90
+Grid_visitas.columns[2].text = "Nombre Visitante" 
+Grid_visitas.columns[2].width = 250
+Grid_visitas.columns[3].text = "Persona a visitar" 
+Grid_visitas.columns[3].width = 200
+Grid_visitas.columns[4].text = "Piso" 
+Grid_visitas.columns[4].width = 50
+Grid_visitas.columns[5].text = "Departamento" 
+Grid_visitas.columns[5].width = 100
+Grid_visitas.columns[6].text = "Area" 
+Grid_visitas.columns[6].width = 100
+Grid_visitas.columns[7].text = "Hab." 
+Grid_visitas.columns[7].width = 50
+Grid_visitas.columns[8].text = "Cama" 
+Grid_visitas.columns[8].width = 50
+Grid_visitas.columns[9].text = "Fecha visita" 
+Grid_visitas.columns[9].width = 80
+Grid_visitas.columns[10].text = "Hora entrada" 
+Grid_visitas.columns[10].width = 50
+Grid_visitas.columns[11].text = "Observacion" 
+Grid_visitas.columns[11].width = 300
+
+conexion.Connect()
+
+query = "select * from visitas where retirado= '" & 0 & "' order by horaentrada"
+Result = conexion.Con.exec(query)
+
+Grid_visitas.Clear
+Grid_visitas.rows.count = Result.count + 1 
+For $linea = 0 To Result.Count - 1 Step 1   
+Grid_visitas[$linea, 0].text = Result!codigovisita
+Grid_visitas[$linea, 1].text = Result!cedulavisitante
+Grid_visitas[$linea, 2].text = Result!nombrevisitante
+Grid_visitas[$linea, 3].text = Result!personavisitar
+Grid_visitas[$linea, 4].text = Result!piso
+Grid_visitas[$linea, 5].text = Result!departamento
+Grid_visitas[$linea, 6].text = Result!area
+Grid_visitas[$linea, 7].text = Result!habitacion
+Grid_visitas[$linea, 8].text = Result!cama
+Grid_visitas[$linea, 9].text = Result!fechavisita
+Grid_visitas[$linea, 10].text = Result!horaentrada
+Grid_visitas[$linea, 11].text = Result!observacion
+Result.MoveNext()
+Next 
+Grid_visitas.Visible = True
+Label51.text = Result.Count
+  
+End
+
+
+
+
+Public Sub visitaspediatrico()
+
+Dim retirado As Integer
+Dim modulo1 As String
+Dim modulo2 As String
+
+modulo1 = "administrativa"
+modulo2 = "hospitalizacion"
+conexion.Connect()
+
+query = "Select * from visitas where retirado='" & retirado & "'"
+Result = conexion.Con.Exec(query)
+
+Label67.Caption = Result.Count
+
+conexion.Connect()
+
+query = "Select * from visitas where retirado='" & 0 & "' and modulo='" & UCase$(modulo1) & "'"
+Result = conexion.Con.Exec(query)
+
+Label68.Caption = Result.Count
+
+conexion.Connect()
+
+query = "Select * from visitas where retirado='" & 0 & "' and modulo='" & UCase(modulo2) & "'"
+Result = conexion.Con.Exec(query)
+
+Label69.Caption = Result.Count
+
+conexion.Connect()
+
+query = "Select * from visitas where retirado='" & 0 & "' and piso='" & 1 & "'"
+Result = conexion.Con.Exec(query)
+
+Label70.Caption = Result.Count
+
+conexion.Connect()
+
+query = "Select * from visitas where retirado='" & 0 & "' and piso='" & 2 & "'"
+Result = conexion.Con.Exec(query)
+
+Label71.Caption = Result.Count
+
+conexion.Connect()
+
+query = "Select * from visitas where retirado='" & 0 & "' and piso='" & 3 & "'"
+Result = conexion.Con.Exec(query)
+
+Label72.Caption = Result.Count
+End
+
+Public Sub CheckBox2_Click()
+
+  If CheckBox2.Value = True
+  
+  conexion.Connect()
+  Query = " Select * from listadovisitantes where cedula = '" & str_cedulab.Text & "'" 
+  Result = conexion.Con.Exec(Query)
+  IconPanel1.Index = 4
+  
+  str_nombresv2.Text = Result!nombres
+  str_apellidosv2.Text = Result!apellidos
+  str_cedulav2.Text = Result!cedula
+  date_fecharegistrov2.value = Result!fecharegistro
+  str_telefonov2.Text = Result!numtelefono
+  str_direccionv2.Text = Result!direccion
+  combo_estado2.Text = Result!estado
+  Combo_municipio2.Text = Result!municipio
+  
+  Else
+    IconPanel1.Index = 0
+  str_nombresv2.Text = ""
+  str_apellidosv2.Text = ""
+  str_cedulav2.Text = ""
+  date_fecharegistrov2.value = ""
+  str_telefonov2.Text = ""
+  str_direccionv2.Text = ""
+  combo_estado2.Text = ""
+  Combo_municipio2.Text = ""
+
+End If
+End
+
+Public Sub B_buscarvisitante2_Click()
+
+  conexion.Connect()
+  Query = " Select * from listadovisitantes where cedula = '" & str_cedulab2.Text & "'" 
+  Result = conexion.Con.Exec(Query)
+  IconPanel1.Index = 4
+  
+  str_nombresv2.Text = Result!nombres
+  str_apellidosv2.Text = Result!apellidos
+  str_cedulav2.Text = Result!cedula
+  date_fecharegistrov2.value = Result!fecharegistro
+  str_telefonov2.Text = Result!numtelefono
+  str_direccionv2.Text = Result!direccion
+  combo_estado2.Text = Result!estado
+  Combo_municipio2.Text = Result!municipio
+
+End
+
+
+Public Sub str_personavisitara_KeyPress()
+
+Select Case Key.Code
+        Case 65 To 90
+        Case 32
+        Case Key.BackSpace
+        Case Key.Delete
+        Case Key.Tab
+        Case Else
+        Stop Event
+    End Select   
+
+End
+Public Sub Button8_Click()
+
+  str_nombresv2.Text = ""
+  str_apellidosv2.Text = ""
+  str_cedulav2.Text = ""
+  date_fecharegistrov2.value = ""
+  str_telefonov2.Text = ""
+  str_direccionv2.Text = ""
+  combo_estado2.Text = ""
+  Combo_municipio2.Text = ""
+  str_cedulab2.Text = ""
+End
+
+Public Sub str_nombrepaciente_KeyPress()
+
+Select Case Key.Code
+        Case 65 To 90
+        Case 32
+        Case Key.BackSpace
+        Case Key.Delete
+        Case Key.Tab
+        Case Else
+        Stop Event
+    End Select   
+
+End
+
+Public Sub str_personavisitard_KeyPress()
+Select Case Key.Code
+        Case 65 To 90
+        Case 32
+        Case Key.BackSpace
+        Case Key.Delete
+        Case Key.Tab
+        Case Else
+        Stop Event
+    End Select   
+
+End
+
+Public Sub TextBox4_KeyPress()
+
+Select Case Key.Code
+        Case 65 To 90
+        Case 32
+        Case Key.BackSpace
+        Case Key.Delete
+        Case Key.Tab
+        Case Else
+        Stop Event
+    End Select   
+
+End
+
+Public Sub TextBox1_KeyPress()
+
+Select Case Key.Code
+        Case 65 To 90
+        Case 32
+        Case Key.BackSpace
+        Case Key.Delete
+        Case Key.Tab
+        Case Else
+        Stop Event
+    End Select   
+  
+
+End
+
+Public Sub str_nombresv_KeyPress()
+
+Select Case Key.Code
+        Case 65 To 90
+        Case 32
+        Case Key.BackSpace
+        Case Key.Delete
+        Case Key.Tab
+        Case Else
+        Stop Event
+    End Select    
+
+End
+
+Public Sub str_apellidosv_KeyPress()
+
+Select Case Key.Code
+        Case 65 To 90
+        Case 32
+        Case Key.BackSpace
+        Case Key.Delete
+        Case Key.Tab
+        Case Else
+        Stop Event
+    End Select   
+
+End
+
+Public Sub Grid_visitas_Click()
+
+Dim i As Integer
+Dim Preg As Integer
+Dim codigovisita As String
+
+
+If Grid_visitas[Grid_visitas.Row, 0].text = ""
+Return
+End If
+
+  query = "SELECT *  FROM visitas Where codigovisita = '" & Grid_visitas[Grid_visitas.Row, 0].text & "' AND cedulavisitante='" & Grid_visitas[Grid_visitas.Row, i].text & "' "
+  result = conexion.Con.Exec(query)
+
+  Preg = 0
+      Preg = Message.Question("¿El visitante se retira?", "Si", "No")
+
+ If Preg = 1 Then
+   str_horasalida.Text = Time
+   codigovisita = Grid_visitas[Grid_visitas.Row, 0].Text
+   conexion.Connect()
+   query = "UPDATE visitas SET retirado='" & 1 & "', horasalida='" & Mid$(str_horasalida.Text, 1, 5) & "' where codigovisita='" & codigovisita & "'"
+   result = Conexion.Con.Exec(query)
+   visitas
+   visitaspediatrico
+ Endif
+
+End
+
+Public Sub Button9_Click()
+Dim Preg As Integer
+
+Preg = 0
+
+Preg = Message.Question(" ¿DESEA CAMBIAR DE USUARIO?", "SI", "NO")
+If Preg = 1
+  FMain.Close
+  inicio.Show
+End If
+End
+
+Public Sub CheckBox3_Click()
+
+  If CheckBox3.Value = True
+  CheckBox8.Value = False
+     CheckBox8.Visible = True
+    DrawingArea6.Visible = False
+  End If
+  End
+
+Public Sub CheckBox8_Click()
+
+  If CheckBox8.Value = True
+    CheckBox3.Value = False
+    DrawingArea6.Visible = True
+    CheckBox8.Visible = False
+ End If
+End
+
+Public Sub Button10_Click()
+
+  DrawingArea2.Visible = False
+
+End
+
+Public Sub Timer1_Timer()
+
+  Timer1.Delay = 1000
+
+  str_reloj.Text = Time(Hour(Now), Minute(Now), Second(Now))
+
+
+End
+
+Public Sub str_cedulab_KeyPress()
+
+If (Key.Code >= Asc("a") And Key.Code <= Asc("z")) Or (Key.Code >= Asc("A") And Key.Code <= Asc("Z"))
+Message.Warning("Disculpe,ingresar solo valores numéricos")
+Stop Event
+Endif
+
+End
+
+Public Sub str_cedulab2_KeyPress()
+
+  If (Key.Code >= Asc("a") And Key.Code <= Asc("z")) Or (Key.Code >= Asc("A") And Key.Code <= Asc("Z"))
+Message.Warning("Disculpe,ingresar solo valores numéricos")
+Stop Event
+Endif
+
+End
+
+Public Sub str_habitacionh_KeyPress()
+
+  If (Key.Code >= Asc("a") And Key.Code <= Asc("z")) Or (Key.Code >= Asc("A") And Key.Code <= Asc("Z"))
+Message.Warning("Disculpe,ingresar solo valores numéricos")
+Stop Event
+Endif
+
+End
+
+Public Sub str_cedulav_KeyPress()
+
+  If (Key.Code >= Asc("a") And Key.Code <= Asc("z")) Or (Key.Code >= Asc("A") And Key.Code <= Asc("Z"))
+Message.Warning("Disculpe,ingresar solo valores numéricos")
+Stop Event
+Endif
+
+End
+
+
+Public Sub codigopaciente()
+  
+  Dim i As Integer
+  Dim $Query As String
+  Dim $Result As Result
+  Dim $codigo As String
+  Dim $n As Integer
+  Dim seccion As String
+
+  
+  
+  i = 1
+  Conexion.Connect()
+  $query = "Select codigo from listadopacientes"
+  $result = Conexion.Con.Exec($query)
+  
+  If $result.Count == 0
+    $codigo = "00000"
+   Else
+    $n = $result.Count
+  End If
+  
+  If $n < 10
+    $codigo = "0000" & $n
+  Else            
+    If $n >= 10 And $n < 100
+    $codigo = "000" & $n
+  Else
+    $codigo = "00" & $n
+  End If
+  End If
+  str_codigopaciente.Text = $codigo
+
+  
+End
+Public Sub str_telefonov_KeyPress()
+
+If (Key.Code >= Asc("a") And Key.Code <= Asc("z")) Or (Key.Code >= Asc("A") And Key.Code <= Asc("Z"))
+Message.Warning("Disculpe,ingresar solo valores numéricos")
+Stop Event
+Endif
+
+End
+
+
+
+
+
+Public Sub Button14_Click()
+
+Dim Preg As Integer
+
+Dim i As Integer
+
+Preg = 0
+
+Preg = Message.Question(" ¿DESEA REGISTRAR UN NUEVO PACIENTE?", "SI", "NO")
+
+If Preg = 1
+
+
+
+  codigopaciente
+  
+  str_pacientenombre.Enabled = True
+  str_pacienteapellido.Enabled = True
+  Date_pacientefechana.Enabled = True
+  Date_pacientefechaing.Enabled = True
+  Combo_pacientepiso.Enabled = True
+  Combo_pacientearea.Enabled = True
+  str_pacientehab.Enabled = True
+  Combo_pacientecama.Enabled = True
+  str_pacienterepresentate.Enabled = True
+  Combo_parentescorepresentante.Enabled = True
+  
+
+End If
+End
+
+Public Sub str_pacientehab_KeyRelease()
+
+Dim i As Integer
+
+Query = "select * from camas where habitacion='" & LCase$(str_pacientehab.Text) & "'"
+Result = conexion.Con.Exec(Query)    
+Combo_pacientecama.Clear
+For i = 0 To Result.Count - 1 Step 1
+Combo_pacientecama.Add(Result!cama) 
+Combo_pacientecama.Refresh()
+Result.MoveNext()
+Next
+
+End
+
+Public Sub Button15_Click()
+
+Dim Preg As Integer
+
+Dim i As Integer
+
+Preg = 0
+
+Preg = Message.Question("SE REGISTRARA UN NUEVO PACIENTE ¿ESTÁ DE ACUERDO?", "SI", "NO")
+
+If Preg = 1
+
+  If str_pacienteapellido.Text = "" Or str_pacientenombre.Text = "" Or Date_pacientefechaing.Value = "" Or Date_pacientefechana.Value = "" Or Combo_pacientepiso.Text = "" Or Combo_pacientearea.Text = "" Or str_pacientehab.text = "" Or Combo_pacientecama.text = ""
+    Message.Info("LLENAR TODAS LAS CASILLAS")
+  Else
+  
+    query = "insert into listadopacientes (codigo,nombres,apellidos,fechanacimiento, acompanante, parentesco,fechaingreso,piso,area,habitacion,cama,recepcionista,retirado,visitas)VALUES('" & str_codigopaciente.Text & "', '" & UCase$(str_pacientenombre.Text) & "', '" & UCase$(str_pacienteapellido.Text) & "', " &
+    "'" & Format$(Date_pacientefechana.Value, "dd/mm/yy") & "','" & UCase$(str_pacienterepresentate.Text) & "','" & UCase$(Combo_parentescorepresentante.Text) & "','" & Format$(Date_pacientefechaing.Value, "dd/mm/yy") & "','" & Combo_pacientepiso.Text & "','" & UCase$(Combo_pacientearea.Text) & "'," &
+    "'" & str_pacientehab.Text & "','" & Combo_pacientecama.Text & "','" & UCase$(Label85.Text) & "','" & 0 & "','" & 1 & "')" 
+    Result = conexion.Con.Exec(query)
+  
+  str_pacientenombre.text = ""
+  str_pacienteapellido.Text = ""
+  Date_pacientefechana.Value = ""
+  Date_pacientefechaing.Value = ""
+  Combo_pacientepiso.Text = ""
+  Combo_pacientearea.Text = ""
+  str_pacientehab.Text = ""
+  Combo_pacientecama.Text = ""
+  str_pacienterepresentate.Text = ""
+  Combo_parentescorepresentante.Text = ""
+    str_pacientenombre.Enabled = False
+  str_pacienteapellido.Enabled = False
+  Date_pacientefechana.Enabled = False
+  Date_pacientefechaing.Enabled = False
+  Combo_pacientepiso.Enabled = False
+  Combo_pacientearea.Enabled = False
+  str_pacientehab.Enabled = False
+  Combo_pacientecama.Enabled = False
+  str_pacienterepresentate.Enabled = False
+  Combo_parentescorepresentante.Enabled = False
+
+  
+  
+  End If
+End If
+pacientes
+End
+
+Public Sub pacientes()
+
+Dim $linea As Integer
+Grid_pacientes.columns.count = 11
+Grid_pacientes.rows.count = 50 
+Grid_pacientes.columns.width = 50 
+Grid_pacientes.rows.height = 15
+
+Grid_pacientes.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
+Grid_pacientes.columns[0].text = "Codigo" 
+Grid_pacientes.columns[0].width = 70    
+Grid_pacientes.columns[1].text = "Nombres" 
+Grid_pacientes.columns[1].width = 150
+Grid_pacientes.columns[2].text = "Apellidos" 
+Grid_pacientes.columns[2].width = 150
+Grid_pacientes.columns[3].text = "Fecha Ingreso" 
+Grid_pacientes.columns[3].width = 100
+Grid_pacientes.columns[4].text = "Piso" 
+Grid_pacientes.columns[4].width = 50
+Grid_pacientes.columns[5].text = "Area" 
+Grid_pacientes.columns[5].width = 150
+Grid_pacientes.columns[6].text = "Hab." 
+Grid_pacientes.columns[6].width = 50
+Grid_pacientes.columns[7].text = "Cama" 
+Grid_pacientes.columns[7].width = 50
+Grid_pacientes.columns[8].text = "Acompañante" 
+Grid_pacientes.columns[8].width = 150
+Grid_pacientes.columns[9].text = "Parentesco" 
+Grid_pacientes.columns[9].width = 100
+Grid_pacientes.columns[10].text = "Acompañantes" 
+Grid_pacientes.columns[10].width = 150
+
+conexion.Connect()
+
+query = "select * from listadopacientes where retirado= '" & 0 & "' order by habitacion"
+Result = conexion.Con.exec(query)
+
+Grid_pacientes.Clear
+Grid_pacientes.rows.count = Result.count + 1 
+For $linea = 0 To Result.Count - 1 Step 1   
+Grid_pacientes[$linea, 0].text = Result!codigo
+Grid_pacientes[$linea, 1].text = Result!nombres
+Grid_pacientes[$linea, 2].text = Result!apellidos
+Grid_pacientes[$linea, 3].text = Result!fechaingreso
+Grid_pacientes[$linea, 4].text = Result!piso
+Grid_pacientes[$linea, 5].text = Result!area
+Grid_pacientes[$linea, 6].text = Result!habitacion
+Grid_pacientes[$linea, 7].text = Result!cama
+Grid_pacientes[$linea, 8].text = Result!acompanante
+Grid_pacientes[$linea, 9].text = Result!parentesco
+Grid_pacientes[$linea, 10].text = Result!visitas
+Result.MoveNext()
+Next 
+Label105.Caption = Result.Count
+
+
+Grid_pacientes2.columns.count = 11
+Grid_pacientes2.rows.count = 50 
+Grid_pacientes2.columns.width = 50 
+Grid_pacientes2.rows.height = 15
+
+Grid_pacientes2.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
+Grid_pacientes2.columns[0].text = "Codigo" 
+Grid_pacientes2.columns[0].width = 70    
+Grid_pacientes2.columns[1].text = "Nombres" 
+Grid_pacientes2.columns[1].width = 150
+Grid_pacientes2.columns[2].text = "Apellidos" 
+Grid_pacientes2.columns[2].width = 150
+Grid_pacientes2.columns[3].text = "Fecha Ingreso" 
+Grid_pacientes2.columns[3].width = 100
+Grid_pacientes2.columns[4].text = "Piso" 
+Grid_pacientes2.columns[4].width = 50
+Grid_pacientes2.columns[5].text = "Area" 
+Grid_pacientes2.columns[5].width = 150
+Grid_pacientes2.columns[6].text = "Hab." 
+Grid_pacientes2.columns[6].width = 50
+Grid_pacientes2.columns[7].text = "Cama" 
+Grid_pacientes2.columns[7].width = 50
+Grid_pacientes2.columns[8].text = "Acompañante" 
+Grid_pacientes2.columns[8].width = 150
+Grid_pacientes2.columns[9].text = "Parentesco" 
+Grid_pacientes2.columns[9].width = 100
+Grid_pacientes2.columns[10].text = "Acompañantes" 
+Grid_pacientes2.columns[10].width = 150
+
+conexion.Connect()
+
+query = "select * from listadopacientes where retirado= '" & 0 & "' order by habitacion"
+Result = conexion.Con.exec(query)
+
+Grid_pacientes2.Clear
+Grid_pacientes2.rows.count = Result.count + 1 
+For $linea = 0 To Result.Count - 1 Step 1   
+Grid_pacientes2[$linea, 0].text = Result!codigo
+Grid_pacientes2[$linea, 1].text = Result!nombres
+Grid_pacientes2[$linea, 2].text = Result!apellidos
+Grid_pacientes2[$linea, 3].text = Result!fechaingreso
+Grid_pacientes2[$linea, 4].text = Result!piso
+Grid_pacientes2[$linea, 5].text = Result!area
+Grid_pacientes2[$linea, 6].text = Result!habitacion
+Grid_pacientes2[$linea, 7].text = Result!cama
+Grid_pacientes2[$linea, 8].text = Result!acompanante
+Grid_pacientes2[$linea, 9].text = Result!parentesco
+Grid_pacientes2[$linea, 10].text = Result!visitas
+Result.MoveNext()
+Next 
+Label109.Caption = Result.Count
+End
+
+
+Public Sub Button11_Click()
+  pacientes
+  DrawingArea7.Visible = True
+End
+
+Public Sub Combo_pacientepiso_Click()
+
+  Dim i As Integer
+  
+ conexion.Connect()
+  
+Query = "select * from areas where piso='" & LCase$(Combo_pacientepiso.Text) & "'"
+Result = conexion.Con.Exec(Query)    
+Combo_pacientearea.Clear
+For i = 0 To Result.Count - 1 Step 1
+Combo_pacientearea.Add(Result!area) 
+Combo_pacientearea.Refresh()
+Result.MoveNext()
+UCase$(Combo_pacientearea.Text)
+
+Next
+
+End
+
+
+Public Sub Grid_pacientes_Click()
+
+
+Dim i As Integer
+Dim Preg As Integer
+Dim fechaegresp As String
+Dim codigopac As String
+
+If Grid_pacientes[Grid_pacientes.Row, 0].text = ""
+Return
+End If
+
+conexion.Connect()
+
+  query = "SELECT *  FROM  listadopacientes Where codigo = '" & Grid_pacientes[Grid_pacientes.Row, 0].text & "' AND nombres='" & Grid_pacientes[Grid_pacientes.Row, i].text & "' "
+  result = conexion.Con.Exec(query)
+ 
+Preg = 0
+
+      Preg = Message.Question("¿Seleccionar paciente?", "Si", "No")
+
+ If Preg = 1 
+    
+   str_nombrepaciente.Text = Grid_pacientes[Grid_pacientes.Row, 1].text & "" & Grid_pacientes[Grid_pacientes.Row, 2].text
+   str_pisoh.Text = Grid_pacientes[Grid_pacientes.Row, 4].text
+   str_areah.Text = Grid_pacientes[Grid_pacientes.Row, 5].text
+   str_habitacionh.Text = Grid_pacientes[Grid_pacientes.Row, 6].text
+   str_camah.Text = Grid_pacientes[Grid_pacientes.Row, 7].text
+   FMain.codigovisitas = Grid_pacientes[Grid_pacientes.Row, 0].text
+   
+End If
+End
+
+Public Sub sumavisitaspacientes()
+  
+  Dim numvisitas As String
+  Dim suma As String
+  
+  conexion.Connect()
+  
+   query = "Select * from listadopacientes where codigo=  '" & FMain.codigovisitas & "' "
+   Result = conexion.Con.Exec(query)
+   
+   If Result.Available Then
+     numvisitas = Result!visitas
+   Endif
+  
+  suma = numvisitas + 1
+  FMain.visitassuma = suma
+End
+
+
+Public Sub Button16_Click()
+
+  str_pacientenombre.text = ""
+  str_pacienteapellido.Text = ""
+  Date_pacientefechana.Value = ""
+  Date_pacientefechaing.Value = ""
+  Combo_pacientepiso.Text = ""
+  Combo_pacientearea.Text = ""
+  str_pacientehab.Text = ""
+  Combo_pacientecama.Text = ""
+  str_pacienterepresentate.Text = ""
+  Combo_parentescorepresentante.Text = ""
+    str_pacientenombre.Enabled = False
+  str_pacienteapellido.Enabled = False
+  Date_pacientefechana.Enabled = False
+  Date_pacientefechaing.Enabled = False
+  Combo_pacientepiso.Enabled = False
+  Combo_pacientearea.Enabled = False
+  str_pacientehab.Enabled = False
+  Combo_pacientecama.Enabled = False
+  str_pacienterepresentate.Enabled = False
+  Combo_parentescorepresentante.Enabled = False
+End
+
+Public Sub restavisitaspacientes()
+  
+  Dim numvisitas As String
+  Dim resta As String
+  
+  conexion.Connect()
+  
+   query = "Select * from listadopacientes where codigo=  '" & FMain.codigovisitas & "' "
+   Result = conexion.Con.Exec(query)
+   
+   If Result.Available Then
+     numvisitas = Result!visitas
+   Endif
+  
+  suma = numvisitas + 1
+  FMain.visitassuma = suma
+End

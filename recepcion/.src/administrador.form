@@ -1,0 +1,287 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,121,81)
+  Background = Color.SelectedForeground
+  Text = ("ADMINISTRADOR")
+  { Menu1 Menu
+    Text = ("INICIO")
+    { Menu2 Menu
+      Text = ("SALIR")
+    }
+  }
+  { DrawingArea1 DrawingArea
+    MoveScaled(17,7,94,66)
+    Visible = False
+    Background = &HFF0000&
+    { DrawingArea2 DrawingArea
+      MoveScaled(2,2,90,34)
+      Background = Color.SelectedForeground
+      { IconPanel1 IconPanel
+        MoveScaled(2,2,90,30)
+        Count = 6
+        Index = 0
+        Text = ("Crear Área ")
+        { Label1 Label
+          MoveScaled(14,5,6,3)
+          Text = ("Piso:")
+        }
+        { str_pisoa ComboBox
+          MoveScaled(19,5,9,3)
+          List = [("PB"), ("1"), ("2"), ("3"), ("S1"), ("S2"), ("S3")]
+        }
+        { Label2 Label
+          MoveScaled(13,10,6,3)
+          Text = ("Área:")
+        }
+        { str_area TextBox
+          MoveScaled(19,9,39,4)
+        }
+        { Button1 Button
+          MoveScaled(31,14,4,4)
+          Picture = Picture["icon:/22/floppy"]
+        }
+        { Button2 Button
+          MoveScaled(35,14,5,4)
+          Picture = Picture["icon:/22/erase"]
+        }
+        { Button3 Button
+          MoveScaled(40,14,5,4)
+          Picture = Picture["icon:/22/find"]
+        }
+        Index = 1
+        Text = ("Crear Departamento")
+        { Label3 Label
+          MoveScaled(17,5,5,3)
+          Text = ("Piso:")
+        }
+        { str_pisod ComboBox
+          MoveScaled(22,5,8,3)
+          List = [("PB"), ("1"), ("2"), ("3"), ("S1"), ("S2"), ("S3")]
+        }
+        { Label4 Label
+          MoveScaled(7,10,16,3)
+          Text = ("Departamento:")
+        }
+        { str_departamento TextBox
+          MoveScaled(22,9,38,4)
+        }
+        { Button4 Button
+          MoveScaled(27,14,3,4)
+          Picture = Picture["icon:/22/floppy"]
+        }
+        { Button5 Button
+          MoveScaled(31,14,4,4)
+          Picture = Picture["icon:/22/erase"]
+        }
+        { Button6 Button
+          MoveScaled(36,14,4,4)
+          Picture = Picture["icon:/22/find"]
+        }
+        Index = 2
+        Text = ("Asignar camas")
+        { Label5 Label
+          MoveScaled(10,6,5,3)
+          Text = ("Piso:")
+        }
+        { str_pisoc ComboBox
+          MoveScaled(15,6,8,3)
+          List = [("PB"), ("1"), ("2"), ("3"), ("S1"), ("S2"), ("S3")]
+        }
+        { Label6 Label
+          MoveScaled(25,6,5,3)
+          Text = ("Área:")
+        }
+        { Button7 Button
+          MoveScaled(21,14,3,4)
+          Picture = Picture["icon:/22/floppy"]
+        }
+        { Button8 Button
+          MoveScaled(25,14,4,4)
+          Picture = Picture["icon:/22/erase"]
+        }
+        { Button9 Button
+          MoveScaled(30,14,4,4)
+          Picture = Picture["icon:/22/find"]
+        }
+        { str_areac ComboBox
+          MoveScaled(31,6,32,3)
+        }
+        { Label7 Label
+          MoveScaled(4,10,11,3)
+          Text = ("Habitación:")
+        }
+        { str_habitacionc TextBox
+          MoveScaled(15,10,8,3)
+        }
+        { Label8 Label
+          MoveScaled(24,10,6,3)
+          Text = ("cama:")
+        }
+        { str_camac TextBox
+          MoveScaled(31,10,13,3)
+        }
+        Index = 3
+        Text = ("Crear Estado")
+        { Label9 Label
+          MoveScaled(14,8,7,3)
+          Text = ("Estado:")
+        }
+        { str_estado TextBox
+          MoveScaled(22,7,29,4)
+        }
+        { Button10 Button
+          MoveScaled(27,12,4,4)
+          Picture = Picture["icon:/22/floppy"]
+        }
+        { Button11 Button
+          MoveScaled(32,12,4,4)
+          Picture = Picture["icon:/22/erase"]
+        }
+        Index = 4
+        Text = ("Crear Municpio")
+        { Label10 Label
+          MoveScaled(17,8,7,3)
+          Text = ("Estado:")
+        }
+        { Button12 Button
+          MoveScaled(28,15,4,4)
+          Picture = Picture["icon:/22/floppy"]
+        }
+        { Button13 Button
+          MoveScaled(33,15,4,4)
+          Picture = Picture["icon:/22/erase"]
+        }
+        { Label11 Label
+          MoveScaled(15,11,10,3)
+          Text = ("Municipio:")
+        }
+        { Combo_estado ComboBox
+          MoveScaled(25,8,23,3)
+        }
+        { str_municipio TextBox
+          MoveScaled(25,11,23,3)
+        }
+        Index = 5
+        Text = ("Registro de usuario")
+        { Label12 Label
+          MoveScaled(6,1,10,3)
+          Font = Font["DejaVu Serif"]
+          Text = ("Nombres:")
+        }
+        { Label13 Label
+          MoveScaled(6,5,9,3)
+          Font = Font["DejaVu Serif"]
+          Text = ("Apellidos:")
+        }
+        { Label14 Label
+          MoveScaled(8,9,7,3)
+          Font = Font["DejaVu Serif"]
+          Text = ("Cedula:")
+        }
+        { Label15 Label
+          MoveScaled(34,9,6,3)
+          Font = Font["DejaVu Serif"]
+          Text = ("Cargo:")
+        }
+        { Label16 Label
+          MoveScaled(3,21,14,3)
+          Font = Font["DejaVu Serif"]
+          Text = ("Fecha registro:")
+        }
+        { str_nombreusuario TextBox
+          MoveScaled(16,1,36,3)
+        }
+        { str_apellidousuario TextBox
+          MoveScaled(16,5,36,3)
+        }
+        { str_cedulausuario TextBox
+          MoveScaled(16,9,17,3)
+        }
+        { str_cargousuario TextBox
+          MoveScaled(41,9,17,3)
+        }
+        { Date_registrousuario DateBox
+          MoveScaled(18,21,19,3)
+        }
+        { Label17 Label
+          MoveScaled(1,13,16,3)
+          Font = Font["DejaVu Serif"]
+          Text = ("Nombre Usuario:")
+        }
+        { Label18 Label
+          MoveScaled(11,17,6,3)
+          Font = Font["DejaVu Serif"]
+          Text = ("Clave:")
+        }
+        { str_claveusuario TextBox
+          MoveScaled(18,17,23,3)
+          Password = True
+        }
+        { str_usernameusuario TextBox
+          MoveScaled(18,13,23,3)
+        }
+        { CheckBox1 CheckBox
+          MoveScaled(42,17,13,3)
+          Font = Font["DejaVu Serif"]
+          Text = ("Ver clave")
+        }
+        { Button14 Button
+          MoveScaled(46,25,4,4)
+          Picture = Picture["icon:/22/floppy"]
+        }
+        { Button15 Button
+          MoveScaled(51,25,4,4)
+          Picture = Picture["icon:/22/erase"]
+        }
+        { Combo_tipousuario ComboBox
+          MoveScaled(18,25,24,4)
+          List = [("administrador"), ("recepcionista")]
+        }
+        { Label19 Label
+          MoveScaled(5,25,12,3)
+          Font = Font["DejaVu Serif"]
+          Text = ("Tipo usuario:")
+        }
+        Index = 0
+      }
+    }
+    { GridView1 GridView
+      MoveScaled(27,36,65,28)
+    }
+    { PictureBox1 PictureBox
+      MoveScaled(2,36,25,28)
+      Picture = Picture["brand.gif"]
+      Stretch = True
+    }
+  }
+  { TextBox1 TextBox
+    MoveScaled(37,1,18,3)
+    Font = Font["DejaVu Serif,Bold,+1"]
+  }
+  { TextBox2 TextBox
+    MoveScaled(72,1,22,3)
+    Font = Font["DejaVu Serif,Bold,+1"]
+    Password = True
+  }
+  { Button16 Button
+    MoveScaled(95,1,12,3)
+    Text = ("INGRESAR")
+  }
+  { Button17 Button
+    MoveScaled(0,1,24,3)
+    Visible = False
+    Text = ("CAMBIAR USUARIO")
+    Picture = Picture["icon:/22/delete"]
+  }
+  { Label20 Label
+    MoveScaled(26,1,10,3)
+    Font = Font["DejaVu Serif,Bold,+1"]
+    Text = ("Usuario:")
+  }
+  { Label21 Label
+    MoveScaled(56,1,15,3)
+    Font = Font["DejaVu Serif,Bold,+1"]
+    Text = ("Contraseña:")
+  }
+}

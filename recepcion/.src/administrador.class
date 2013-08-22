@@ -1,0 +1,317 @@
+' Gambas class file
+
+Public query As String
+Public Result As Result
+
+Public Sub Button1_Click()
+  
+  If str_pisoa.Text = "" Or str_area.Text = "" Then
+  
+  Message.Info("Ingresar datos")
+  
+  Else
+  conexion.Connect
+  query = " insert into areas(piso,area)values('" & UCase$(str_pisoa.Text) & "','" & UCase$(str_area.Text) & "')"
+  Result = conexion.Con.Exec(query)
+  Message.Info("Se ha registrado la siguiente área= '" & str_area.text & "'")
+  str_pisoa.text = ""
+  str_area.Text = ""
+  End If
+  
+End
+
+Public Sub Button4_Click()
+
+  If str_pisod.Text = "" Or str_departamento.Text = "" Then
+    
+    Message.Info("Ingresar datos")
+    
+    Else
+  conexion.Connect
+  query = "insert into departamentos(piso, departamento)values('" & UCase$(str_pisod.Text) & "','" & UCase$(str_departamento.Text) & "')"
+  Result = conexion.Con.Exec(query)
+  Message.Info("Se ha registrado el seguiente departamento= ' " & str_departamento.text & "'")
+  str_pisod.text = ""
+  str_departamento.Text = ""  
+  Endif
+
+End
+
+Public Sub Button7_Click()
+
+   If str_pisoc.Text = "" Or str_areac.Text = "" Or str_habitacionc.Text = "" Or str_camac.Text = "" Then
+   
+   Message.Info("Ingresar datos")
+   
+   Else
+   conexion.Connect
+   query = "insert into camas(piso, area, habitacion, cama)values( '" & LCase$(str_pisoc.text) & "', '" & UCase$(str_areac.Text) & "', '" & str_habitacionc.Text & "', '" & str_camac.Text & "')"
+   Result = conexion.Con.Exec(query)
+   Message.Info("Se asigno la cama='" & str_camac.text & "' a la habitaciṕn='" & str_habitacionc.Text & "'")
+
+   End If
+   
+End
+
+Public Sub Button3_Click()
+
+Dim $linea As Integer
+
+GridView1.columns.count = 2
+GridView1.rows.count = 50 
+GridView1.columns.width = 100 
+GridView1.rows.height = 20
+
+GridView1.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
+GridView1.columns[0].text = "Piso" 
+GridView1.columns[0].width = 100
+GridView1.columns[1].text = "Área" 
+GridView1.columns[1].width = 100
+
+
+conexion.Connect()
+
+query = "select * from areas" 
+Result = conexion.Con.exec(query)
+gridView1.Clear
+GridView1.rows.count = Result.count + 1 
+For $linea = 0 To Result.Count - 1 Step 1      
+GridView1[$linea, 0].text = Result!piso
+GridView1[$linea, 1].text = Result!area
+Result.MoveNext()
+Next 
+
+  
+End
+
+
+Public Sub Button6_Click()
+Dim $linea As Integer
+
+GridView1.columns.count = 2
+GridView1.rows.count = 50 
+GridView1.columns.width = 100 
+GridView1.rows.height = 20
+
+GridView1.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
+GridView1.columns[0].text = "Piso" 
+GridView1.columns[0].width = 100
+GridView1.columns[1].text = "Departamento" 
+GridView1.columns[1].width = 100
+
+conexion.Connect()
+
+query = "select * from departamentos" 
+Result = conexion.Con.exec(query)
+gridView1.Clear
+GridView1.rows.count = Result.count + 1 
+For $linea = 0 To Result.Count - 1 Step 1      
+GridView1[$linea, 0].text = Result!piso
+GridView1[$linea, 1].text = Result!departamento
+Result.MoveNext()
+Next 
+
+
+
+End
+
+
+Public Sub Form_Open()
+Dim i As Integer
+
+conexion.Connect()
+Query = "select * from areas where piso='" & LCase$(str_pisoc.Text) & "'"
+Result = conexion.Con.Exec(Query)    
+str_areac.Clear
+For i = 0 To Result.Count - 1 Step 1
+str_areac.Add(Result!area) 
+str_areac.Refresh()
+Result.MoveNext()
+UCase$(str_areac.Text)
+Next
+
+conexion.Connect()
+Query = "select * from estados"
+Result = conexion.Con.Exec(Query)    
+Combo_estado.Clear
+For i = 0 To Result.Count - 1 Step 1
+Combo_estado.Add(Result!nombre) 
+Combo_estado.Refresh()
+Result.MoveNext()
+Next
+
+
+End
+Public Sub Button9_Click()
+Dim $linea As Integer
+
+GridView1.columns.count = 4
+GridView1.rows.count = 50 
+GridView1.columns.width = 100 
+GridView1.rows.height = 20
+
+GridView1.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
+GridView1.columns[0].text = "Cama" 
+GridView1.columns[0].width = 100
+GridView1.columns[1].text = "Habitación" 
+GridView1.columns[1].width = 100
+GridView1.columns[2].text = "área" 
+GridView1.columns[2].width = 100
+GridView1.columns[3].text = "Piso" 
+GridView1.columns[3].width = 100
+
+conexion.Connect()
+
+query = "select * from camas" 
+Result = conexion.Con.exec(query)
+gridView1.Clear
+GridView1.rows.count = Result.count + 1 
+For $linea = 0 To Result.Count - 1 Step 1      
+GridView1[$linea, 0].text = Result!cama
+GridView1[$linea, 1].text = Result!habitacion
+GridView1[$linea, 2].text = Result!area
+GridView1[$linea, 3].text = Result!piso
+Result.MoveNext()
+Next 
+
+
+
+End
+
+
+Public Sub IconPanel1_Click()
+
+  
+
+End
+Public Sub str_pisoc_Click()
+
+  Dim i As Integer
+
+conexion.Connect()
+Query = "select * from areas where piso='" & str_pisoc.Text & "'"
+Result = conexion.Con.Exec(Query)    
+str_areac.Clear
+For i = 0 To Result.Count - 1 Step 1
+str_areac.Add(Result!area) 
+str_areac.Refresh()
+Result.MoveNext()
+UCase$(str_areac.Text)
+Next
+End
+
+Public Sub Button10_Click()
+If str_estado.Text = ""
+  
+  Message.Info("LLENAR CASILLAS")
+Else
+  conexion.Connect
+  
+  query = "insert into estados (nombre)values('" & UCase$(str_estado.Text) & "')"
+  Result = conexion.Con.Exec(query)
+  
+  Message.Info("Estado Guardado")
+  
+  str_estado.Text = ""
+
+End If
+End
+
+Public Sub Button12_Click()
+If combo_estado.Text = "" Or str_municipio.Text = ""
+Message.Info("LLENAR LAS CASILLAS")
+Else
+  conexion.Connect
+  
+  query = "insert into municipios (estado,nombre)values('" & UCase$(Combo_estado.Text) & "','" & UCase$(str_municipio.Text) & "')"
+  Result = conexion.Con.Exec(query)
+  
+  Message.Info("Municipio Guardado")
+    combo_estado.Text = ""
+    str_municipio.Text = ""
+Endif
+End
+
+Public Sub Button14_Click()
+
+  If str_nombreusuario.Text = "" Or str_apellidousuario.Text = "" Or str_cedulausuario.Text = " " Or str_cargousuario.Text = "" Or str_usernameusuario.Text = "" Or str_claveusuario.Text = "" Or Date_registrousuario.Value = ""
+  Message.Info("LLENAR TODAS LAS CASILLAS")
+  Else
+  query = "insert into usuarios (nombres, apellidos, cedula, cargo, nombreusuario, claveusuario, fecharegistro, tipousuario)values('" & UCase$(str_nombreusuario.Text) & "', '" & UCase$(str_apellidousuario.Text) & "','" & str_cedulausuario.Text & "', " &
+  " '" & UCase$(str_cargousuario.Text) & "','" & UCase$(str_usernameusuario.Text) & "','" & str_claveusuario.Text & "','" & Format$(Date_registrousuario.Value, "dd/mm/yy") & "', '" & UCase$(Combo_tipousuario.Text) & "')"
+  result = conexion.Con.Exec(query)
+  Message.Info("Usuario GUARDADO")
+End If
+limpiarregistrousuario
+End
+
+Public Sub limpiarregistrousuario()
+  
+  str_nombreusuario.Text = ""
+  str_apellidousuario.Text = ""
+  str_cedulausuario.Text = ""
+  str_cargousuario.Text = ""
+  str_usernameusuario.Text = ""
+  str_claveusuario.Text = ""
+  Combo_tipousuario.Text = ""
+  Date_registrousuario.Value = ""
+  
+End
+
+
+
+
+Public Sub CheckBox1_Click()
+
+  If CheckBox1.Value = True
+    str_claveusuario.Password = False
+Else
+  str_claveusuario.Password = True
+End If
+
+End
+
+Public Sub Button15_Click()
+
+  limpiarregistrousuario
+
+End
+
+Public Sub Button16_Click()
+  Dim tipou As String
+  
+  tipou = "ADMINISTRADOR"
+  conexion.Connect()
+  query = "Select * from usuarios where nombreusuario='" & UCase$(TextBox1.Text) & "' and claveusuario='" & TextBox2.Text & "' and tipousuario='" & tipou & "'"
+  Result = conexion.Con.exec(query)
+   
+   If Result.Available Then
+     Label20.Visible = False
+     Label21.Visible = False
+     TextBox1.Text = ""
+     TextBox1.Visible = False
+     TextBox2.Text = ""
+     TextBox2.Visible = False
+     Button16.Visible = False
+     Button17.Visible = True
+     DrawingArea1.Visible = True
+     
+   Endif
+End
+
+Public Sub Button17_Click()
+  Label20.Visible = True
+  Label21.Visible = True
+  TextBox1.Visible = True
+  TextBox2.Visible = True
+  Button16.Visible = True
+  Button17.Visible = False
+  DrawingArea1.Visible = False
+End
+
+Public Sub Menu2_Click()
+
+  administrador.Close
+  FMain.Show
+
+End
