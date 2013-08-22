@@ -43,6 +43,7 @@
     MoveScaled(71,6,96,8)
     Font = Font["Impact,64"]
     Foreground = &HFF0000&
+    Text = ("ELECCIONES 2013")
   }
   { Label4 Label
     MoveScaled(103,12,64,6)
