@@ -4,7 +4,8 @@ Public query As String
 Public result As Result
 Public codigovisitas As String
 Public visitassuma As Integer
-
+Public Enviar As String
+Public Enviar1 As String
 
 Public Sub Form_Open()
 
@@ -1725,4 +1726,13 @@ Public Sub restavisitaspacientes()
   
   suma = numvisitas + 1
   FMain.visitassuma = suma
+End
+
+Public Sub Button17_Click()
+Dim Rpt1 As Report
+Enviar = CboxConsulta.Text
+Enviar1 = Format$(DateBox1.Value, "dd/mm/yyyy")
+Rpt1 = New Rptmilicia
+Rpt1.Preview
+
 End
