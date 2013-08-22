@@ -1,0 +1,10 @@
+' Gambas module file
+
+Public $Result As Result
+Public $codigo As Integer
+Public $cod_historia As String
+Public $Arreglo As New String[50]
+Public $fechacontrol As String
+Public $id As String
+' Gambas module file
+

@@ -1,0 +1,31 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.4.1
+Title=Sistema de Control de Consumo
+Startup=conexion2
+Profiling=1
+Version=0.0.3
+Component=gb.image
+Component=gb.qt4
+Component=gb.form
+Component=gb.db
+Component=gb.db.form
+Component=gb.db.mysql
+Component=gb.db.odbc
+Component=gb.db.postgresql
+Component=gb.db.sqlite3
+Component=gb.dbus
+Component=gb.form.dialog
+Component=gb.qt4.ext
+Component=gb.vb
+TabSize=2
+Translate=1
+Language=es
+Maintainer=nelson
+Address=nelson@nelson-escritorio
+License=General Public License
+PackageName=consumo-0.0.2
+Packager=1
+Systems=debian
+Menus=debian:"Applications/Programming"
+Groups=debian:"admin"
+ExtraDependencies=debian:"gambas3-runtime\t3.2.1\t3.2.1"

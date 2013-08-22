@@ -1,0 +1,32 @@
+' Gambas module file
+
+Public $Con As New Connection
+
+Public Procedure Connect()
+                $Con.Close() ' Close the connection
+                $Con.Type = "postgresql"
+                $Con.Host = "192.168.0.10" ' Name of the server
+                $Con.Login = "postgres" ' User's name for the connection
+                $Con.Port = "5432" ' Port to use in the connection, usually 5432
+                $Con.Name = "crucedesala" ' Nombre de la base de datos que desea utilizar
+                $Con.Password = "12345" 's password"
+                $Con.Open() ' Open the connection
+       
+  'IF ERROR THEN 'me muestra un error si no conecta la BD
+  'Message.Error("Error al conectar la base de datos")
+  'QUIT 
+  'ELSE 
+  'Message("Su conexion fue exitosa")
+   'ENDIF 
+   End
+Public Sub Main()
+                
+                Connect() ' se ejecuta el pocedimiento a conectar
+                Form1.Visible = True
+End
+Public Sub desconectar(Conex As Connection)
+    
+    Conex.Close
+    Conex = Null
+
+End

@@ -1,0 +1,153 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,170,94)
+  { PictureBox5 PictureBox
+    MoveScaled(54,87,11,5)
+    Border = Border.Etched
+  }
+  { cedula TextBox
+    MoveScaled(11,5,17.5714,5)
+  }
+  { TableView1 TableView
+    MoveScaled(1,43,168,42)
+    Header = GridView.Both
+  }
+  { Button1 Button
+    MoveScaled(29,5,13,5)
+    Text = ("Buscar...")
+  }
+  { nombres TextBox
+    MoveScaled(2,11,54,5)
+    ReadOnly = True
+  }
+  { unidad TextBox
+    MoveScaled(2,17,54,5)
+    ReadOnly = True
+  }
+  { cargo TextBox
+    MoveScaled(57,17,54,5)
+    ReadOnly = True
+  }
+  { !Label1 Label
+    MoveScaled(2,2,23,4)
+    #Public = True
+    Text = ("Cedula del Responsable")
+  }
+  { Label2 Label
+    MoveScaled(102,-1,65,8)
+    Font = Font["Verdana,36"]
+    Text = ("Alcaldias")
+  }
+  { Label3 Label
+    MoveScaled(71,6,96,8)
+    Font = Font["Impact,64"]
+    Foreground = &HFF0000&
+    Text = ("ELECCIONES 2013")
+  }
+  { Label4 Label
+    MoveScaled(103,12,64,6)
+    Text = ("Desarrollado por Sistemas y Telecomunicaciones, Hospital Pediatrico Niño Jesús")
+  }
+  { Panel1 Panel
+    MoveScaled(2.1429,22.8571,164,19)
+    Enabled = False
+    Border = Border.Etched
+    { CheckBox1 CheckBox
+      MoveScaled(2,2,16,3)
+      Enabled = False
+      AutoResize = True
+      Text = ("Agregar")
+    }
+    { Frame1 Frame
+      MoveScaled(14,1,160,19)
+      Enabled = False
+      { cedula2 TextBox
+        MoveScaled(0,0,38,5)
+      }
+      { nombresbuscar TextBox
+        MoveScaled(54,0,80,5)
+      }
+      { Button2 Button
+        MoveScaled(40,0,13,5)
+        Text = ("Buscar...")
+      }
+      { Button3 Button
+        MoveScaled(136,12,5,5)
+        Picture = Picture["icon:/16/add"]
+      }
+      { municipio TextBox
+        MoveScaled(0,12,67,5)
+      }
+      { centro TextBox
+        MoveScaled(0,6,134,5)
+      }
+      { parroquia TextBox
+        MoveScaled(68,12,67,5)
+      }
+    }
+  }
+  { Button4 Button
+    MoveScaled(3,5,7,5)
+    Enabled = False
+    Picture = Picture["icon:/16/add"]
+  }
+  { municipioresp TextBox
+    MoveScaled(113,17,54,5)
+    ReadOnly = True
+  }
+  { PictureBox2 PictureBox
+    MoveScaled(1,86,168,7)
+    Border = Border.Etched
+  }
+  { PictureBox3 PictureBox
+    MoveScaled(151,87,17,5)
+    Border = Border.Etched
+  }
+  { Label5 Label
+    MoveScaled(2,87,19,5)
+    Text = ("Total de Responsables:")
+  }
+  { PictureBox4 PictureBox
+    MoveScaled(21,87,11,5)
+    Border = Border.Etched
+  }
+  { Label6 Label
+    MoveScaled(21,87,11,5)
+    Alignment = Align.Center
+  }
+  { Label7 Label
+    MoveScaled(35,87,19,5)
+    Text = ("Total de Patrulleros:")
+  }
+  { Label8 Label
+    MoveScaled(54,87,11,5)
+    Alignment = Align.Center
+  }
+  { Label9 Label
+    MoveScaled(67,87,23,5)
+    Text = ("Total de Votos Registrados:")
+  }
+  { PictureBox6 PictureBox
+    MoveScaled(90,87,11,5)
+    Border = Border.Etched
+  }
+  { Label10 Label
+    MoveScaled(90,87,11,5)
+    Alignment = Align.Center
+  }
+  { Timer1 #Timer
+    #MoveScaled(63,2)
+    Enabled = True
+    Delay = 10
+  }
+  { Label11 Label
+    MoveScaled(151,87,17,5)
+    Alignment = Align.Center
+  }
+  { PictureBox1 PictureBox
+    MoveScaled(43,2,18.5714,8.2857)
+    Picture = Picture["cne.jpg"]
+    Stretch = True
+  }
+}
