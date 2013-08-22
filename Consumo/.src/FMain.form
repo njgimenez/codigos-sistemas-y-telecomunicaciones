@@ -1,0 +1,277 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,243,141)
+  { Panel1 Panel
+    MoveScaled(72,3,152,134)
+    Background = Color.TextBackground
+    Foreground = Color.TextBackground
+    Border = Border.Plain
+    { Label3 Label
+      MoveScaled(71,19,29,7)
+      Enabled = False
+      Foreground = Color.Foreground
+      Text = ("Numero de Caso")
+    }
+    { Label4 Label
+      MoveScaled(1,40,32,7)
+      Foreground = Color.Foreground
+      Text = ("Fecha de Ingreso")
+    }
+    { Label5 Label
+      MoveScaled(71,33,29,7)
+      Foreground = Color.Foreground
+      Text = ("Habitación")
+    }
+    { Label7 Label
+      MoveScaled(1,47,29,7)
+      Foreground = Color.Foreground
+      Text = ("Servicio")
+    }
+    { Label8 Label
+      MoveScaled(1,62,32,7)
+      Foreground = Color.Foreground
+      Text = ("Fecha de Egreso")
+    }
+    { Label10 Label
+      MoveScaled(1,33,29,7)
+      Foreground = Color.Foreground
+      Text = ("Cama")
+    }
+    { TabStrip1 TabStrip
+      MoveScaled(1,75,150,57)
+      Foreground = &H007FFF&
+      Count = 2
+      Index = 0
+      Text = ("MEDICINAS SUMINISTRADAS")
+      { TableView1 TableView
+        MoveScaled(1,32,138,17)
+        Header = GridView.Both
+        ScrollBar = Scroll.Vertical
+        AutoResize = False
+      }
+      { Panel2 Panel
+        MoveScaled(1,1,148,30)
+        Enabled = False
+        { Label16 Label
+          MoveScaled(103,0,29,7)
+          Foreground = Color.Foreground
+          Text = ("Fecha del Tratamiento")
+        }
+        { strmedicina ComboBox
+          MoveScaled(23,1,78,5)
+        }
+        { Label12 Label
+          MoveScaled(1,2,39,2)
+          Foreground = Color.Foreground
+          Text = ("Medicamento")
+        }
+        { Label13 Label
+          MoveScaled(1,7,29,7)
+          Foreground = Color.Foreground
+          Text = ("Cantidad")
+        }
+        { ncantidad TextBox
+          MoveScaled(23,8,37,5)
+        }
+        { Label14 Label
+          MoveScaled(1,14,29,7)
+          Foreground = Color.Foreground
+          Text = ("Unidad de Medida")
+        }
+        { strmedida TextBox
+          MoveScaled(23,15,37,5)
+        }
+        { Label15 Label
+          MoveScaled(1,21,29,7)
+          Foreground = Color.Foreground
+          Text = ("Dosis Aplicadas / dia")
+        }
+        { ndosis TextBox
+          MoveScaled(23,22,37,5)
+        }
+        { strfechaaplicacion DateBox
+          MoveScaled(126,1,22,5)
+        }
+        { ToggleButton5 ToggleButton
+          MoveScaled(133,24,5,5)
+          ToolTip = ("Agregar Medicina")
+          Picture = Picture["icon:/16/add"]
+        }
+      }
+      Index = 1
+      Text = ("MATERIAL MEDICO QUIRURGICO")
+      { TableView2 TableView
+        MoveScaled(1,22,147,27)
+        Header = GridView.Both
+        ScrollBar = Scroll.Vertical
+        AutoResize = False
+      }
+      { Panel3 Panel
+        MoveScaled(0,2,149,19)
+        Enabled = False
+        { Label19 Label
+          MoveScaled(1,4,39,2)
+          Foreground = Color.Foreground
+          Text = ("MMQ")
+        }
+        { mmq ComboBox
+          MoveScaled(23,3,78,5)
+        }
+        { Label20 Label
+          MoveScaled(1,9,29,7)
+          Foreground = Color.Foreground
+          Text = ("Cantidad")
+        }
+        { mmqcantidad TextBox
+          MoveScaled(23,10,37,5)
+        }
+        { Label23 Label
+          MoveScaled(103,2,29,7)
+          Foreground = Color.Foreground
+          Text = ("Fecha del Tratamiento")
+        }
+        { strfechaaplicacionmmq DateBox
+          MoveScaled(126,3,22,5)
+        }
+        { ToggleButton6 ToggleButton
+          MoveScaled(143,13,5,5)
+          ToolTip = ("Agregar Medicina")
+          Picture = Picture["icon:/16/add"]
+        }
+      }
+      Index = 0
+    }
+    { Separator1 Separator
+      MoveScaled(1,5,151,9)
+    }
+    { PictureBox1 PictureBox
+      MoveScaled(2,5,148,3)
+      Background = &HFF7F00&
+      NoTabFocus = True
+    }
+    { Label17 Label
+      MoveScaled(2,1,47,4)
+      Font = Font["Arial Black,20"]
+      Foreground = &H00009F&
+      Text = ("Datos del Caso")
+    }
+    { numcaso TextBox
+      MoveScaled(94,20,37,5)
+      Enabled = False
+    }
+    { habitacion TextBox
+      MoveScaled(94,34,37,5)
+    }
+    { cama TextBox
+      MoveScaled(23,34,37,5)
+    }
+    { fechaingreso DateBox
+      MoveScaled(23,41,37,5)
+      Font = Font["Andale Mono"]
+    }
+    { servicio ComboBox
+      MoveScaled(23,48,37,5)
+      List = [("Cirugia"), ("Pediatria"), ("Emergencia")]
+    }
+    { TextBox7 TextBox
+      MoveScaled(94,48,37,5)
+      Enabled = False
+    }
+    { Button1 Button
+      MoveScaled(61,35,5,4)
+      Picture = Picture["icon:/small/find"]
+    }
+    { dx TextBox
+      MoveScaled(23,55,108,5)
+    }
+    { label Label
+      MoveScaled(1,54,3,7)
+      Foreground = Color.Foreground
+      Text = ("Dx")
+    }
+    { fechaegreso DateBox
+      MoveScaled(23,63,37,5)
+      Font = Font["Andale Mono"]
+      Value = CDate("01/01/2000")
+    }
+    { Label9 Label
+      MoveScaled(71,47,29,7)
+      Enabled = False
+      Foreground = Color.Foreground
+      Text = ("Medico del Caso")
+    }
+  }
+  { ToggleButton1 ToggleButton
+    MoveScaled(3,4,21,11)
+    Text = ("Calculadora")
+    Picture = Picture["icon:/32/calculator"]
+  }
+  { Expander1 Expander
+    MoveScaled(224,4,14,41)
+    Background = Color.LightForeground
+    Text = ("Opciones")
+    Animated = True
+    Hidden = True
+    { ToggleButton2 ToggleButton
+      MoveScaled(1,3,10,8)
+      ToolTip = ("Guardar")
+      Picture = Picture["icon:/32/floppy"]
+    }
+    { ToggleButton3 ToggleButton
+      MoveScaled(1,15,10,8)
+      Enabled = False
+      ToolTip = ("Nuevo")
+      Picture = Picture["icon:/32/add"]
+    }
+    { ToggleButton4 ToggleButton
+      MoveScaled(1,27,10,8)
+      ToolTip = ("Cerrar")
+      Picture = Picture["icon:/32/lock"]
+    }
+  }
+  { Label1 Label
+    MoveScaled(73,22,29,7)
+    Enabled = False
+    Foreground = Color.Foreground
+    Text = ("Numero de Historia")
+  }
+  { cod_historia TextBox
+    MoveScaled(95,23,37,5)
+    Enabled = False
+  }
+  { Button3 Button
+    MoveScaled(133,24,5,4)
+    Enabled = False
+    Picture = Picture["icon:/small/find"]
+  }
+  { Label11 Label
+    MoveScaled(143,29,29,7)
+    Foreground = Color.Foreground
+    Text = ("Apellidos del Px")
+  }
+  { apellidos TextBox
+    MoveScaled(166,30,37,5)
+  }
+  { Label2 Label
+    MoveScaled(73,29,32,7)
+    Foreground = Color.Foreground
+    Text = ("Nombre del Px")
+  }
+  { nombres TextBox
+    MoveScaled(95,30,37,5)
+  }
+  { ToggleButton7 ToggleButton
+    MoveScaled(60,3,10,8)
+    Picture = Picture["icon:/32/apply"]
+  }
+  { ToggleButton8 ToggleButton
+    MoveScaled(3,16,21,11)
+    Text = ("Reporte")
+    Picture = Picture["icon:/32/text"]
+  }
+  { listnombres ListBox
+    MoveScaled(95.2857,34.8571,36,1)
+    Visible = False
+  }
+}

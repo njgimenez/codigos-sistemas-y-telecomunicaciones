@@ -1,0 +1,425 @@
+' Gambas class file
+
+Private cx As Connection
+Private rs As Result
+Private id As Integer
+
+
+Public Sub TabStrip1_Click()
+
+  
+
+End
+
+Public Sub Panel1_MouseDown()
+
+  
+
+End
+
+Public Sub ToggleButton1_Click()
+
+  Exec ["gcalctool"]
+
+End
+
+Public Sub Form_Open()
+Dim $Query As String
+Dim $Result As Result
+Dim i As Integer
+
+
+  conexion2.Connect()
+    $Query = "select stritema,id_maestro from insumos.tblmaestros where id_origen=15112"    
+    $Result = conexion2.$Con.Exec($Query)    
+     For i = 0 To $Result.Count - 1 Step 1
+       strmedicina.Add($Result!stritema, $Result!id_maestro)       
+       $Result.MoveNext()
+     Next
+    
+     
+     
+    $Query = "select stritema,id_maestro from insumos.tblmaestros where id_origen=15809"    
+    $Result = conexion2.$Con.Exec($Query)    
+     For i = 0 To $Result.Count - 1 Step 1
+       mmq.Add($Result!stritema, $Result!id_maestro)       
+       $Result.MoveNext()
+     Next
+     
+    
+    
+  TableView1.Columns.Count = 5
+  TableView1.Columns[0].Text = "Medicina"
+  TableView1.Columns[0].Width = 300
+  TableView1.Columns[1].Text = "Cantidad"
+  TableView1.Columns[1].Width = 80
+  TableView1.Columns[2].Text = "Unidad"
+  TableView1.Columns[2].Width = 80
+  TableView1.Columns[3].Text = "Dosis"
+  TableView1.Columns[3].Width = 80
+  TableView1.Columns[4].Text = "Fecha de Aplicación"
+  TableView1.Columns[4].Width = 80
+  
+  
+  
+  TableView2.Columns.Count = 4
+  TableView2.Columns[0].Text = "MMQ"
+  TableView2.Columns[0].Width = 300
+  TableView2.Columns[1].Text = "Cantidad"
+  TableView2.Columns[1].Width = 80
+  TableView2.Columns[2].Text = "Fecha de Aplicación"
+  TableView2.Columns[2].Width = 40
+  TableView2.Columns[3].Text = "Total"
+  TableView2.Columns[3].Width = 40
+End
+
+
+Public Sub Expander1_Leave()
+
+  Expander1.Hidden = True
+
+End
+
+
+
+
+
+Public Sub ToggleButton5_Click()
+Dim row As Integer = TableView1.Rows.Count
+Dim $Query As String
+Dim $Result As Result
+Dim i As Integer
+
+$Query = "INSERT INTO insumos.pro_medicina" &
+           "( id_caso,medicamento, cantidad, fech_registro, unidad,ndosis)" &
+          "VALUES( '" & numcaso.Text & "','" & strmedicina.Text & "'," & ncantidad.Text & ",'" & Format$(strfechaaplicacion.Value, "dd/mm/yy") & "','" & strmedida.Text & "'," & ndosis.Text & ");" 
+   $Result = conexion2.$Con.Exec($Query)  
+   
+   $Query = "select * from insumos.pro_medicina where id_caso='" & numcaso.Text & "' order by id desc"
+   $Result = conexion2.$Con.Exec($Query)
+   TableView1.Clear
+   
+   TableView1.Rows.Count = $Result.Count + 1
+   For i = 0 To $Result.Count - 1 Step 1     
+                                        
+        TableView1[i, 0].Text = $Result!medicamento
+        TableView1[i, 1].Text = $Result!cantidad
+        TableView1[i, 2].Text = $Result!unidad
+        TableView1[i, 3].Text = $Result!ndosis
+        TableView1[i, 4].Text = $Result!fech_registro
+       $Result.MoveNext()
+     Next 
+  strmedicina.Index = 0
+  ncantidad.Text = ""
+  ndosis.Text = ""
+  strmedida.Text = ""
+  strfechaaplicacion.Value = Date
+  strmedicina.SetFocus 
+
+End
+
+
+
+Public Sub Label16_MouseDown()
+
+  
+
+End
+
+Public Sub ncantidad_KeyPress()
+
+If (Key.Code >= Asc("a") And Key.Code <= Asc("z")) Or (Key.Code >= Asc("A") And Key.Code <= Asc("Z")) Then
+  
+Message.Warning("Solo valores numéricos")
+
+Stop Event
+
+Endif
+
+End
+
+Public Sub nombres_KeyPress()
+If (Key.Code >= Asc("0") And Key.Code <= Asc("9")) Then
+  Message.Warning("solo caracteres alfabéticos")
+  Stop Event
+Endif
+End
+
+Public Sub Button3_Click()
+
+  
+
+End
+
+Public Sub nombres_KeyRelease()
+Dim $Query As String
+Dim $Result As Result
+Dim i As Integer
+Dim cadena As String
+If (nombres.Text <> "") Then
+  $Query = "Select id, NOMBRES, APELLIDOS From INSUMOS.pro_paciente WHERE upper(NOMBRES) Like '%" & Upper(nombres.Text) & "%' and cerrado=0 order by nombres"
+  $Result = conexion2.$Con.Exec($Query)
+  listnombres.Clear
+  listnombres.Height = 120
+  listnombres.Visible = True
+  If $Result.Available      
+      For i = 0 To $Result.Count - 1 Step 1
+        cadena = Upper($Result!nombres) & " " & Upper($Result!APELLIDOS)
+        listnombres.Add(cadena)
+        $Result.MoveNext()
+      Next
+  Endif
+  Else 
+  listnombres.Visible = False   
+Endif  
+End
+
+
+
+Public Sub listnombres_Select()
+Dim $Query As String
+Dim $Result As Result
+Dim i As Integer
+        $Query = "Select * From " &
+                               "( Select dx,cerrado,cod_historia,fechaingreso,cama,hab,servicio,id,nombres, apellidos, (nombres ||' '||apellidos) as nombrecompleto FROM " &
+                                "insumos.pro_paciente) As RESULTADO " &
+                 "WHERE upper(nombrecompleto) Like upper('%" & listnombres.Text & "%') and cerrado=0"
+        $Result = conexion2.$Con.Exec($Query)
+          If $Result.Available
+            nombres.Text = Upper($Result!nombres)
+            apellidos.Text = Upper($Result!APELLIDOS)
+            cama.Text = $Result!cama
+            habitacion.Text = $Result!hab
+            servicio.Text = $Result!servicio
+            fechaingreso.Value = $Result!fechaingreso
+            var.$fechacontrol = $Result!fechaingreso
+            numcaso.Text = $Result!cod_historia
+            dx.Text = $Result!dx
+            var.$cod_historia = $Result!cod_historia
+            var.$id = $Result!id
+            If $Result!cerrado <> 1 Then 
+              Panel2.Enabled = True
+              Panel3.Enabled = True   
+            Endif         
+                      $Query = "select * from insumos.pro_materialmq where id_caso='" & numcaso.Text & "' order by id desc"
+                      $Result = conexion2.$Con.Exec($Query)
+                      TableView2.Clear
+                      TableView2.Rows.Count = $Result.Count + 1
+                      For i = 0 To $Result.Count - 1 Step 1                                        
+                           TableView2[i, 0].Text = $Result!mmq
+                           TableView2[i, 1].Text = $Result!cantidad
+                           TableView2[i, 2].Text = Format$($Result!fech_registro, "dd/mm/yy")
+                          $Result.MoveNext()
+                      Next 
+                      
+                      $Query = "select * from insumos.pro_medicina where id_caso='" & numcaso.Text & "' order by id desc"
+                      $Result = conexion2.$Con.Exec($Query)
+                      TableView1.Clear   
+                      TableView1.Rows.Count = $Result.Count + 1
+                      For i = 0 To $Result.Count - 1 Step 1             
+                           TableView1[i, 0].Text = $Result!medicamento
+                           TableView1[i, 1].Text = $Result!cantidad
+                           TableView1[i, 2].Text = $Result!unidad
+                           TableView1[i, 3].Text = $Result!ndosis
+                           TableView1[i, 4].Text = $Result!fech_registro
+                          $Result.MoveNext()
+                      Next 
+                          
+                   
+            
+           'cod_historia.Text = $Result!cod_historia
+            'cama.Text = 
+          Endif
+          
+End
+
+Public Sub listnombres_LostFocus()
+'listnombres.hide
+  habitacion.SetFocus
+End
+
+Public Sub listnombres_Click()
+
+End
+
+Public Sub ComboBox3_Click()
+
+End
+
+Public Sub listnombres_DblClick()
+  listnombres.hide
+  habitacion.SetFocus
+End
+
+Public Sub nombres_LostFocus()
+
+'listnombres.Clear
+'listnombres.Hide
+apellidos.SetFocus
+
+End
+
+
+Public Sub ToggleButton2_Click()
+
+Dim $Query As String
+Dim $Result As Result
+Dim i As Integer
+Dim cadena As String
+
+   If var.$id Then
+            $Query = "UPDATE INSUMOS.PRO_PACIENTE SET " 
+     Goto SALIR
+   Endif
+   
+   $Query = "INSERT INTO insumos.pro_paciente" &
+           "( nombres, apellidos, hab, cama,fechaingreso, servicio,dx)" &
+          "VALUES( '" & nombres.Text & "','" & apellidos.Text & "','" & habitacion.Text & "','" & cama.Text & "','" & fechaingreso.Value & "','" & servicio.Text & "','" & dx.Text & "');" 
+   $Result = conexion2.$Con.Exec($Query)
+   $Query = "Select id, NOMBRES, APELLIDOS From INSUMOS.pro_paciente WHERE upper(NOMBRES) Like '%" & Upper(nombres.Text) & "%' and cama= '" & cama.Text & "'"
+   $Result = conexion2.$Con.Exec($Query) 
+   var.$codigo = $Result!id
+   numcaso.Text = $Result!id & "-" & Format$(fechaingreso.Value, "ddmmyy")
+   $Query = "INSERT INTO insumos.pro_casos_paciente" &
+           "(id_paciente,id_caso)" &
+          "VALUES( " & $Result!id & ",'" & var.$codigo & "-" & Format$(fechaingreso.Value, "ddmmyy") & "');" 
+   $Result = conexion2.$Con.Exec($Query)   
+   $Query = "Update insumos.pro_paciente SET cod_historia ='" & var.$codigo & "-" & Format$(fechaingreso.Value, "ddmmyy") & "' WHERE upper(NOMBRES) Like '%" & Upper(nombres.Text) & "%' and cama= '" & cama.Text & "'" 
+   $Result = conexion2.$Con.Exec($Query)  
+   
+   SALIR:
+   
+   Panel2.Enabled = True
+   Panel3.Enabled = True
+   
+End
+
+Public Sub ToggleButton3_Click()
+Dim $Query As String
+Dim $Result As Result
+  fechaingreso.Value = Now()
+  numcaso.Text = ""
+  habitacion.Text = ""
+  cama.Text = ""
+  servicio.Text = ""
+  fechaegreso.Value = "01/01/2000"
+  dx.Text = ""  
+  TableView2.Clear
+  TableView1.Clear
+  var.$id = ""  
+    salida:
+End
+
+
+
+Public Sub ToggleButton6_Click()
+Dim row As Integer = TableView1.Rows.Count
+Dim $Query As String
+Dim $Result As Result
+Dim i As Integer
+$Query = "INSERT INTO insumos.pro_materialmq" &
+           "(id_caso,mmq, cantidad, fech_registro)" &
+          "VALUES( '" & numcaso.Text & "','" & mmq.Text & "'," & mmqcantidad.Text & ",'" & Format$(strfechaaplicacionmmq.Value, "dd/mm/yy") & "' );" 
+   $Result = conexion2.$Con.Exec($Query)     
+   $Query = "select * from insumos.pro_materialmq where id_caso='" & numcaso.Text & "' order by id desc"
+   $Result = conexion2.$Con.Exec($Query)
+   TableView2.Clear
+   TableView2.Rows.Count = $Result.Count + 1
+   For i = 0 To $Result.Count - 1 Step 1                                        
+        TableView2[i, 0].Text = $Result!mmq
+        TableView2[i, 1].Text = $Result!cantidad
+        TableView2[i, 2].Text = Format$($Result!fech_registro, "dd/mm/yy")
+       $Result.MoveNext()
+     Next    
+  mmq.Index = 0
+  mmqcantidad.Text = ""
+  strfechaaplicacionmmq.Value = Date
+  mmq.SetFocus 
+End
+
+Public Sub TableView2_Click()
+
+  
+
+End
+
+Public Sub Label2_MouseDown()
+
+  
+
+End
+
+Public Sub ToggleButton4_Click()
+Dim $Query As String
+Dim $Result As Result
+  If (fechaegreso.Value = "01/01/2000") Then 
+  Message("Actualizar fecha de egreso")
+  Goto salir
+  Endif
+  If (fechaegreso.Value < fechaingreso.Value) Then 
+  Message("Fecha de egreso errada")
+  Goto salir
+  Endif
+  $Query = "Update insumos.pro_paciente SET cerrado = 1 WHERE cod_historia= '" & numcaso.Text & "'" 
+  $Result = conexion2.$Con.Exec($Query)
+   
+   
+  nombres.Text = ""
+  apellidos.Text = ""
+  fechaingreso.Value = Now()
+  numcaso.Text = ""
+  habitacion.Text = ""
+  cama.Text = ""
+  servicio.Text = ""
+  fechaegreso.Value = "01/01/2000"
+  label.Text = ""  
+  TableView2.Clear
+  TableView1.Clear
+  Panel2.Enabled = False
+  Panel3.Enabled = False
+  var.$id = ""  
+  salir:
+End
+
+Public Sub ToggleButton7_Click()
+ nombres.Text = ""
+ apellidos.Text = ""
+  fechaingreso.Value = Now()
+  numcaso.Text = ""
+  habitacion.Text = ""
+  cama.Text = ""
+  servicio.Text = ""
+  fechaegreso.Value = "01/01/2000"
+  dx.Text = ""  
+  TableView2.Clear
+  TableView1.Clear
+  Panel2.Enabled = False
+  Panel3.Enabled = False
+  var.$id = ""  
+End
+
+
+Public Sub nombres_GotFocus()
+  nombres.Clear
+End
+
+Public Sub ToggleButton8_Click()
+Dim i As Integer
+Dim $Query As String
+Dim $Result As Result
+Dim $Result2 As Result
+Dim $Result3 As Result
+$Query = "select * from materialesmq" 
+$Result = conexion2.$Con.Exec($Query)
+If $Result.Available      
+      For i = 0 To $Result.Count - 1 Step 1
+           $Query = "Select sum(cantidad) as gtotal From mmq WHERE SERVICIO = 'Nebulizacion' and mmq='" & $Result!material & "'" 
+           $Result2 = conexion2.$Con.Exec($Query)
+           If $Result2!gtotal <> Null Then
+            $Query = "insert into resultadommq (servicio,nombre,total) values ('Nebulizacion','" & $Result!material & "'," & $Result2!gtotal & ")"
+            $Result3 = conexion2.$Con.Exec($Query)
+           Endif
+          $Result.MoveNext()
+      Next
+  Endif
+End

@@ -1,0 +1,483 @@
+' Gambas class file
+
+Public Sub Form_Open()
+  Dim $Query As String
+  Dim $Result As Result
+  Dim $Result2 As Result
+  Dim $Result3 As Result
+  Dim $Result4 As Result
+  Dim $Result5 As Result
+  Dim i As Integer  
+  Timer1.Start
+  
+  TableView1.Columns.Count = 4
+  TableView1.Columns[0].Text = "Cedula"
+  TableView1.Columns[0].Width = 60
+  TableView1.Columns[1].Text = "Nombres y Apellidos"
+  TableView1.Columns[1].Width = 230
+  TableView1.Columns[2].Text = "Centro de Votación"
+  TableView1.Columns[2].Width = 400
+  TableView1.Columns[3].Text = "Municipio"
+  TableView1.Columns[3].Width = 440
+  
+   $Query = "delete from totales"
+   $Result5 = conexion.$Con.Exec($Query)
+  
+   $Query = "Select DISTINCT cedularesponsable From simulacro WHERE Not cedularesponsable = ''"
+   $Result = conexion.$Con.Exec($Query)
+   Label6.Text = $Result.Count
+     
+   For i = 0 To $Result.Count - 1 Step 1
+     
+   $Query = "Select nom006.nombre From  public.nom006 WHERE nom006.cedula Like '%'||'" & $Result!cedularesponsable & "'"
+   $Result4 = conexion.$Con.Exec($Query)       
+   $Query = "SELECT count(participo)as cuenta From simulacro  where cedularesponsable = '" & $Result!cedularesponsable & "' and participo ='1'"
+   $Result2 = conexion.$Con.Exec($Query)
+   $Query = "SELECT count(participo)as cuenta2 From simulacro  where cedularesponsable = '" & $Result!cedularesponsable & "' and participo ='0'"
+   $Result3 = conexion.$Con.Exec($Query)
+   
+   $Query = "INSERT INTO totales(cedula, nombre, voto, novoto)VALUES('" & $Result!cedularesponsable & "','" & $Result4!nombre & "','" & $Result2!cuenta & "','" & $Result3!cuenta2 & "'); " ""
+   $Result5 = conexion.$Con.Exec($Query)   
+   $Result.MoveNext()
+   Next 
+   
+   
+   
+   $Query = "Select DISTINCT cedulapatrullero From simulacro WHERE Not cedulapatrullero = ''"
+   $Result = conexion.$Con.Exec($Query)
+   Label8.Text = $Result.Count
+   
+   $Query = "Select DISTINCT cedulapatrullero From simulacro WHERE Not cedulapatrullero = '' and participo='1'"
+   $Result = conexion.$Con.Exec($Query)
+   Label10.Text = $Result.Count
+  
+     
+End
+
+Public Sub Button1_Click()
+  
+  Dim $Query As String
+  Dim $Result As Result
+  Dim i As Integer
+  
+  Frame1.Enabled = False
+  CheckBox1.Value = False
+  cedula2.Text = ""
+  centro.Text = ""
+  municipio.Text = ""
+  parroquia.Text = ""
+  nombresbuscar.text = ""
+  
+  
+  If cedula.Text = "" Then Return
+  
+  $Query = "Select " &
+    "listadosentregadas.descripcion_dep, " & 
+    "listadosentregadas.nombre, " & 
+    "listadosentregadas.denominacion " &
+    "From " &
+    "public.listadosentregadas Left JOIN public.simulacro " &
+    "On " & 
+    "listadosentregadas.num = simulacro.cedularesponsable " & 
+    "where " &
+    "listadosentregadas.cedula Like '%" & cedula.Text & "%' " &
+    "group by " & 
+    " listadosentregadas.descripcion_dep, " & 
+    "listadosentregadas.nombre, " & 
+    "listadosentregadas.denominacion" 
+  
+  $Result = conexion.$Con.Exec($Query)
+  If $Result.Available Then
+    cedula.Enabled = False
+    Button4.Enabled = True
+    Panel1.Enabled = True
+    CheckBox1.Enabled = True
+    nombres.Text = Upper$($Result!nombre)
+    unidad.Text = Upper$($Result!descripcion_dep)
+    cargo.Text = Upper$($Result!denominacion)
+   
+    $Query = "Select " &  
+    "datarepnuevos.municipio " & 
+    "From " & 
+    "cne.datarepnuevos " & 
+    "WHERE " & 
+    "datarepnuevos.cedula='" & cedula.Text & "'"
+    $Result = conexion.$Con.Exec($Query)   
+    municipioresp.Text = $Result!municipio
+    
+    
+    $Query = "Select " & 
+      "datarepnuevos.cedula, " & 
+      "datarepnuevos.nombres, " & 
+      "datarepnuevos.centro, " & 
+      "datarepnuevos.municipio, " & 
+      "simulacro.participo " & 
+      "From " & 
+      "public.simulacro, " & 
+      "public.listadosentregadas, " & 
+      "cne.datarepnuevos " & 
+      "WHERE " & 
+      "simulacro.cedularesponsable = listadosentregadas.num And " & 
+      "simulacro.cedulapatrullero = datarepnuevos.cedula And " & 
+      "listadosentregadas.num =  '" & cedula.Text & "' order by datarepnuevos.cedula::INT desc"
+    
+    $Result = conexion.$Con.Exec($Query)    
+    
+    TableView1.Clear
+    TableView1.Rows.Count = $Result.Count + 1
+    For i = 0 To $Result.Count - 1 Step 1      
+      If $Result!participo = 0
+        TableView1[i, 0].background = Color.LightGray
+      Else If $Result!participo = 1
+        TableView1[i, 0].background = Color.Red
+      Endif     
+      TableView1[i, 0].Text = $Result!cedula
+      TableView1[i, 1].Text = $Result!nombres
+      TableView1[i, 2].Text = $Result!centro
+      TableView1[i, 3].Text = $Result!municipio
+      $Result.MoveNext()
+    Next 
+    
+  Else
+    Message.Info("Sin planilla Entregada, se buscaran datos en Nomina, para comenzar el Proceso")
+    $Query = "Select " &
+      "nom006.cedula," &
+      "nom006.nombre," &
+      "nom005.descripcion_dep, " &
+      "nom004.denominacion " &
+      "From " &
+      "public.nom006," &
+      "public.nom005," &
+      "public.nom004 " &
+      "WHERE " &
+      "cedula like '%" & cedula.Text & "%' And "
+    "nom006.cod_cargo = nom004.codigo_cargo And " &
+      "nom005.codigo_departamento = nom006.cod_departam;"
+    
+    $Result = conexion.$Con.Exec($Query)
+    If $Result.Available Then
+      Button4.Enabled = True
+      Panel1.Enabled = True
+      cedula.Enabled = False
+      CheckBox1.Enabled = True
+      nombres.Text = Upper$($Result!nombre)
+      unidad.Text = Upper$($Result!descripcion_dep)
+      cargo.Text = Upper$($Result!denominacion)
+      $Query = "INSERT INTO " &
+        "listadosentregadas(num, cedula, nombre, denominacion, descripcion_dep) " &
+        "VALUES( '" & cedula.Text & "' , '" & cedula.Text & "' ,'" & nombres.Text & "' ,'" & cargo.Text & "' ,'" & unidad.Text & "' );" 
+      $Result = conexion.$Con.Exec($Query) 
+      $Query = "Select " & 
+        "datarepnuevos.cedula, " & 
+        "datarepnuevos.nombres, " & 
+        "datarepnuevos.centro, " & 
+        "datarepnuevos.municipio, " & 
+        "simulacro.participo " & 
+        "From " & 
+        "public.simulacro, " & 
+        "public.listadosentregadas, " & 
+        "cne.datarepnuevos " & 
+        "WHERE " & 
+        "simulacro.cedularesponsable = listadosentregadas.num And " & 
+        "simulacro.cedulapatrullero = datarepnuevos.cedula And " & 
+        "listadosentregadas.num =  '" & cedula.Text & "' order by datarepnuevos.cedula::INT desc"
+      
+      $Result = conexion.$Con.Exec($Query)    
+      
+      TableView1.Clear
+      TableView1.Rows.Count = $Result.Count + 1
+      For i = 0 To $Result.Count - 1 Step 1      
+        If $Result!participo = 0
+          TableView1[i, 0].background = Color.LightGray
+        Else If $Result!participo = 1
+          TableView1[i, 0].background = Color.Red
+        Endif     
+        TableView1[i, 0].Text = $Result!cedula
+        TableView1[i, 1].Text = $Result!nombres
+        TableView1[i, 2].Text = $Result!centro
+        TableView1[i, 3].Text = $Result!municipio
+        $Result.MoveNext()
+      Next 
+      
+    Else
+      Message.Error("No existen datos en Nomina, Proceso de Inclusion Cancelado")
+      cedula.Text = ""
+    Endif
+  Endif
+  
+salida:   
+  
+End
+
+Public Sub TableView1_Click()
+  
+  Dim resultado As Integer
+  Dim $Result As Result
+  Dim $Query As String
+  Dim i As Integer
+  
+  If TableView1[TableView1.row, 0].Text = "" Then
+    Return
+  Endif
+  
+  resultado = 0
+  resultado = Message.Question("¿" & TableView1[TableView1.row, 0].Text & " " & TableView1[TableView1.row, 1].Text, "Votó", "Eliminar Registro", "Cancelar")
+  
+  If resultado = 1 Then
+    $Query = "UPDATE simulacro " &
+      "SET participo ='" & resultado & "' " &
+      "WHERE cedulapatrullero ='" & TableView1[TableView1.row, 0].Text & "';" 
+    $Result = conexion.$Con.Exec($Query) 
+  Else If resultado = 2 Then
+    resultado = Message.Warning("Seguro de Eliminar Registro?", "Si", "Cancelar")
+    If resultado = 1 Then
+      $Query = "Delete from public.simulacro where simulacro.cedularesponsable='" & cedula.Text & "' and simulacro.cedulapatrullero='" & TableView1[TableView1.row, 0].Text & "'" 
+      $Result = conexion.$Con.Exec($Query) 
+    Endif
+  Endif
+  
+  $Query = "Select " & 
+    "datarepnuevos.cedula, " & 
+    "datarepnuevos.nombres, " & 
+    "datarepnuevos.centro, " & 
+    "datarepnuevos.municipio, " & 
+    "simulacro.participo " & 
+    "From " & 
+    "public.simulacro, " & 
+    "public.listadosentregadas, " & 
+    "cne.datarepnuevos " & 
+    "WHERE " & 
+    "simulacro.cedularesponsable = listadosentregadas.num And " & 
+    "simulacro.cedulapatrullero = datarepnuevos.cedula And " & 
+    "listadosentregadas.num =  '" & cedula.Text & "' order by datarepnuevos.cedula::INT desc"
+  
+  $Result = conexion.$Con.Exec($Query)    
+  
+  TableView1.Clear
+  TableView1.Rows.Count = $Result.Count + 1
+  For i = 0 To $Result.Count - 1 Step 1  
+    
+    If $Result!participo = 0
+      TableView1[i, 0].background = Color.LightGray
+    Else If $Result!participo = 1
+      TableView1[i, 0].background = Color.Red
+    Endif
+    
+    TableView1[i, 0].Text = $Result!cedula
+    TableView1[i, 1].Text = $Result!nombres
+    TableView1[i, 2].Text = $Result!centro
+    TableView1[i, 3].Text = $Result!municipio
+    $Result.MoveNext()
+  Next 
+  ' 
+  ' $Query = "Select "
+  ' listadosentregadas
+  
+End
+
+Public Sub CheckBox1_Click() 
+  
+  Dim $Result As Result
+  Dim $Query As String
+  Dim sw As Boolean
+  
+  $Query = "select * from listadosentregadas where num='" & cedula.Text & "'"
+  $Result = conexion.$Con.Exec($Query)
+  
+  If Not $Result.Available Then    
+    $Query = "INSERT INTO " &
+      "listadosentregadas(num, cedula, nombre, denominacion, descripcion_dep) " &
+      "VALUES( '" & cedula.Text & "' , '" & cedula.Text & "' ,'" & nombres.Text & "' ,'" & cargo.Text & "' ,'" & unidad.Text & "' );" 
+    $Result = conexion.$Con.Exec($Query) 
+  Endif
+  
+  sw = IIf(CheckBox1.Value = True, True, False)
+  Frame1.Enabled = sw
+  
+End
+
+Public Sub Button3_Click()
+  
+  Dim $Result As Result
+  Dim $Query As String
+  Dim i As Integer
+  
+  $Query = "select * from simulacro where cedularesponsable='" & cedula.Text & "' and cedulapatrullero='" & cedula2.Text & "' "
+  $Result = conexion.$Con.Exec($Query)
+  If $Result.Available Then
+    Message.Info("Cedula ya incluida en el Responsable")
+    cedula2.Text = ""
+    centro.Text = ""
+    municipio.Text = ""
+    parroquia.Text = ""
+    nombresbuscar.text = ""
+  Else  
+    $Query = "INSERT INTO " &
+      "simulacro(cedularesponsable, cedulapatrullero) " &
+      "VALUES( '" & cedula.Text & "' , '" & cedula2.Text & "');" 
+    $Result = conexion.$Con.Exec($Query)
+    
+    cedula2.Text = ""
+    centro.Text = ""
+    municipio.Text = ""
+    parroquia.Text = ""
+    nombresbuscar.Text = ""
+    $Query = "Select " & 
+      "datarepnuevos.cedula, " & 
+      "datarepnuevos.nombres, " & 
+      "datarepnuevos.centro, " & 
+      "datarepnuevos.municipio, " & 
+      "simulacro.participo " & 
+      "From " & 
+      "public.simulacro, " & 
+      "public.listadosentregadas, " & 
+      "cne.datarepnuevos " & 
+      "WHERE " & 
+      "simulacro.cedularesponsable = listadosentregadas.num And " & 
+      "simulacro.cedulapatrullero = datarepnuevos.cedula And " & 
+      "listadosentregadas.num =  '" & cedula.Text & "' order by datarepnuevos.cedula::INT desc"
+    
+    $Result = conexion.$Con.Exec($Query)    
+    
+    TableView1.Clear
+    TableView1.Rows.Count = $Result.Count + 1
+    For i = 0 To $Result.Count - 1 Step 1      
+      If $Result!participo = 0
+        TableView1[i, 0].background = Color.LightGray
+      Else If $Result!participo = 1
+        TableView1[i, 0].background = Color.Red
+      Endif
+      TableView1[i, 0].Text = $Result!cedula
+      TableView1[i, 1].Text = $Result!nombres
+      TableView1[i, 2].Text = $Result!centro
+      TableView1[i, 3].Text = $Result!municipio
+      $Result.MoveNext()
+    Next 
+    
+  Endif
+  
+End
+
+Public Sub cedula2_KeyPress()
+  
+  nombresbuscar.Text = ""
+  municipio.Text = ""
+  parroquia.Text = ""
+  centro.Text = ""
+  
+End
+
+Public Sub Button2_Click()
+  
+  Dim resultado As Integer
+  Dim $Result As Result
+  Dim $Query As String
+  Dim i As Integer
+  
+  $Query = "Select " &
+    "datarepnuevos.nombres, " & 
+    "datarepnuevos.centro, " &
+    "datarepnuevos.municipio, " &
+    "datarepnuevos.parroquia " & 
+    "From " & 
+    "cne.datarepnuevos " &
+    "WHERE " & 
+    "datarepnuevos.cedula= '" & cedula2.Text & "'"
+  
+  Try $Result = conexion.$Con.Exec($Query) 
+  If Error Then 'me muestra un error si no conecta la BD
+    Message.Error("Error:" & Error.Text & " al Guardar los datos, verifique la conexion a la base de datos")
+    Return 
+  Else
+    If $Result.Available Then
+      nombresbuscar.Text = $Result!nombres
+      municipio.Text = $Result!municipio
+      centro.Text = $Result!centro
+      parroquia.Text = $Result!parroquia
+      
+    Else
+      Message.Warning("Dato incorrecto o no Existe")
+      cedula2.Clear
+    Endif
+  Endif
+  
+End
+
+Public Sub unidad_KeyPress()
+  
+End
+
+Public Sub Panel1_MouseDown()
+  
+End
+
+Public Sub Button4_Click()
+
+  Panel1.Enabled = False
+  CheckBox1.Value = False
+  Button4.Enabled = False
+  cedula.Enabled = True
+  cedula2.Text = ""
+  nombresbuscar.Text = ""
+  municipio.Text = ""
+  parroquia.Text = ""
+  centro.Text = ""
+  cedula.Text = ""
+  nombres.Text = ""
+  unidad.Text = ""
+  cargo.Text = ""
+  municipioresp.Text = ""
+  TableView1.Clear
+  TableView1.Rows.Count = 0
+  
+End
+
+Public Sub cedula_KeyPress()
+  
+  If Key.Code = Key.Return Or Key.Code = Key.Enter Then Button1_Click()
+  
+End
+
+Public Sub Label3_MouseDown()
+
+  
+
+End
+
+Public Sub Label6_MouseDown()
+
+  
+
+End
+
+Public Sub Label7_MouseDown()
+
+  
+
+End
+
+Public Sub Timer1_Timer()
+ Dim $Query As String
+  Dim $Result As Result
+  Dim i As Integer  
+
+   $Query = "Select DISTINCT cedularesponsable From simulacro WHERE Not cedularesponsable = ''"
+   $Result = conexion.$Con.Exec($Query)
+   Label6.Text = $Result.Count
+   
+   $Query = "Select DISTINCT cedulapatrullero From simulacro WHERE Not cedulapatrullero = ''"
+   $Result = conexion.$Con.Exec($Query)
+   Label8.Text = $Result.Count
+   
+   $Query = "Select DISTINCT cedulapatrullero From simulacro WHERE Not cedulapatrullero = '' and participo='1'"
+   $Result = conexion.$Con.Exec($Query)
+   Label10.Text = $Result.Count
+
+   Label11.Text = Format(Time, "hh:nn:ss AM/PM")
+End
+
+Public Sub Label2_MouseDown()
+
+  
+
+End
