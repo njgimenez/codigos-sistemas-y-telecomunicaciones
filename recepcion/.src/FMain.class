@@ -4,6 +4,7 @@ Public query As String
 Public result As Result
 Public codigovisitas As String
 Public visitassuma As Integer
+Public visitasresta As String
 Public Enviar As String
 Public Enviar1 As String
 
@@ -697,9 +698,19 @@ End If
  If Preg = 1 Then
    str_horasalida.Text = Time
    Label48.Caption = Grid_hospitalizacion[Grid_hospitalizacion.Row, 0].Text
+   codigovisitas = Grid_hospitalizacion[Grid_hospitalizacion.Row, 0].Text
+   
    conexion.Connect()
    query = "UPDATE visitas SET retirado='" & 1 & "', horasalida='" & Mid$(str_horasalida.Text, 1, 5) & "' where codigovisita='" & Label48.Text & "'"
    result = Conexion.Con.Exec(query)
+   
+   restavisitaspacientes
+  
+  
+  query = "UPDATE listadopacientes SET visitas='" & FMain.visitasresta & "' where codigo='" & codigovisitas & "'"
+  result = Conexion.Con.Exec(query)
+
+   pacientes
    hospitalizacion
    visitaspediatrico
  Endif
@@ -1714,7 +1725,9 @@ Public Sub restavisitaspacientes()
   
   Dim numvisitas As String
   Dim resta As String
+  Dim i As String
   
+  i = "1"
   conexion.Connect()
   
    query = "Select * from listadopacientes where codigo=  '" & FMain.codigovisitas & "' "
@@ -1724,8 +1737,8 @@ Public Sub restavisitaspacientes()
      numvisitas = Result!visitas
    Endif
   
-  suma = numvisitas + 1
-  FMain.visitassuma = suma
+  resta = numvisitas - i 
+  FMain.visitasresta = resta
 End
 
 Public Sub Button17_Click()
