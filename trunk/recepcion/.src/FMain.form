@@ -311,8 +311,15 @@
       }
     }
     { Label106 Label
-      MoveScaled(5,38,14,3)
-      Text = ("Label106")
+      MoveScaled(3,28,14,3)
+      Text = ("codigopaciente")
+    }
+    { Label112 Label
+      MoveScaled(2,34,12,8)
+    }
+    { Label113 Label
+      MoveScaled(16,39,11,3)
+      Text = ("Label113")
     }
     Index = 3
     Text = ("Departamentos")

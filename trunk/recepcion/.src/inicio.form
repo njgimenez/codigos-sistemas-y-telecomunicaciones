@@ -17,7 +17,7 @@
           Background = Color.SelectedForeground
           { PictureBox1 PictureBox
             MoveScaled(0,2,33,27)
-            Picture = Picture["Mision niño jesus.jpg"]
+            Picture = Picture["Mision.jpg"]
             Stretch = True
           }
           { PictureBox2 PictureBox

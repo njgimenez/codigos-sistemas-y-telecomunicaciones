@@ -2,9 +2,10 @@
 
 Public query As String
 Public result As Result
-Public codigovisitas As String
-Public visitassuma As Integer
-Public visitasresta As String
+Public pacientecodigo As String
+Public pacientenombre As String
+Public resultadosuma As String
+ Public resultadoresta As String
 Public Enviar As String
 Public Enviar1 As String
 
@@ -401,17 +402,15 @@ Public Sub Button6_Click()
   Message.Info("LLENAR TODAS LAS CASILLAS")
   Else
   conexion.Connect()
-  query = "insert into visitas(codigovisita, cedulavisitante,personavisitar,piso, area, habitacion, cama,fechavisita, horaentrada, observacion, modulo, retirado,nombrevisitante,  recepcionista)values('" & str_codigoa.Text & "'," &
+  query = "insert into visitas(codigovisita, cedulavisitante,personavisitar,piso, area, habitacion, cama,fechavisita, horaentrada, observacion, modulo, retirado,nombrevisitante,  recepcionista,codigopaciente)values('" & str_codigoa.Text & "'," &
   "'" & label46.Text & "', '" & UCase$(str_nombrepaciente.Text) & "','" & str_pisoh.Text & "', '" & UCase$(str_areah.Text) & "','" & str_habitacionh.Text & "','" & str_camah.Text & "', '" & Format$(date_fechah.Value, "dd/mm/yy") & "'," &
-  "'" & str_horah.Text & "','" & UCase$(str_observacionh.text) & "','" & UCase$(textbox3.text) & "', '" & 0 & "','" & UCase$(str_nombrevisitanteh.text) & "','" & UCase$(Label85.Text) & "')"
+  "'" & str_horah.Text & "','" & UCase$(str_observacionh.text) & "','" & UCase$(textbox3.text) & "', '" & 0 & "','" & UCase$(str_nombrevisitanteh.text) & "','" & UCase$(Label85.Text) & "','" & Label106.Text & "')"
   Result = conexion.Con.Exec(query)
   
- sumavisitaspacientes
- 
-conexion.Connect()
- 
-query = "UPDATE listadopacientes SET visitas='" & FMain.visitassuma & "' where codigo='" & codigovisitas & "'"
-result = Conexion.Con.Exec(query)
+  conexion.Connect()
+  
+  query = "update listadopacientes SET visitas='" & Val(resultadosuma) & "' where codigo ='" & pacientecodigo & "'"
+  result = conexion.Con.Exec(query)
 
 
 str_nombrepaciente.Enabled = False
@@ -566,7 +565,7 @@ End
 Public Sub hospitalizacion()
 
 Dim $linea As Integer
-Grid_hospitalizacion.columns.count = 11
+Grid_hospitalizacion.columns.count = 12
 Grid_hospitalizacion.rows.count = 50 
 Grid_hospitalizacion.columns.width = 100 
 Grid_hospitalizacion.rows.height = 20
@@ -594,6 +593,8 @@ Grid_hospitalizacion.columns[9].text = "Hora de Visita"
 Grid_hospitalizacion.columns[9].width = 100
 Grid_hospitalizacion.columns[10].text = "Observacion" 
 Grid_hospitalizacion.columns[10].width = 300
+Grid_hospitalizacion.columns[10].text = "Codigo Paciente" 
+Grid_hospitalizacion.columns[11].width = 50
   
 conexion.Connect()
 
@@ -614,6 +615,7 @@ Grid_hospitalizacion[$linea, 7].text = Result!cama
 Grid_hospitalizacion[$linea, 8].text = Result!fechavisita
 Grid_hospitalizacion[$linea, 9].text = Result!horaentrada
 Grid_hospitalizacion[$linea, 10].text = Result!observacion
+Grid_hospitalizacion[$linea, 11].text = Result!codigopaciente
 Result.MoveNext()
 Next 
 
@@ -698,18 +700,19 @@ End If
  If Preg = 1 Then
    str_horasalida.Text = Time
    Label48.Caption = Grid_hospitalizacion[Grid_hospitalizacion.Row, 0].Text
-   codigovisitas = Grid_hospitalizacion[Grid_hospitalizacion.Row, 0].Text
+   pacientecodigo = Grid_hospitalizacion[Grid_hospitalizacion.Row, 11].Text
    
    conexion.Connect()
    query = "UPDATE visitas SET retirado='" & 1 & "', horasalida='" & Mid$(str_horasalida.Text, 1, 5) & "' where codigovisita='" & Label48.Text & "'"
    result = Conexion.Con.Exec(query)
    
-   restavisitaspacientes
+  restavisitaspacientes
   
+  conexion.Connect()
   
-  query = "UPDATE listadopacientes SET visitas='" & FMain.visitasresta & "' where codigo='" & codigovisitas & "'"
-  result = Conexion.Con.Exec(query)
-
+  query = "update listadopacientes SET visitas='" & Val(resultadoresta) & "' where codigo ='" & pacientecodigo & "'"
+  result = conexion.Con.Exec(query)
+ 
    pacientes
    hospitalizacion
    visitaspediatrico
@@ -1477,7 +1480,7 @@ If Preg = 1
     Message.Info("LLENAR TODAS LAS CASILLAS")
   Else
   
-    query = "insert into listadopacientes (codigo,nombres,apellidos,fechanacimiento, acompanante, parentesco,fechaingreso,piso,area,habitacion,cama,recepcionista,retirado,visitas)VALUES('" & str_codigopaciente.Text & "', '" & UCase$(str_pacientenombre.Text) & "', '" & UCase$(str_pacienteapellido.Text) & "', " &
+    query = "insert into listadopacientes (codigo,nombres,apellidos,fechanacimiento, acompanante, parentesco,fechaingreso,piso,area,habitacion,cama,recepcionista,retirado,visitas)VALUES('" & str_codigopaciente.Text & "', '" & UCase$(str_pacientenombre.Text) & " ', '" & UCase$(str_pacienteapellido.Text) & " ', " &
     "'" & Format$(Date_pacientefechana.Value, "dd/mm/yy") & "','" & UCase$(str_pacienterepresentate.Text) & "','" & UCase$(Combo_parentescorepresentante.Text) & "','" & Format$(Date_pacientefechaing.Value, "dd/mm/yy") & "','" & Combo_pacientepiso.Text & "','" & UCase$(Combo_pacientearea.Text) & "'," &
     "'" & str_pacientehab.Text & "','" & Combo_pacientecama.Text & "','" & UCase$(Label85.Text) & "','" & 0 & "','" & 1 & "')" 
     Result = conexion.Con.Exec(query)
@@ -1673,27 +1676,28 @@ Preg = 0
    str_areah.Text = Grid_pacientes[Grid_pacientes.Row, 5].text
    str_habitacionh.Text = Grid_pacientes[Grid_pacientes.Row, 6].text
    str_camah.Text = Grid_pacientes[Grid_pacientes.Row, 7].text
-   FMain.codigovisitas = Grid_pacientes[Grid_pacientes.Row, 0].text
-   
+   pacientecodigo = Grid_pacientes[Grid_pacientes.Row, 0].text
+   Label106.Caption = Grid_pacientes[Grid_pacientes.Row, 0].text
 End If
+sumavisitaspacientes
 End
 
 Public Sub sumavisitaspacientes()
   
   Dim numvisitas As String
   Dim suma As String
-  
   conexion.Connect()
   
-   query = "Select * from listadopacientes where codigo=  '" & FMain.codigovisitas & "' "
+   query = "Select * from listadopacientes where codigo=  '" & pacientecodigo & "' "
    Result = conexion.Con.Exec(query)
    
-   If Result.Available Then
-     numvisitas = Result!visitas
-   Endif
+   
+   numvisitas = Result!visitas
+   Label112.Caption = numvisitas
   
-  suma = numvisitas + 1
-  FMain.visitassuma = suma
+  suma = Val(numvisitas) + 1
+  resultadosuma = Val(suma)
+
 End
 
 
@@ -1722,23 +1726,21 @@ Public Sub Button16_Click()
 End
 
 Public Sub restavisitaspacientes()
-  
+ 
   Dim numvisitas As String
   Dim resta As String
-  Dim i As String
-  
-  i = "1"
   conexion.Connect()
   
-   query = "Select * from listadopacientes where codigo=  '" & FMain.codigovisitas & "' "
+   query = "Select * from listadopacientes where codigo=  '" & pacientecodigo & "' "
    Result = conexion.Con.Exec(query)
    
-   If Result.Available Then
-     numvisitas = Result!visitas
-   Endif
+   
+   numvisitas = Result!visitas
+   Label112.Caption = numvisitas
   
-  resta = numvisitas - i 
-  FMain.visitasresta = resta
+  resta = Val(numvisitas) - 1
+  resultadoresta = Val(resta)
+  Label113.Caption = resultadoresta
 End
 
 Public Sub Button17_Click()
@@ -1747,5 +1749,11 @@ Enviar = CboxConsulta.Text
 Enviar1 = Format$(DateBox1.Value, "dd/mm/yyyy")
 Rpt1 = New RptMiliciailicia
 Rpt1.Preview
+
+End
+
+Public Sub IconPanel1_Click()
+
+  
 
 End
