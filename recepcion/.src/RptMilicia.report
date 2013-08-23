@@ -1,11 +1,165 @@
 # Gambas Form File 3.0
 
 { Report Report
-  #MoveScaled(0,0,83,80)
+  #MoveScaled(0,0,120,107)
   Padding = ReportPadding["Top:10mm;Bottom:10mm;Left:10mm;Right:10mm"]
   Paper = Printer.Letter
   Orientation = Printer.Landscape
   Index = 0
   Text = ("")
+  { ReportHBox1 ReportHBox
+    #MoveScaled(8,0,93,15)
+    Width = "2cm"
+    Height = "30mm"
+    Fixed = True
+    { ReportHBox5 ReportHBox
+      #MoveScaled(3,1,16,12)
+      Width = "30mm"
+      Height = "30mm"
+      { ReportImage1 ReportImage
+        #MoveScaled(1,1,13,10)
+        Expand = True
+        Image = Image.Load("Mision.jpg")
+      }
+    }
+    { ReportLabel1 ReportLabel
+      #MoveScaled(22,0,49,15)
+      Font = Font["FreeSans,Italic,9"]
+      Expand = True
+      Text = ("REPUBLICA BOLIVARIANA DE VENEZUELA\nMINISTERIO DEL PODER POPULAR PARA LA SALUD\nGOBIERNO DEL ESTADO YARACUY\nFUNDACION NIÑO JESUS DEL ESTADO YARACUY\nHOSPITAL PEDIATRICO NIÑO JESUS\nSAN FELIPE - ESTADO YARACUY ")
+      Alignment = Align.Center
+    }
+    { ReportHBox4 ReportHBox
+      #MoveScaled(75,0,14,14)
+      Width = "30mm"
+      Height = "30mm"
+      { ReportImage2 ReportImage
+        #MoveScaled(1,2,12,11)
+        Expand = True
+        Image = Image.Load("brand.gif")
+      }
+    }
+  }
+  { ReportVBox1 ReportVBox
+    #MoveScaled(8,15,93,6)
+    Height = "20mm"
+    Fixed = True
+    { ReportLabel2 ReportLabel
+      #MoveScaled(1,0,91,6)
+      Font = Font["Bold,+2"]
+      Expand = True
+      Text = ("CONTROL DE VISITAS")
+      Alignment = Align.Center
+    }
+  }
+  { ReportVBox2 ReportVBox
+    #MoveScaled(8,21,93,76)
+    Expand = True
+    { ReportHBox3 ReportHBox
+      #MoveScaled(0,0,93,6)
+      Height = "10mm"
+      Fixed = True
+      { Reporfehca ReportLabel
+        #MoveScaled(48,1,21,4)
+        Width = "20mm"
+        Font = Font["Bold"]
+        Text = ("FECHA:")
+      }
+      { Rptefecha ReportLabel
+        #MoveScaled(69,1,23,4)
+        Width = "25mm"
+        Font = Font["Bold"]
+        Text = ("fecha")
+      }
+    }
+    { ReportHBox2 ReportHBox
+      #MoveScaled(1,7,92,6)
+      Height = "10mm"
+      Fixed = True
+      Background = ReportBrush["#9F9F9F"]
+      { ReportLabel3 ReportLabel
+        #MoveScaled(0,1,11,4)
+        Width = "15mm"
+        Font = Font["Bold"]
+        AutoResize = True
+        Border = ReportBorder["Top:1px #000000;Bottom:1px #000000;Left:1px #000000;Right:1px #000000"]
+        Text = ("CODIGO")
+        Alignment = Align.Center
+      }
+      { ReportLabel4 ReportLabel
+        #MoveScaled(11,1,11,4)
+        Width = "30mm"
+        Fixed = True
+        Font = Font["Bold"]
+        AutoResize = True
+        Border = ReportBorder["Top:1px #000000;Bottom:1px #000000;Left:1px #000000;Right:1px #000000"]
+        Text = ("CEDULA")
+        Alignment = Align.Center
+      }
+      { ReportLabel5 ReportLabel
+        #MoveScaled(22,1,23,4)
+        Width = "80mm"
+        Fixed = True
+        Font = Font["Bold"]
+        AutoResize = True
+        Border = ReportBorder["Top:1px #000000;Bottom:1px #000000;Left:1px #000000;Right:1px #000000"]
+        Text = ("NOMBRES Y APELLIDOS")
+        Alignment = Align.Center
+      }
+      { ReportLabel6 ReportLabel
+        #MoveScaled(45,1,10,4)
+        Width = "20mm"
+        Fixed = True
+        Font = Font["Bold"]
+        AutoResize = True
+        Border = ReportBorder["Top:1px #000000;Bottom:1px #000000;Left:1px #000000;Right:1px #000000"]
+        Text = ("PISOS")
+        Alignment = Align.Center
+      }
+      { ReportLabel7 ReportLabel
+        #MoveScaled(55,1,5,4)
+        Width = "10mm"
+        Fixed = True
+        Font = Font["Bold"]
+        AutoResize = True
+        Border = ReportBorder["Top:1px #000000;Bottom:1px #000000;Left:1px #000000;Right:1px #000000"]
+        Text = ("H")
+        Alignment = Align.Center
+      }
+      { ReportLabel8 ReportLabel
+        #MoveScaled(60,1,5,4)
+        Width = "10mm"
+        Fixed = True
+        Font = Font["Bold"]
+        AutoResize = True
+        Border = ReportBorder["Top:1px #000000;Bottom:1px #000000;Left:1px #000000;Right:1px #000000"]
+        Text = ("c")
+        Alignment = Align.Center
+      }
+      { ReportLabel9 ReportLabel
+        #MoveScaled(65,1,15,4)
+        Width = "80mm"
+        Fixed = True
+        Font = Font["Bold"]
+        AutoResize = True
+        Border = ReportBorder["Top:1px #000000;Bottom:1px #000000;Left:1px #000000;Right:1px #000000"]
+        Text = ("PACIENTE / PERSONAL")
+        Alignment = Align.Center
+      }
+    }
+    { listabox ReportVBox
+      #MoveScaled(1,15,91,54)
+      Expand = True
+      Border = ReportBorder["Top:1pt #000000;Bottom:1pt #000000;Left:1pt #000000;Right:1pt #000000"]
+    }
+    { ReportLabel15 ReportLabel
+      #MoveScaled(7,70,71,5)
+      Height = "5mm"
+      Font = Font["Bold"]
+      Text = ("Página $PAGE de $NPAGE")
+      Alignment = Align.Center
+      UseField = True
+    }
+  }
   Index = 0
 }

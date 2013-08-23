@@ -1732,7 +1732,7 @@ Public Sub Button17_Click()
 Dim Rpt1 As Report
 Enviar = CboxConsulta.Text
 Enviar1 = Format$(DateBox1.Value, "dd/mm/yyyy")
-Rpt1 = New Rptmilicia
+Rpt1 = New RptMiliciailicia
 Rpt1.Preview
 
 End
