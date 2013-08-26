@@ -48,3 +48,13 @@ Public Sub DrawingArea4_Draw()
   
 
 End
+
+Public Sub str_claveusuario_KeyPress()
+
+  If Key.Code = Key.Enter Or Key.Code = Key.Return Then
+  Button1.SetFocus
+  Else
+  Return
+  Endif
+
+End
