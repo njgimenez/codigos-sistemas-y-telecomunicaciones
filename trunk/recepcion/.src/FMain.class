@@ -1830,8 +1830,37 @@ End If
 End If
 End
 
-Public Sub IconPanel1_Click()
 
-  
+Public Sub TextBox5_KeyRelease()
+
+Dim $linea As Integer
+Dim busqueda As String
+
+busqueda = UCase$(TextBox5.Text)
+If TextBox5.Text = ""
+visitas
+Else
+Query = "select * From visitas where nombrevisitante Like '%" & busqueda & "%' and retirado='" & 0 & "'" 
+Result = Conexion.Con.Exec(Query)
+For $linea = 0 To Result.Count - 1 Step 1   
+Grid_visitas[$linea, 0].text = Result!codigovisita
+Grid_visitas[$linea, 1].text = Result!cedulavisitante
+Grid_visitas[$linea, 2].text = Result!nombrevisitante
+Grid_visitas[$linea, 3].text = Result!codigopaciente
+Grid_visitas[$linea, 4].text = Result!personavisitar
+Grid_visitas[$linea, 5].text = Result!piso
+Grid_visitas[$linea, 6].text = Result!departamento
+Grid_visitas[$linea, 7].text = Result!area
+Grid_visitas[$linea, 8].text = Result!habitacion
+Grid_visitas[$linea, 9].text = Result!cama
+Grid_visitas[$linea, 10].text = Result!fechavisita
+Grid_visitas[$linea, 11].text = Result!horaentrada
+Grid_visitas[$linea, 12].text = Result!observacion
+Grid_visitas[$linea, 13].text = Result!modulo
+Result.MoveNext()
+Next 
+End If
+
 
 End
+
