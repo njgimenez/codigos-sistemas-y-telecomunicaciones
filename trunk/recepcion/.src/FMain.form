@@ -21,7 +21,7 @@
       Font = Font["DejaVu Serif,Bold,+1"]
     }
     { Grid_visitas GridView
-      MoveScaled(4,8,165,46)
+      MoveScaled(2,7,165,46)
     }
     Index = 1
     Text = ("Área administrativa")
@@ -188,13 +188,13 @@
       Enabled = False
     }
     { Button6 Button
-      MoveScaled(39,38,16,3)
+      MoveScaled(39,36,16,3)
       Enabled = False
       Text = ("INGRESAR")
       Picture = Picture["icon:/22/forward"]
     }
     { Button7 Button
-      MoveScaled(33,38,5,3)
+      MoveScaled(33,36,5,3)
       Picture = Picture["icon:/22/erase"]
     }
     { Button12 Button
@@ -240,12 +240,12 @@
       Enabled = False
     }
     { Label40 Label
-      MoveScaled(7,32,16,4)
+      MoveScaled(7,31,16,4)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("Observación:")
     }
     { str_observacionh TextBox
-      MoveScaled(23,28,41,9)
+      MoveScaled(23,28,41,7)
       Enabled = False
     }
     { CheckBox5 CheckBox
@@ -293,32 +293,19 @@
       ToolTip = ("Buscar paciente")
       Picture = Picture["icon:/22/find"]
     }
-    { DrawingArea7 DrawingArea
-      MoveScaled(1,43,72,14)
-      Visible = False
-      Background = &HDF0003&
-      { Label91 Label
-        MoveScaled(2,3,19,4)
-        Text = ("Nombre paciente:")
-      }
-      { TextBox5 TextBox
-        MoveScaled(1,7,23,4)
-      }
-      { Grid_pacientes GridView
-        MoveScaled(25,1,46,12)
-        Font = Font["Bitstream Charter"]
-      }
-    }
     { Label106 Label
-      MoveScaled(3,28,14,3)
+      MoveScaled(45,52,14,3)
+      Visible = False
       Text = ("codigopaciente")
     }
-    { Label112 Label
-      MoveScaled(2,34,12,8)
-    }
-    { Label113 Label
-      MoveScaled(16,39,11,3)
-      Text = ("Label113")
+    { DrawingArea7 DrawingArea
+      MoveScaled(0,39,74,19)
+      Visible = False
+      Background = &HFFFFFF&
+      { Grid_pacientes GridView
+        MoveScaled(0,1,74,18)
+        Font = Font["Bitstream Charter"]
+      }
     }
     Index = 3
     Text = ("Departamentos")
@@ -762,6 +749,7 @@
   }
   { PictureBox1 PictureBox
     MoveScaled(1,1,28,21)
+    Picture = Picture["Mision.jpg"]
     Stretch = True
   }
   { DrawingArea1 DrawingArea
