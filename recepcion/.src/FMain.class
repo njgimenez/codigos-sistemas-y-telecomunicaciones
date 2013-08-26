@@ -40,7 +40,6 @@ Result = conexion.Con.Exec(Query)
   Label41.Caption = Result!nombres
   Label45.Caption = Result!apellidos
   Label46.Caption = Result!cedula
-  IconPanel1.Index = 0
   Else
   DrawingArea2.Visible = False
   str_nombresv.Enabled = True
@@ -483,13 +482,13 @@ Grid_areaadministrativa.rows.height = 20
 
 Grid_areaadministrativa.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
 Grid_areaadministrativa.columns[0].text = "Cod. Visita" 
-Grid_areaadministrativa.columns[0].width = 50
+Grid_areaadministrativa.columns[0].width = 100
 Grid_areaadministrativa.columns[1].text = "C.I Visitante" 
-Grid_areaadministrativa.columns[1].width = 90
+Grid_areaadministrativa.columns[1].width = 100
 Grid_areaadministrativa.columns[2].text = "Nombre Visitante" 
-Grid_areaadministrativa.columns[2].width = 250
+Grid_areaadministrativa.columns[2].width = 300
 Grid_areaadministrativa.columns[3].text = "Persona a visitar" 
-Grid_areaadministrativa.columns[3].width = 200
+Grid_areaadministrativa.columns[3].width = 300
 Grid_areaadministrativa.columns[4].text = "Piso" 
 Grid_areaadministrativa.columns[4].width = 50
 Grid_areaadministrativa.columns[5].text = "Departamento" 
@@ -572,29 +571,30 @@ Grid_hospitalizacion.rows.height = 20
 
 Grid_hospitalizacion.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
 Grid_hospitalizacion.columns[0].text = "Cod. Visita" 
-Grid_hospitalizacion.columns[0].width = 70
+Grid_hospitalizacion.columns[0].width = 100
 Grid_hospitalizacion.columns[1].text = "Cedula Visitante" 
-Grid_hospitalizacion.columns[1].width = 90
+Grid_hospitalizacion.columns[1].width = 100
 Grid_hospitalizacion.columns[2].text = "Nombre Visitante" 
-Grid_hospitalizacion.columns[2].width = 250
-Grid_hospitalizacion.columns[3].text = "Paciente" 
-Grid_hospitalizacion.columns[3].width = 200
-Grid_hospitalizacion.columns[4].text = "Piso" 
-Grid_hospitalizacion.columns[4].width = 50
-Grid_hospitalizacion.columns[5].text = "Área" 
-Grid_hospitalizacion.columns[5].width = 100
-Grid_hospitalizacion.columns[6].text = "Hab." 
-Grid_hospitalizacion.columns[6].width = 50
-Grid_hospitalizacion.columns[7].text = "Cama" 
+Grid_hospitalizacion.columns[2].width = 300
+Grid_hospitalizacion.columns[3].text = "Codigo Paciente" 
+Grid_hospitalizacion.columns[3].width = 50
+Grid_hospitalizacion.columns[4].text = "Paciente" 
+Grid_hospitalizacion.columns[4].width = 300
+Grid_hospitalizacion.columns[5].text = "Piso" 
+Grid_hospitalizacion.columns[5].width = 50
+Grid_hospitalizacion.columns[6].text = "Área" 
+Grid_hospitalizacion.columns[6].width = 200
+Grid_hospitalizacion.columns[7].text = "Hab." 
 Grid_hospitalizacion.columns[7].width = 50
-Grid_hospitalizacion.columns[8].text = "Fecha de Visita" 
-Grid_hospitalizacion.columns[8].width = 100
-Grid_hospitalizacion.columns[9].text = "Hora de Visita" 
+Grid_hospitalizacion.columns[8].text = "Cama" 
+Grid_hospitalizacion.columns[8].width = 50
+Grid_hospitalizacion.columns[9].text = "Fecha de Visita" 
 Grid_hospitalizacion.columns[9].width = 100
-Grid_hospitalizacion.columns[10].text = "Observacion" 
-Grid_hospitalizacion.columns[10].width = 300
-Grid_hospitalizacion.columns[10].text = "Codigo Paciente" 
-Grid_hospitalizacion.columns[11].width = 50
+Grid_hospitalizacion.columns[10].text = "Hora de Visita" 
+Grid_hospitalizacion.columns[10].width = 100
+Grid_hospitalizacion.columns[11].text = "Observacion" 
+Grid_hospitalizacion.columns[11].width = 300
+
   
 conexion.Connect()
 
@@ -607,15 +607,16 @@ For $linea = 0 To Result.Count - 1 Step 1
 Grid_hospitalizacion[$linea, 0].text = Result!codigovisita
 Grid_hospitalizacion[$linea, 1].text = Result!cedulavisitante
 Grid_hospitalizacion[$linea, 2].text = Result!nombrevisitante
-Grid_hospitalizacion[$linea, 3].text = Result!personavisitar
-Grid_hospitalizacion[$linea, 4].text = Result!piso
-Grid_hospitalizacion[$linea, 5].text = Result!area
-Grid_hospitalizacion[$linea, 6].text = Result!habitacion
-Grid_hospitalizacion[$linea, 7].text = Result!cama
-Grid_hospitalizacion[$linea, 8].text = Result!fechavisita
-Grid_hospitalizacion[$linea, 9].text = Result!horaentrada
-Grid_hospitalizacion[$linea, 10].text = Result!observacion
-Grid_hospitalizacion[$linea, 11].text = Result!codigopaciente
+Grid_hospitalizacion[$linea, 3].text = Result!codigopaciente
+Grid_hospitalizacion[$linea, 4].text = Result!personavisitar
+Grid_hospitalizacion[$linea, 5].text = Result!piso
+Grid_hospitalizacion[$linea, 6].text = Result!area
+Grid_hospitalizacion[$linea, 7].text = Result!habitacion
+Grid_hospitalizacion[$linea, 8].text = Result!cama
+Grid_hospitalizacion[$linea, 9].text = Result!fechavisita
+Grid_hospitalizacion[$linea, 10].text = Result!horaentrada
+Grid_hospitalizacion[$linea, 11].text = Result!observacion
+
 Result.MoveNext()
 Next 
 
@@ -745,21 +746,21 @@ Grid_departamentos.rows.height = 20
 
 Grid_departamentos.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
 Grid_departamentos.columns[0].text = "Cod. Visita" 
-Grid_departamentos.columns[0].width = 70
+Grid_departamentos.columns[0].width = 100
 Grid_departamentos.columns[1].text = "Cedula Visitante" 
-Grid_departamentos.columns[1].width = 90
+Grid_departamentos.columns[1].width = 100
 Grid_departamentos.columns[2].text = "Nombre Visitante" 
-Grid_departamentos.columns[2].width = 250
-Grid_departamentos.columns[3].text = "Paciente" 
-Grid_departamentos.columns[3].width = 200
+Grid_departamentos.columns[2].width = 300
+Grid_departamentos.columns[3].text = "Persona a visitar" 
+Grid_departamentos.columns[3].width = 300
 Grid_departamentos.columns[4].text = "Piso" 
 Grid_departamentos.columns[4].width = 50
 Grid_departamentos.columns[5].text = "Departamento" 
-Grid_departamentos.columns[5].width = 100
+Grid_departamentos.columns[5].width = 200
 Grid_departamentos.columns[6].text = "Fecha entrada" 
-Grid_departamentos.columns[6].width = 50
+Grid_departamentos.columns[6].width = 80
 Grid_departamentos.columns[7].text = "Hora entrada" 
-Grid_departamentos.columns[7].width = 50
+Grid_departamentos.columns[7].width = 80
 Grid_departamentos.columns[8].text = "Observacion" 
 Grid_departamentos.columns[8].width = 300
   
@@ -986,36 +987,38 @@ End
 Public Sub visitas()
   
 Dim $linea As Integer
-Grid_visitas.columns.count = 12
+Grid_visitas.columns.count = 13
 Grid_visitas.rows.count = 50 
 Grid_visitas.columns.width = 100 
 Grid_visitas.rows.height = 20
 
 Grid_visitas.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
-Grid_visitas.columns[0].text = "Codigo" 
+Grid_visitas.columns[0].text = "Cod. Visitas" 
 Grid_visitas.columns[0].width = 70    
 Grid_visitas.columns[1].text = "C.I" 
-Grid_visitas.columns[1].width = 90
+Grid_visitas.columns[1].width = 100
 Grid_visitas.columns[2].text = "Nombre Visitante" 
-Grid_visitas.columns[2].width = 250
+Grid_visitas.columns[2].width = 300
 Grid_visitas.columns[3].text = "Persona a visitar" 
-Grid_visitas.columns[3].width = 200
+Grid_visitas.columns[3].width = 300
 Grid_visitas.columns[4].text = "Piso" 
 Grid_visitas.columns[4].width = 50
 Grid_visitas.columns[5].text = "Departamento" 
-Grid_visitas.columns[5].width = 100
+Grid_visitas.columns[5].width = 150
 Grid_visitas.columns[6].text = "Area" 
-Grid_visitas.columns[6].width = 100
+Grid_visitas.columns[6].width = 150
 Grid_visitas.columns[7].text = "Hab." 
 Grid_visitas.columns[7].width = 50
 Grid_visitas.columns[8].text = "Cama" 
 Grid_visitas.columns[8].width = 50
 Grid_visitas.columns[9].text = "Fecha visita" 
-Grid_visitas.columns[9].width = 80
+Grid_visitas.columns[9].width = 100
 Grid_visitas.columns[10].text = "Hora entrada" 
-Grid_visitas.columns[10].width = 50
+Grid_visitas.columns[10].width = 60
 Grid_visitas.columns[11].text = "Observacion" 
 Grid_visitas.columns[11].width = 300
+Grid_visitas.columns[12].text = "Modulo" 
+Grid_visitas.columns[12].width = 300
 
 conexion.Connect()
 
@@ -1037,6 +1040,7 @@ Grid_visitas[$linea, 8].text = Result!cama
 Grid_visitas[$linea, 9].text = Result!fechavisita
 Grid_visitas[$linea, 10].text = Result!horaentrada
 Grid_visitas[$linea, 11].text = Result!observacion
+Grid_visitas[$linea, 12].text = Result!modulo
 Result.MoveNext()
 Next 
 Grid_visitas.Visible = True
@@ -1334,9 +1338,6 @@ Public Sub Timer1_Timer()
 End
 
 Public Sub str_cedulab_KeyPress()
-If Key.Code = Key.Enter Or Key.Code = Key.Return Then
-B_buscarvisitante.SetFocus
-Endif
 
 If (Key.Code >= Asc("a") And Key.Code <= Asc("z")) Or (Key.Code >= Asc("A") And Key.Code <= Asc("Z"))
 Message.Warning("Disculpe,ingresar solo valores numéricos")
@@ -1526,27 +1527,27 @@ Grid_pacientes.rows.height = 15
 
 Grid_pacientes.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
 Grid_pacientes.columns[0].text = "Codigo" 
-Grid_pacientes.columns[0].width = 70    
+Grid_pacientes.columns[0].width = 100
 Grid_pacientes.columns[1].text = "Nombres" 
-Grid_pacientes.columns[1].width = 150
+Grid_pacientes.columns[1].width = 300
 Grid_pacientes.columns[2].text = "Apellidos" 
-Grid_pacientes.columns[2].width = 150
+Grid_pacientes.columns[2].width = 300
 Grid_pacientes.columns[3].text = "Fecha Ingreso" 
 Grid_pacientes.columns[3].width = 100
 Grid_pacientes.columns[4].text = "Piso" 
 Grid_pacientes.columns[4].width = 50
 Grid_pacientes.columns[5].text = "Area" 
-Grid_pacientes.columns[5].width = 150
+Grid_pacientes.columns[5].width = 200
 Grid_pacientes.columns[6].text = "Hab." 
 Grid_pacientes.columns[6].width = 50
 Grid_pacientes.columns[7].text = "Cama" 
 Grid_pacientes.columns[7].width = 50
 Grid_pacientes.columns[8].text = "Acompañante" 
-Grid_pacientes.columns[8].width = 150
+Grid_pacientes.columns[8].width = 250
 Grid_pacientes.columns[9].text = "Parentesco" 
 Grid_pacientes.columns[9].width = 100
 Grid_pacientes.columns[10].text = "Acompañantes" 
-Grid_pacientes.columns[10].width = 150
+Grid_pacientes.columns[10].width = 100
 
 conexion.Connect()
 
@@ -1696,7 +1697,7 @@ Public Sub sumavisitaspacientes()
    
    
    numvisitas = Result!visitas
-   Label112.Caption = numvisitas
+   
   
   suma = Val(numvisitas) + 1
   resultadosuma = Val(suma)
@@ -1739,20 +1740,56 @@ Public Sub restavisitaspacientes()
    
    
    numvisitas = Result!visitas
-   Label112.Caption = numvisitas
+
   
   resta = Val(numvisitas) - 1
   resultadoresta = Val(resta)
-  Label113.Caption = resultadoresta
+
 End
 
 Public Sub Button17_Click()
 Dim Rpt1 As Report
 Enviar = CboxConsulta.Text
 Enviar1 = Format$(DateBox1.Value, "dd/mm/yyyy")
-Rpt1 = New RptMilicia
+Rpt1 = New RptMiliciailicia
 Rpt1.Preview
 
+End
+
+
+
+Public Sub str_nombrepaciente_KeyRelease()
+
+Dim $linea As Integer
+Dim busqueda As String
+
+busqueda = UCase$(str_nombrepaciente.Text)
+If str_nombrepaciente.Text = ""
+DrawingArea7.Visible = False
+pacientes
+Else
+Query = "select * From listadopacientes where nombres Like '%" & busqueda & "%' and retirado='" & 0 & "'" 
+Result = Conexion.Con.Exec(Query)
+If Result.Available Then
+DrawingArea7.Visible = True
+For $linea = 0 To Result.Count - 1 Step 1   
+Grid_pacientes[$linea, 0].text = Result!codigo
+Grid_pacientes[$linea, 1].text = Result!nombres
+Grid_pacientes[$linea, 2].text = Result!apellidos
+Grid_pacientes[$linea, 3].text = Result!fechaingreso
+Grid_pacientes[$linea, 4].text = Result!piso
+Grid_pacientes[$linea, 5].text = Result!area
+Grid_pacientes[$linea, 6].text = Result!habitacion
+Grid_pacientes[$linea, 7].text = Result!cama
+Grid_pacientes[$linea, 8].text = Result!acompanante
+Grid_pacientes[$linea, 9].text = Result!parentesco
+Grid_pacientes[$linea, 10].text = Result!visitas
+Result.MoveNext()
+Next 
+Else
+  DrawingArea7.Visible = False
+End If
+End If
 End
 
 Public Sub IconPanel1_Click()
