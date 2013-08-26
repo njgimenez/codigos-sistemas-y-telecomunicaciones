@@ -7,7 +7,7 @@ Public Procedure Connect()
                 Con.Close() ' Close the connection
                 Con = New Connection
                 Con.Type = "postgresql"
-                Con.Host = "localhost" ' Name of the server
+                Con.Host = "192.168.0.2" ' Name of the server"
                 Con.Login = "postgres" ' User's name for the connection
                 Con.Port = "5432" ' Port to use in the connection, usually 5432
                 Con.Name = "recepcion" ' Nombre de la base de datos que desea utilizar
