@@ -303,7 +303,6 @@
       }
       { TextBox5 TextBox
         MoveScaled(1,7,23,4)
-        Text = ("TextBox5")
       }
       { Grid_pacientes GridView
         MoveScaled(25,1,46,12)
@@ -625,7 +624,7 @@
     }
     { Separator7 Separator
       MoveScaled(62,0,1,58)
-      Background = &H0000FF&
+      Background = &HDF0003&
     }
     { Button14 Button
       MoveScaled(0,0,18,4)
