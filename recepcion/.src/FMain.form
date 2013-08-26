@@ -12,16 +12,19 @@
     Index = 0
     Text = ("VISITAS:")
     { CheckBox6 CheckBox
-      MoveScaled(4,1,22,5)
+      MoveScaled(2,1,22,5)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("TOTAL VISITAS:")
     }
     { Label51 Label
-      MoveScaled(27,2,10,3)
+      MoveScaled(25,2,10,3)
       Font = Font["DejaVu Serif,Bold,+1"]
     }
     { Grid_visitas GridView
-      MoveScaled(2,7,165,46)
+      MoveScaled(2,10,165,43)
+    }
+    { TextBox5 TextBox
+      MoveScaled(2,6,33,4)
     }
     Index = 1
     Text = ("Área administrativa")
@@ -1005,11 +1008,11 @@
         Text = ("Label67")
       }
       { Label104 Label
-        MoveScaled(21,15,15,3)
+        MoveScaled(13,15,15,3)
         Text = ("Total Pacientes:")
       }
       { Label105 Label
-        MoveScaled(36,15,4,3)
+        MoveScaled(28,15,4,3)
         Font = Font["Bold"]
       }
     }
