@@ -1334,6 +1334,9 @@ Public Sub Timer1_Timer()
 End
 
 Public Sub str_cedulab_KeyPress()
+If Key.Code = Key.Enter Or Key.Code = Key.Return Then
+B_buscarvisitante.SetFocus
+Endif
 
 If (Key.Code >= Asc("a") And Key.Code <= Asc("z")) Or (Key.Code >= Asc("A") And Key.Code <= Asc("Z"))
 Message.Warning("Disculpe,ingresar solo valores numéricos")
@@ -1747,7 +1750,7 @@ Public Sub Button17_Click()
 Dim Rpt1 As Report
 Enviar = CboxConsulta.Text
 Enviar1 = Format$(DateBox1.Value, "dd/mm/yyyy")
-Rpt1 = New RptMiliciailicia
+Rpt1 = New RptMilicia
 Rpt1.Preview
 
 End
