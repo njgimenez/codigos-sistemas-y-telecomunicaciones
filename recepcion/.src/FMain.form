@@ -150,7 +150,7 @@
       Text = ("TextBox4")
     }
     { Grid_areaadministrativa GridView
-      MoveScaled(77,11,92,44)
+      MoveScaled(77,11,92,46)
       Visible = False
     }
     Index = 2

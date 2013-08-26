@@ -987,7 +987,7 @@ End
 Public Sub visitas()
   
 Dim $linea As Integer
-Grid_visitas.columns.count = 13
+Grid_visitas.columns.count = 14
 Grid_visitas.rows.count = 50 
 Grid_visitas.columns.width = 100 
 Grid_visitas.rows.height = 20
@@ -999,26 +999,28 @@ Grid_visitas.columns[1].text = "C.I"
 Grid_visitas.columns[1].width = 100
 Grid_visitas.columns[2].text = "Nombre Visitante" 
 Grid_visitas.columns[2].width = 300
-Grid_visitas.columns[3].text = "Persona a visitar" 
+Grid_visitas.columns[3].text = "Cod. Paciente" 
 Grid_visitas.columns[3].width = 300
-Grid_visitas.columns[4].text = "Piso" 
-Grid_visitas.columns[4].width = 50
-Grid_visitas.columns[5].text = "Departamento" 
-Grid_visitas.columns[5].width = 150
-Grid_visitas.columns[6].text = "Area" 
+Grid_visitas.columns[4].text = "Persona a visitar o paciente" 
+Grid_visitas.columns[4].width = 300
+Grid_visitas.columns[5].text = "Piso" 
+Grid_visitas.columns[5].width = 50
+Grid_visitas.columns[6].text = "Departamento" 
 Grid_visitas.columns[6].width = 150
-Grid_visitas.columns[7].text = "Hab." 
-Grid_visitas.columns[7].width = 50
-Grid_visitas.columns[8].text = "Cama" 
+Grid_visitas.columns[7].text = "Area" 
+Grid_visitas.columns[7].width = 150
+Grid_visitas.columns[8].text = "Hab." 
 Grid_visitas.columns[8].width = 50
-Grid_visitas.columns[9].text = "Fecha visita" 
-Grid_visitas.columns[9].width = 100
-Grid_visitas.columns[10].text = "Hora entrada" 
-Grid_visitas.columns[10].width = 60
-Grid_visitas.columns[11].text = "Observacion" 
-Grid_visitas.columns[11].width = 300
-Grid_visitas.columns[12].text = "Modulo" 
+Grid_visitas.columns[9].text = "Cama" 
+Grid_visitas.columns[9].width = 50
+Grid_visitas.columns[10].text = "Fecha visita" 
+Grid_visitas.columns[10].width = 100
+Grid_visitas.columns[11].text = "Hora entrada" 
+Grid_visitas.columns[11].width = 60
+Grid_visitas.columns[12].text = "Observacion" 
 Grid_visitas.columns[12].width = 300
+Grid_visitas.columns[13].text = "Modulo" 
+Grid_visitas.columns[13].width = 300
 
 conexion.Connect()
 
@@ -1031,16 +1033,17 @@ For $linea = 0 To Result.Count - 1 Step 1
 Grid_visitas[$linea, 0].text = Result!codigovisita
 Grid_visitas[$linea, 1].text = Result!cedulavisitante
 Grid_visitas[$linea, 2].text = Result!nombrevisitante
-Grid_visitas[$linea, 3].text = Result!personavisitar
-Grid_visitas[$linea, 4].text = Result!piso
-Grid_visitas[$linea, 5].text = Result!departamento
-Grid_visitas[$linea, 6].text = Result!area
-Grid_visitas[$linea, 7].text = Result!habitacion
-Grid_visitas[$linea, 8].text = Result!cama
-Grid_visitas[$linea, 9].text = Result!fechavisita
-Grid_visitas[$linea, 10].text = Result!horaentrada
-Grid_visitas[$linea, 11].text = Result!observacion
-Grid_visitas[$linea, 12].text = Result!modulo
+Grid_visitas[$linea, 3].text = Result!codigopaciente
+Grid_visitas[$linea, 4].text = Result!personavisitar
+Grid_visitas[$linea, 5].text = Result!piso
+Grid_visitas[$linea, 6].text = Result!departamento
+Grid_visitas[$linea, 7].text = Result!area
+Grid_visitas[$linea, 8].text = Result!habitacion
+Grid_visitas[$linea, 9].text = Result!cama
+Grid_visitas[$linea, 10].text = Result!fechavisita
+Grid_visitas[$linea, 11].text = Result!horaentrada
+Grid_visitas[$linea, 12].text = Result!observacion
+Grid_visitas[$linea, 13].text = Result!modulo
 Result.MoveNext()
 Next 
 Grid_visitas.Visible = True
@@ -1268,7 +1271,9 @@ Public Sub Grid_visitas_Click()
 Dim i As Integer
 Dim Preg As Integer
 Dim codigovisita As String
-
+Dim modulo As String
+Dim numvisitas As String
+Dim resta As String
 
 If Grid_visitas[Grid_visitas.Row, 0].text = ""
 Return
@@ -1276,19 +1281,52 @@ End If
 
   query = "SELECT *  FROM visitas Where codigovisita = '" & Grid_visitas[Grid_visitas.Row, 0].text & "' AND cedulavisitante='" & Grid_visitas[Grid_visitas.Row, i].text & "' "
   result = conexion.Con.Exec(query)
+  
+   codigovisita = Grid_visitas[Grid_visitas.Row, 0].Text
+   modulo = Grid_visitas[Grid_visitas.Row, 12].Text
+   pacientecodigo = Grid_visitas[Grid_visitas.Row, 3].Text
 
   Preg = 0
       Preg = Message.Question("¿El visitante se retira?", "Si", "No")
 
- If Preg = 1 Then
+ If Preg = 1 
    str_horasalida.Text = Time
-   codigovisita = Grid_visitas[Grid_visitas.Row, 0].Text
-   conexion.Connect()
-   query = "UPDATE visitas SET retirado='" & 1 & "', horasalida='" & Mid$(str_horasalida.Text, 1, 5) & "' where codigovisita='" & codigovisita & "'"
-   result = Conexion.Con.Exec(query)
-   visitas
-   visitaspediatrico
- Endif
+ 
+   If pacientecodigo = ""
+ 
+    conexion.Connect()
+ 
+ query = "UPDATE visitas SET retirado='" & 1 & "', horasalida='" & Mid$(str_horasalida.Text, 1, 5) & "' where codigovisita='" & codigovisita & "'"
+ result = Conexion.Con.Exec(query)
+ 
+ visitas
+ visitaspediatrico
+ pacientes
+   
+Else
+  
+conexion.Connect()
+  
+query = "Select * from listadopacientes where codigo=  '" & pacientecodigo & "' "
+Result = conexion.Con.Exec(query)
+      
+numvisitas = Result!visitas
+resta = Val(numvisitas) - 1
+resultadoresta = Val(resta)
+   
+  
+query = "update listadopacientes SET visitas='" & Val(resultadoresta) & "' where codigo ='" & pacientecodigo & "'"
+result = conexion.Con.Exec(query)
+   
+query = "UPDATE visitas SET retirado='" & 1 & "', horasalida='" & Mid$(str_horasalida.Text, 1, 5) & "' where codigovisita='" & codigovisita & "'"
+result = Conexion.Con.Exec(query)
+ 
+visitas
+visitaspediatrico
+pacientes
+ 
+Endif
+End If
 
 End
 
