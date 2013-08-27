@@ -482,7 +482,7 @@ Grid_areaadministrativa.rows.height = 20
 
 Grid_areaadministrativa.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
 Grid_areaadministrativa.columns[0].text = "Cod. Visita" 
-Grid_areaadministrativa.columns[0].width = 100
+Grid_areaadministrativa.columns[0].width = 0
 Grid_areaadministrativa.columns[1].text = "C.I Visitante" 
 Grid_areaadministrativa.columns[1].width = 100
 Grid_areaadministrativa.columns[2].text = "Nombre Visitante" 
@@ -571,13 +571,13 @@ Grid_hospitalizacion.rows.height = 20
 
 Grid_hospitalizacion.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
 Grid_hospitalizacion.columns[0].text = "Cod. Visita" 
-Grid_hospitalizacion.columns[0].width = 100
+Grid_hospitalizacion.columns[0].width = 0
 Grid_hospitalizacion.columns[1].text = "Cedula Visitante" 
 Grid_hospitalizacion.columns[1].width = 100
 Grid_hospitalizacion.columns[2].text = "Nombre Visitante" 
 Grid_hospitalizacion.columns[2].width = 300
 Grid_hospitalizacion.columns[3].text = "Codigo Paciente" 
-Grid_hospitalizacion.columns[3].width = 50
+Grid_hospitalizacion.columns[3].width = 0
 Grid_hospitalizacion.columns[4].text = "Paciente" 
 Grid_hospitalizacion.columns[4].width = 300
 Grid_hospitalizacion.columns[5].text = "Piso" 
@@ -701,7 +701,7 @@ End If
  If Preg = 1 Then
    str_horasalida.Text = Time
    Label48.Caption = Grid_hospitalizacion[Grid_hospitalizacion.Row, 0].Text
-   pacientecodigo = Grid_hospitalizacion[Grid_hospitalizacion.Row, 11].Text
+   pacientecodigo = Grid_hospitalizacion[Grid_hospitalizacion.Row, 3].Text
    
    conexion.Connect()
    query = "UPDATE visitas SET retirado='" & 1 & "', horasalida='" & Mid$(str_horasalida.Text, 1, 5) & "' where codigovisita='" & Label48.Text & "'"
@@ -746,7 +746,7 @@ Grid_departamentos.rows.height = 20
 
 Grid_departamentos.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
 Grid_departamentos.columns[0].text = "Cod. Visita" 
-Grid_departamentos.columns[0].width = 100
+Grid_departamentos.columns[0].width = 0
 Grid_departamentos.columns[1].text = "Cedula Visitante" 
 Grid_departamentos.columns[1].width = 100
 Grid_departamentos.columns[2].text = "Nombre Visitante" 
@@ -994,13 +994,13 @@ Grid_visitas.rows.height = 20
 
 Grid_visitas.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
 Grid_visitas.columns[0].text = "Cod. Visitas" 
-Grid_visitas.columns[0].width = 70    
+Grid_visitas.columns[0].width = 0    
 Grid_visitas.columns[1].text = "C.I" 
 Grid_visitas.columns[1].width = 100
 Grid_visitas.columns[2].text = "Nombre Visitante" 
 Grid_visitas.columns[2].width = 300
 Grid_visitas.columns[3].text = "Cod. Paciente" 
-Grid_visitas.columns[3].width = 300
+Grid_visitas.columns[3].width = 0
 Grid_visitas.columns[4].text = "Persona a visitar o paciente" 
 Grid_visitas.columns[4].width = 300
 Grid_visitas.columns[5].text = "Piso" 
@@ -1020,7 +1020,7 @@ Grid_visitas.columns[11].width = 60
 Grid_visitas.columns[12].text = "Observacion" 
 Grid_visitas.columns[12].width = 300
 Grid_visitas.columns[13].text = "Modulo" 
-Grid_visitas.columns[13].width = 300
+Grid_visitas.columns[13].width = 0
 
 conexion.Connect()
 
@@ -1618,7 +1618,7 @@ Grid_pacientes2.rows.height = 15
 
 Grid_pacientes2.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
 Grid_pacientes2.columns[0].text = "Codigo" 
-Grid_pacientes2.columns[0].width = 70    
+Grid_pacientes2.columns[0].width = 0
 Grid_pacientes2.columns[1].text = "Nombres" 
 Grid_pacientes2.columns[1].width = 150
 Grid_pacientes2.columns[2].text = "Apellidos" 

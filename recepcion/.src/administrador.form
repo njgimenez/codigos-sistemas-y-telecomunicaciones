@@ -1,7 +1,7 @@
 # Gambas Form File 3.0
 
 { Form Form
-  MoveScaled(0,0,121,81)
+  MoveScaled(0,0,205,131)
   Background = Color.SelectedForeground
   Text = ("ADMINISTRADOR")
   { Menu1 Menu
@@ -11,9 +11,8 @@
     }
   }
   { DrawingArea1 DrawingArea
-    MoveScaled(17,7,94,66)
-    Visible = False
-    Background = &HFF0000&
+    MoveScaled(107,6,94,66)
+    Background = &HDF0003&
     { DrawingArea2 DrawingArea
       MoveScaled(2,2,90,34)
       Background = Color.SelectedForeground
@@ -251,7 +250,7 @@
     }
     { PictureBox1 PictureBox
       MoveScaled(2,36,25,28)
-      Picture = Picture["brand.gif"]
+      Picture = Picture["Mision.jpg"]
       Stretch = True
     }
   }
@@ -283,5 +282,12 @@
     MoveScaled(56,1,15,3)
     Font = Font["DejaVu Serif,Bold,+1"]
     Text = ("Contraseña:")
+  }
+  { DrawingArea3 DrawingArea
+    MoveScaled(2,6,104,66)
+    Background = &HDF0003&
+    { GridView2 GridView
+      MoveScaled(1,2,102,62)
+    }
   }
 }
