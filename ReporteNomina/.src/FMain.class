@@ -1,0 +1,370 @@
+' Gambas class file
+
+Public limite As Integer
+Public btnx As Integer
+Public btny As Integer
+Public btni As Integer
+Public oriente As String
+Public tamano As String
+
+Public Sub _new()
+  
+End
+
+Public Sub Form_Open()
+
+  Dim $Query As String
+  Dim $Result As Result
+  Dim i As Integer
+  Dim patrulla As Float
+
+  oriente = "landscape"
+  patrulla = 0
+  tamano = "letter"
+  $Query = "Select tipo_nomina, descripcion " & 
+    "From " &
+    "nom001 order by tipo_nomina"
+  $Result = conexion.$Con.Exec($Query)
+  For i = 0 To $Result.Count - 1 Step 1                                       
+    ComboBox1.Add($Result!tipo_nomina & " " & $Result!descripcion)    
+    $Result.MoveNext()
+  Next
+  Me.top = (Desktop.Height / 2) - (Me.Height / 2) 
+  Me.Left = (Desktop.Width / 2) - (Me.Width / 2) 
+  GridView2.Columns.Count = 2
+  GridView2.Columns[0].Text = "Codigos"
+  GridView2.Columns[0].Width = 100
+  GridView2.Columns[1].Text = "Denominacion"
+  GridView2.Columns[1].Width = 100
+
+End
+
+Public Sub TableView1_Change()
+  
+End
+
+Public Sub TableView1_ColumnResize(Column As Integer)
+  
+End
+
+Public Sub ComboBox1_Click()
+  
+  Dim $Query As String
+  Dim $Result As Result
+  Dim i As Integer
+  
+  $Query = "Select cod_concepto, denominacion " & 
+    "From " &
+    "nom002 where tipo_nomina='" & Mid(ComboBox1.Text, 1, 2) & "' order by cod_concepto"
+  $Result = conexion.$Con.Exec($Query)
+  GridView2.Clear
+  GridView2.Rows.Count = $Result.Count 
+  For i = 0 To $Result.Count - 1 Step 1                                       
+    GridView2[i, 0].Text = $Result!cod_concepto
+    GridView2[i, 1].Text = $Result!denominacion
+    $Result.MoveNext()
+  Next
+  
+End
+
+Public Sub GridView2_DblClick()
+  
+  Dim Elemento As String
+  
+  Elemento = GridView2[GridView2.Row, 0].Text & " " & GridView2[GridView2.Row, 1].Text
+  If ListBox1.Find(Elemento) < 0 Then
+    ListBox1.Add(Elemento)
+    ListBox1.Sorted = True
+  Else
+    Message.Error("Codigo ya fue Seleccionado") 
+  Endif
+  
+End
+
+Public Sub ListBox1_Click()
+  
+  Dim opcion As Integer
+  
+  opcion = Message.Question("¿Eliminar Codigo?", "Aceptar", "Cancelar")
+  If opcion = 1 Then
+    ListBox1.Remove(ListBox1.Index)
+    ListBox1.Sorted = True
+  Endif
+  
+End
+
+Public Sub TableView1_Click()
+  
+End
+
+Public Sub ToggleButton2_Click()
+  
+  Dim $Query, a As String
+  Dim $Result As Result
+  Dim i As Integer
+  Dim cadenasql As String
+  Dim codigos As New String[ListBox1.Count]
+  Dim encontrados As New String[ListBox1.Count]
+  Dim totales As New Float[ListBox1.Count]
+  Dim $Cedulas As Result
+  Dim j As Integer
+  Dim k As Integer
+  Dim resu As Integer
+  Dim Acumulado, grantotal As Float
+  
+  For i = 0 To ListBox1.Count - 1 Step 1 
+    cadenasql &= "nom018.cod_concepto = '" & Mid(ListBox1[i].Text, 1, 3) & "' OR "
+  Next
+  cadenasql = Mid(cadenasql, 1, Len(cadenasql) - 4)
+  
+  $Query = "drop table reporte1; Select " & 
+    "nom018.cod_empleado, nom018.cod_concepto,nom018.des_concepto,SUM(nom018.monto) As MONTO " &
+    "into reporte1 From " &
+    "(nom018 Left join nom006 On (nom018.cod_empleado = nom006.cod_empleado)), nom001 " &
+    "WHERE " &
+    "nom001.tipo_nomina = nom018.tipo_nomina And " &
+    "nom001.tipo_nomina = '" & Mid(ComboBox1.Text, 1, 2) & "'AND " &
+    "(" & cadenasql & ") AND " &
+    "nom018.fecha_nomina >= '" & Format(DateBox1.Value, "yyyymmdd") & "' AND nom018.fecha_nomina <='" & Format(DateBox2.Value, "yyyymmdd") & "'  " &     
+    "GROUP BY " &
+    "nom018.tipo_nomina,nom001.descripcion,nom018.cod_empleado,nom018.nombre_empleado,nom018.cod_concepto," &
+    "nom018.des_concepto,nom018.asig_ded_apo,nom018.tipo_asigna,nom006.fecha_ingreso " &
+    "ORDER BY " &
+    "nom018.tipo_nomina,nom018.cod_empleado,nom018.cod_concepto"
+ 
+  Try $Result = conexion.$Con.Exec($Query)
+  If Error Then 
+    Message.Error(Mid(Error.Text, 1, 40) & "...\n Verifique que los criterios de busqueda esten llenos!")
+    Return
+  Endif   
+  
+  cadenasql = ""
+  For i = 0 To ListBox1.Count - 1 Step 1
+    cadenasql &= "camp" & Str(i + 1) & " numeric, "
+  Next 
+  cadenasql = Mid(cadenasql, 1, Len(cadenasql) - 2)
+  $Query = "DROP TYPE nuevoreporte CASCADE; " &
+    "Create TYPE nuevoreporte As " &
+    "(cod_empleado character varying(15)," &
+    cadenasql & ");" &
+    "ALTER TYPE nuevoreporte " &
+    "OWNER To postgres;" &
+    "Create Or Replace function func_crosstab_invertida(text) " &
+    "RETURNS setof nuevoreporte " &
+    "As '$libdir/tablefunc','crosstab' LANGUAGE C STABLE STRICT;"
+  
+  $Result = conexion.$Con.Exec($Query)
+  
+  For i = 0 To ListBox1.Count - 1 Step 1
+    codigos[i] = Mid(ListBox1[i].Text, 1, 3)
+  Next 
+  
+  $Query = "Select " & 
+    "nom018.cod_empleado " &
+    "From " &
+    "(nom018 Left join nom006 On (nom018.cod_empleado = nom006.cod_empleado)), nom001 " &
+    "WHERE " &
+    "nom001.tipo_nomina = nom018.tipo_nomina And " &
+    "nom001.tipo_nomina = '" & Mid(ComboBox1.Text, 1, 2) & "'AND " &
+    "nom018.fecha_nomina >= '" & Format(DateBox1.Value, "yyyymmdd") & "' AND nom018.fecha_nomina <='" & Format(DateBox2.Value, "yyyymmdd") & "'  " &
+    "GROUP BY " &
+    "nom018.cod_empleado," &
+    "nom006.nombre " &
+    "ORDER BY " &
+    "nom018.cod_empleado"
+  $Cedulas = conexion.$Con.Exec($Query) 
+  
+  For i = 0 To $Cedulas.Count - 1 Step 1 
+    encontrados.Fill("", 0, encontrados.Length)
+    
+    $Query = "Select cod_concepto " &
+      "From reporte1 " &
+      "WHERE " &
+      "cod_empleado = '" & $Cedulas!cod_empleado & "'" &
+      "GROUP BY " &
+      "cod_empleado,cod_concepto " & 
+      "ORDER BY " &
+      "cod_empleado,cod_concepto"
+    $Result = conexion.$Con.Exec($Query)
+    For j = 0 To $Result.Count - 1 Step 1 
+      encontrados[j] = $Result!cod_concepto 
+      $Result.MoveNext
+    Next
+    For k = 0 To codigos.Length - 1 Step 1 
+      If encontrados.Find(codigos[K]) < 0 
+        $Query = "INSERT INTO reporte1 (cod_empleado, cod_concepto, des_concepto, monto) values ('" & $Cedulas!cod_empleado & "','" & codigos[K] & "','',0)" 
+        $Result = conexion.$Con.Exec($Query)
+      Endif
+    Next
+    $Cedulas.MoveNext
+  Next
+  
+  $Query = "drop table reporte2; Select * " &
+    "into reporte2 From reporte1 " &
+    "ORDER BY " &
+    "cod_empleado,cod_concepto"
+  $Result = conexion.$Con.Exec($Query)
+  
+  'esta parte es la que llena el DataView para el report
+  
+  $Query = "Select * From func_crosstab_invertida('select cod_empleado, des_concepto, monto from reporte2 order by 1 asc');"
+  $Result = conexion.$Con.Exec($Query) 
+  TableView1.Columns.Count = $Result.Fields.Count + 4
+  TableView1.Columns[0].Text = "Codigo"
+  TableView1.Columns[0].Width = 80
+  TableView1.Columns[1].Text = "Nombres"
+  TableView1.Columns[1].Width = 270
+  TableView1.Columns[2].Text = "Cargo"
+  TableView1.Columns[2].Width = 230
+  TableView1.Columns[3].Text = "Fecha de Ingreso"
+  TableView1.Columns[3].Width = 190
+  
+  For i = 0 To ListBox1.Count - 1 Step 1 
+    TableView1.Columns[i + 4].Text = Mid(ListBox1[i].Text, 1, 3)
+    TableView1.Columns[i + 4].Width = 90   
+  Next
+  
+  TableView1.Columns[$Result.Fields.Count + 3].Text = "Total"
+  TableView1.Columns[$Result.Fields.Count + 3].Width = 190
+  
+  TableView1.Rows.Count = $Result.Count + 1
+  
+  For i = 0 To $Result.Count - 1 Step 1                                       
+    Acumulado = 0
+    TableView1[i, 0].Text = $Result!cod_empleado
+    TableView1[i, 1].Text = BuscarDato($Result!cod_empleado, "nombre")
+    TableView1[i, 2].Text = BuscarDato($Result!cod_empleado, "des_cargo")
+    TableView1[i, 3].Text = BuscarDato($Result!cod_empleado, "fecha_ingreso")
+    For j = 1 To $Result.Fields.Count - 1 Step 1    
+      TableView1[i, j + 3].Text = Format$($Result["camp" & Str(j)], "Bs #.##")
+       totales[j - 1] = totales[j - 1] + CFloat($Result["camp" & Str(j)])
+      If $Result["camp" & Str(j)] == 0 Then 
+        TableView1[i, j + 3].Text = "Bs 0,00"
+      Endif
+      
+      Acumulado += Val(Str($Result["camp" & Str(j)]))      
+    Next
+    
+    TableView1[i, $Result.Fields.Count + 3].Text = Format$(Acumulado, "Bs #.##")
+    grantotal += Acumulado
+   If Acumulado == 0 Then 
+' ' '       TableView1[i, j + 3].Text = "Bs 0,00"/home/servidor/Escritorio/valla.jpg
+    Endif
+    $Result.MoveNext()
+  Next
+   TableView1[TableView1.Rows.Count - 1, 3].Text = "Totales"
+    For j = 0 To totales.Count - 1 Step 1 
+      TableView1[TableView1.Rows.Count - 1, j + 4].Text = Format$(totales[j], "Bs #.##")
+       If totales[j] == 0 Then 
+       TableView1[TableView1.Rows.Count - 1, j + 4].Text = "Bs 0,00"
+    Endif
+    Next
+  
+    TableView1[TableView1.Rows.Count - 1, TableView1.Columns.Count - 1].Text = Format$(grantotal, "Bs #.##")
+    
+  For i = 0 To totales.Count - 1 Step 1
+    ListBox2.Add(totales[i])
+  Next
+   
+  
+  
+  
+End
+
+Public Function BuscarDato(codigo As String, DatoaBuscar As String) As String
+  
+  Dim $Query, a As String
+  Dim $Result As Result
+  Dim cadena As String
+  
+  $Query = " Select " &
+    "nom006.nombre, " &
+    "nom006.fecha_ingreso, " &
+    "nom008.des_cargo, " &
+    "nom008.fecha_asigna, " &
+    "nom008.sueldo " &
+    "From " &
+    "public.nom008, " & 
+    "public.nom006 " &
+    "WHERE " &
+    "nom006.cod_empleado = nom008.cod_empleado " &
+    "And nom008.cod_empleado = '" & codigo & "' " &
+    "And nom008.fecha_asigna = ( Select Max(nom008.fecha_asigna) From public.nom008 where nom008.cod_empleado =  '" & codigo & "')"
+  
+  $Result = conexion.$Con.Exec($Query) 
+  Return $Result[DatoaBuscar] 'Devolvemos el valor de la operación
+
+End
+
+Public Sub ToggleButton1_Click()
+  
+End
+
+Public Sub Botones_Click()
+
+  Dim sentencia As String
+  Dim btn As Button
+  Dim i, j As Integer
+  Dim cadena As String
+
+  cadena = "<html><head> <meta http-equiv=" & Chr(34) & "Content-Type" & Chr(34) & " content=" & Chr(34) & "text/Html; charset=UTF-8" & Chr(34) & "/> </head> <body>\n"
+  cadena &= "<style type ='text/css'> \n"
+  cadena &= ".myTable { background-color:#ffffff;border-collapse:collapse; } \n"
+  cadena &= ".myTable th { background-color:#d9e5ee;color:white; } \n"
+  cadena &= ".myTable td, .myTable th { padding:5px;border:1px solid #000000; } \n"
+  cadena &= "</style> \n" 
+  cadena &= "<table align='center' border=0> \n" 
+  cadena &= "<tr> \n"
+  cadena &= "<td rowspan='2'><IMG SRC='logo2peq.png' VSPACE=3 HSPACE=20 ALT='Obra de K. Haring'></td> \n"
+  cadena &= "<td width='500px' align='center'><font size=1 % font-family='arial'>REPUBLICA BOLIVARIANA DE VENEZUELA<BR> GOBIERNO BOLIVARIANO DEL ESTADO YARACUY<BR>SECRETARÍA DE DESARROLLO SOCIAL<BR> FUNDACIÓN NIÑO JESÚS DEL ESTADO YARACUY</font></td> \n" 
+  cadena &= "</tr> \n" 
+  cadena &= "<tr><td align='center'>BENEFICIOS PERCIBIDOS</td></tr> \n"
+  cadena &= "<tr> \n"
+  cadena &= "<td align='left'> \n"
+  cadena &= "Fecha:" & Format$(Now(), "dd/mm/yyyy") & " \n "
+  cadena &= "</td> \n"
+  cadena &= "<td align='center'> \n"
+  cadena &= "Periodo desde: " & DateBox1.Value & " - hasta: " & DateBox2.Value & " \n "
+  cadena &= "</td> \n"  
+  cadena &= "</tr> \n"
+  cadena &= "</table> \n"  
+  cadena &= "<table  align='center' class ='myTable'> \n"
+  cadena &= "<tr> \n"
+  For i = 0 To TableView1.Columns.Count - 1 Step 1  
+  cadena &= "<th><font size=1 % font-family='arial' color='blue'>" & TableView1.Columns[i].Text & "</font></th> \n"
+  Next
+  cadena &= " </tr> \n"
+  For i = 0 To TableView1.Rows.Count - 1 Step 1     
+    cadena &= " <Tr> \n"
+    For j = 0 To TableView1.Columns.Count - 1 Step 1
+      cadena &= " <td><font size=1 % <font face='serif'>" & TableView1[i, j].Text & "</font></td> \n"
+    Next
+    cadena &= " </Tr> \n"
+  Next
+  cadena &= " </table > \n"
+  cadena &= "</body></html>"
+  File.Save(User.home & "/nuevo.html", cadena)
+  tamano = ComboBox2.Text
+  sentencia = "wkhtmltopdf " & User.home & "/nuevo.html " & User.home & "/nuevo.pdf -O " & oriente & " -s " & tamano 
+  Shell sentencia Wait
+  Shell "evince " & User.home & "/nuevo.pdf"
+  
+End
+
+Public Sub RadioButton1_Click()
+  
+  oriente = "landscape"
+  
+End
+
+Public Sub RadioButton2_Click()
+
+  oriente = "portrait"
+
+End
+
+Public Sub Label7_MouseDown()
+
+  
+
+End

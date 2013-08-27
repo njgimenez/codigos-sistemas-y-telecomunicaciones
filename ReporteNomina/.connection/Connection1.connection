@@ -1,0 +1,10 @@
+# Gambas Connection File 3.0
+[Connection]
+Type="postgresql"
+Host="192.168.0.1"
+Port="5432"
+User="postgres"
+RememberPassword=False
+IgnoreCharset=False
+Database="DATOS"
+
