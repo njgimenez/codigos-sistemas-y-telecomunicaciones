@@ -56,9 +56,6 @@
     MoveScaled(3,41,195,45)
     Header = GridView.Horizontal
   }
-  { ListBox2 ListBox
-    MoveScaled(8,91,33,31)
-  }
   { PictureBox1 PictureBox
     MoveScaled(3,1,8,11)
     Picture = Picture["logo2peq.png"]
@@ -75,10 +72,10 @@
     Text = ("Unidad de nomina")
   }
   { Frame4 Frame
-    MoveScaled(123,91,74,17)
+    MoveScaled(123,91,74,26)
     Text = ("Opciones de Impresión")
     { Frame3 Frame
-      MoveScaled(25,4,23,10)
+      MoveScaled(25,13,23,10)
       Text = ("Tamaño del Papel")
       { ComboBox2 ComboBox
         MoveScaled(2,4,19,4)
@@ -87,7 +84,7 @@
       }
     }
     { Frame2 Frame
-      MoveScaled(1,4,23,10)
+      MoveScaled(1,13,23,10)
       Text = ("Orientacion")
       { RadioButton1 RadioButton
         MoveScaled(6,3,17,3)
@@ -100,9 +97,18 @@
     }
     { Button1 Button Botones
       Name = "Button1"
-      MoveScaled(49,4,22,9)
+      MoveScaled(49,13,22,9)
       Text = ("Ver Reporte")
       Picture = Picture["icon:/48/text"]
+    }
+    { TituloRpt TextBox
+      MoveScaled(2,7,68,3)
+      Text = ("Beneficios Percibidos")
+    }
+    { Label8 Label
+      MoveScaled(2,5,17,2)
+      Font = Font["Bold"]
+      Text = ("Titulo del Reporte")
     }
   }
 }
