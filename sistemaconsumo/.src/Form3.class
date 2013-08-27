@@ -11,7 +11,7 @@ Public Sub Button1_Click() 'Se comprueba el usuario y contraseña para ejecutar 
   nombre = LCase(str_nombreusuario.Text)
 
    Conexion.Connect()
-   $Query = "SELECT * FROM usuario where nombreusuario='" & nombre & "' and clave='" & str_claveusuario.text & "' and nivelusuario='" & LCase$(label14.text) & "' "
+   $Query = "SELECT * FROM usuario where nombreusuario='" & UCase$(nombre) & "' and clave='" & str_claveusuario.text & "' and nivelusuario='" & UCase$(label14.text) & "' "
    $Result = Conexion.Con.Exec($Query)  
    If $Result.Count = 0 Then 
    Message.info("Usuario o Contraseña no coinciden")
@@ -587,7 +587,7 @@ End
 
 Public Sub Button8_Click()
 
-reporte_inventario
+'reporte_inventario
 End
 Public Sub int_cantidadinsumo_KeyPress()
  
