@@ -1,0 +1,490 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,207,120)
+  Background = Color.SelectedForeground
+  Text = ("Sistema de contraloria y consumo")
+  { Menu2 Menu
+    Text = ("Menu")
+    { Menu4 Menu
+      Text = ("Salir")
+    }
+  }
+  { str_nombreusuario TextBox
+    MoveScaled(49,1,21,3)
+  }
+  { Label2 Label
+    MoveScaled(71,1,7,3)
+    Text = ("CLAVE:")
+  }
+  { str_claveusuario TextBox
+    MoveScaled(79,1,26,3)
+    Tracking = True
+    Password = True
+  }
+  { Label1 Label
+    MoveScaled(30,1,18,3)
+    Text = ("INGRESE USUARIO:")
+  }
+  { Button1 Button
+    MoveScaled(110,1,17,3)
+    Text = ("INICIAR")
+  }
+  { Label37 Label
+    MoveScaled(1,1,27,3)
+    Font = Font["Bold,+3"]
+    Foreground = &H0000FF&
+  }
+  { Frame1 Frame
+    MoveScaled(177,55,25,50)
+    Enabled = False
+    Text = ("TABLAS:")
+    { Button17 Button
+      MoveScaled(1,4,13,4)
+      Text = ("INVENTARIO")
+    }
+    { Button18 Button
+      MoveScaled(1,9,13,4)
+      Text = ("MOVIMIENTO")
+    }
+    { Button25 Button
+      MoveScaled(1,14,17,5)
+      Text = ("Reporte Inv")
+      Picture = Picture["icon:/32/print"]
+    }
+    { Button26 Button
+      MoveScaled(1,26,18,5)
+      Text = ("Reporte Mov")
+      Picture = Picture["icon:/32/print"]
+    }
+    { Button24 Button
+      MoveScaled(1,38,18,5)
+      Text = ("Generar F15")
+      Picture = Picture["icon:/32/print"]
+    }
+    { Button4 Button
+      MoveScaled(1,44,21,4)
+      Text = ("Buscar insumos")
+      Picture = Picture["icon:/32/find"]
+    }
+    { d_inventario DateBox
+      MoveScaled(1,21,16,3)
+      Enabled = False
+    }
+    { d_movimiento DateBox
+      MoveScaled(1,33,16,3)
+      Enabled = False
+    }
+    { Separator1 Separator
+      MoveScaled(-2,13,25,1)
+      Font = Font["Bitstream Charter,+4"]
+      Foreground = Color.Foreground
+    }
+    { Separator2 Separator
+      MoveScaled(-3,25,25,1)
+    }
+    { Separator3 Separator
+      MoveScaled(-2,37,25,1)
+    }
+    { Button5 Button
+      MoveScaled(17,20,5,4)
+      Enabled = False
+      Picture = Picture["icon:/32/ok"]
+    }
+    { Button7 Button
+      MoveScaled(17,32,5,4)
+      Enabled = False
+      Picture = Picture["icon:/32/ok"]
+    }
+  }
+  { PictureBox1 PictureBox
+    MoveScaled(27,10,36,39)
+    Picture = Picture["fundacion.png"]
+    Stretch = True
+  }
+  { TabStrip1 TabStrip
+    MoveScaled(1,4,117,47)
+    Visible = False
+    Enabled = False
+    Count = 2
+    Index = 0
+    Text = ("INGRESAR INSUMO AL INVENTARIO")
+    { Panel1 Panel
+      MoveScaled(1,2,114,39)
+      { Label4 Label
+        MoveScaled(2,3,9,5)
+        Text = ("Insumo:")
+      }
+      { Label5 Label
+        MoveScaled(2,24,8,3)
+        Text = ("Cantidad:")
+      }
+      { int_cantidadinsumo TextBox
+        MoveScaled(11,23,8,5)
+        Enabled = False
+        MaxLength = 5
+      }
+      { Label6 Label
+        MoveScaled(3,30,6,3)
+        Text = ("Fecha:")
+      }
+      { date_fechaingreso DateBox
+        MoveScaled(11,29,16,4)
+        Enabled = False
+      }
+      { Button3 Button
+        MoveScaled(21,34,22,4)
+        Background = Color.Background
+        Text = ("Guardar insumo")
+        Picture = Picture["icon:/32/floppy"]
+      }
+      { Label7 Label
+        MoveScaled(2,13,8,5)
+        Text = ("Tipo de\nInsumo:")
+      }
+      { Label8 Label
+        MoveScaled(2,8,8,5)
+        Text = ("Codigo:")
+      }
+      { str_codigoinsumo TextBox
+        MoveScaled(11,9,12,3)
+        Enabled = False
+      }
+      { Label11 Label
+        MoveScaled(2,19,12,3)
+        Text = ("Procedencia:")
+      }
+      { Combo_procedenciainsumo ComboBox
+        MoveScaled(14,18,23,4)
+        Enabled = False
+        List = [("farmacia"), ("almacen")]
+        MaxLength = 8
+      }
+      { str_tipoinsumo TextBox
+        MoveScaled(11,13,15,4)
+        Enabled = False
+        MaxLength = 8
+      }
+      { Button13 Button
+        MoveScaled(91,33,21,5)
+        Enabled = False
+        Text = ("Editar insumo ")
+        Picture = Picture["icon:/32/new"]
+      }
+      { Button20 Button
+        MoveScaled(44,34,7,4)
+        Picture = Picture["icon:/32/erase"]
+      }
+      { Label32 Label
+        MoveScaled(20,23,17,5)
+        Text = ("Unidad de Medida:")
+      }
+      { Label3 Label
+        MoveScaled(77,45,25,6)
+        Visible = False
+        Font = Font["Bold,+3"]
+        Foreground = &H0000FF&
+        Text = ("Label3")
+      }
+      { str_insumo TextBox
+        MoveScaled(11,4,44,4)
+      }
+      { CheckBox5 CheckBox
+        MoveScaled(19,1,12,3)
+        Text = ("Medicina")
+      }
+      { CheckBox6 CheckBox
+        MoveScaled(31,1,9,3)
+        Text = ("MMQ")
+      }
+      { Label27 Label
+        MoveScaled(11,2,10,2)
+        Visible = False
+        Text = ("Label27")
+      }
+      { Label33 Label
+        MoveScaled(70,33,19,5)
+        Font = Font["Courier 10 Pitch,+3"]
+        Foreground = &H0000FF&
+      }
+      { TextBox6 TextBox
+        MoveScaled(98,5,16,4)
+        Visible = False
+        Text = ("ingresar insumo")
+      }
+      { Label12 Label
+        MoveScaled(38,23,12,5)
+      }
+      { TextBox8 TextBox
+        MoveScaled(90,6,9,4)
+        Visible = False
+        Text = ("codigo movimientos")
+      }
+      { GridView3 GridView
+        MoveScaled(56,4,57,27)
+        Visible = False
+      }
+    }
+    Index = 1
+    Text = ("DISTRIBUIR INSUMO")
+    { Panel2 Panel
+      MoveScaled(1,1,114,40)
+      { Label15 Label
+        MoveScaled(6,3,8,5)
+        Text = ("Insumo:")
+      }
+      { combo_insumoD ComboBox
+        MoveScaled(14,3,48,4)
+      }
+      { TextBox21 TextBox
+        MoveScaled(93,41,15,4)
+        Visible = False
+        Text = ("distribuir insumo")
+      }
+      { str_tipoinsumoD TextBox
+        MoveScaled(45,10,31,4)
+        Enabled = False
+      }
+      { Label16 Label
+        MoveScaled(30,11,15,2)
+        Text = ("Tipo de insumo:")
+      }
+      { str_codigoinsumoD TextBox
+        MoveScaled(14,10,15,4)
+        Enabled = False
+      }
+      { Label18 Label
+        MoveScaled(6,11,7,2)
+        Text = ("Codigo:")
+      }
+      { Label19 Label
+        MoveScaled(2,17,13,4)
+        Text = ("Cantidad en\ninventario:")
+      }
+      { str_cantidadinsumoD TextBox
+        MoveScaled(14,16,15,5)
+        Enabled = False
+      }
+      { Label20 Label
+        MoveScaled(44,16,10,5)
+        Text = ("Cantidad a\ndistribuir:")
+      }
+      { str_cantidaddistribuirD TextBox
+        MoveScaled(55,16,15,5)
+        MaxLength = 5
+      }
+      { Label21 Label
+        MoveScaled(5,25,8,3)
+        Text = ("Destino:")
+      }
+      { combo_destinoinsumoD ComboBox
+        MoveScaled(14,24,49,4)
+      }
+      { Label22 Label
+        MoveScaled(7,30,6,3)
+        Text = ("Fecha:")
+      }
+      { Date_fechadistribucionD DateBox
+        MoveScaled(14,29,17,4)
+      }
+      { Button6 Button
+        MoveScaled(31,34,16,4)
+        Text = ("Enviar")
+        Picture = Picture["icon:/32/bottom"]
+      }
+      { Button22 Button
+        MoveScaled(47,34,8,4)
+        Picture = Picture["icon:/32/erase"]
+      }
+      { CheckBox2 CheckBox
+        MoveScaled(63,1,14,4)
+        Text = ("MMQ")
+      }
+      { CheckBox3 CheckBox
+        MoveScaled(63,4,14,1)
+        Text = ("Medicina")
+      }
+      { CheckBox4 CheckBox
+        MoveScaled(63,6,18,3)
+        Text = ("Medicina&&MMQ")
+      }
+      { TextBox13 TextBox
+        MoveScaled(90,40,18,4)
+        Visible = False
+        Text = ("codigo movimiento")
+      }
+      { TextBox7 TextBox
+        MoveScaled(99,42,13,3)
+        Visible = False
+        Text = ("TextBox7")
+      }
+      { Label9 Label
+        MoveScaled(30,17,9,4)
+        Visible = False
+        Text = ("Label9")
+      }
+      { Label10 Label
+        MoveScaled(71,17,9,4)
+        Visible = False
+      }
+    }
+    Index = 0
+  }
+  { TabStrip2 TabStrip
+    MoveScaled(119,4,78,47)
+    Visible = False
+    Index = 0
+    Text = ("EDITAR INSUMO")
+    { Panel4 Panel
+      MoveScaled(1,2,74,38)
+      { Button9 Button
+        MoveScaled(0,0,14,4)
+        Text = ("volver")
+        Picture = Picture["icon:/32/left"]
+      }
+      { Combo_insumoE ComboBox
+        MoveScaled(15,5,44,4)
+      }
+      { TextBox20 TextBox
+        MoveScaled(15,1,24,3)
+        Visible = False
+      }
+      { Label28 Label
+        MoveScaled(7,4,9,5)
+        Text = ("Insumo")
+      }
+      { Label26 Label
+        MoveScaled(7,9,7,5)
+        Text = ("Codigo")
+      }
+      { str_codigoinsumoE TextBox
+        MoveScaled(15,10,26,4)
+        Enabled = False
+      }
+      { Button10 Button
+        MoveScaled(60,10,13,6)
+        Text = ("Editar")
+        Picture = Picture["icon:/32/edit"]
+      }
+      { Button11 Button
+        MoveScaled(60,17,13,6)
+        Text = ("Sumar")
+        Picture = Picture["icon:/32/calculator"]
+      }
+      { Button16 Button
+        MoveScaled(60,24,13,6)
+        Text = ("Eliminar\nregistro")
+        Picture = Picture["icon:/32/remove"]
+      }
+      { Button12 Button
+        MoveScaled(60,31,13,6)
+        Enabled = False
+        Text = ("Guardar")
+        Picture = Picture["icon:/32/add"]
+      }
+      { Label31 Label
+        MoveScaled(8,34,7,3)
+        Text = ("FECHA")
+      }
+      { Label30 Label
+        MoveScaled(6,26,8,3)
+        Text = ("Cantidad")
+      }
+      { str_cantidadinsumoE TextBox
+        MoveScaled(16,25,8,4)
+        Enabled = False
+        MaxLength = 5
+      }
+      { str_cantidadinsumosumaE TextBox
+        MoveScaled(27,25,8,4)
+        Visible = False
+        MaxLength = 5
+      }
+      { Combo_procedenciainsumoE ComboBox
+        MoveScaled(15,20,26,4)
+        Enabled = False
+        List = [("farmacia"), ("almacen")]
+        MaxLength = 8
+      }
+      { Label29 Label
+        MoveScaled(2,20,12,3)
+        Text = ("Procedencia")
+      }
+      { Label25 Label
+        MoveScaled(7,14,8,6)
+        Text = ("Tipo de \nInsumo")
+      }
+      { str_tipoinsumoE TextBox
+        MoveScaled(15,15,26,4)
+        Enabled = False
+        MaxLength = 8
+      }
+      { Label23 Label
+        MoveScaled(25,26,3,3)
+        Visible = False
+        Text = ("+")
+      }
+      { Button23 Button
+        MoveScaled(60,5,5,4)
+        Picture = Picture["icon:/32/erase"]
+      }
+      { Label13 Label
+        MoveScaled(15,29,12,3)
+      }
+      { DateBox2 DateBox
+        MoveScaled(15,33,17,4)
+        Visible = False
+        Enabled = False
+      }
+      { date_fechamovimientoE DateBox
+        MoveScaled(15,33,22,4)
+        Enabled = False
+      }
+      { PictureBox3 PictureBox
+        MoveScaled(56,18,4,5)
+        Picture = Picture["icon:/32/forward"]
+      }
+    }
+    Index = 0
+  }
+  { CheckBox1 CheckBox
+    MoveScaled(79,4,20,3)
+    Text = ("Ver clave")
+  }
+  { GridView1 GridView
+    MoveScaled(1,58,175,57)
+    Visible = False
+  }
+  { GridView2 GridView
+    MoveScaled(1,58,175,57)
+    Visible = False
+  }
+  { Label14 Label
+    MoveScaled(186,0,7,3)
+    Text = ("usuario")
+  }
+  { Button2 Button
+    MoveScaled(175,1,22,3)
+    Enabled = False
+    Text = ("CAMBIAR DE USUARIO")
+  }
+  { Label17 Label
+    MoveScaled(1,53,9,4)
+    Visible = False
+    Text = ("INSUMO")
+  }
+  { TextBox12 TextBox
+    MoveScaled(10,53,41,4)
+    Visible = False
+  }
+  { CheckBox7 CheckBox
+    MoveScaled(59,54,16,3)
+    Visible = False
+    Text = ("INVENTARIO")
+  }
+  { CheckBox8 CheckBox
+    MoveScaled(77,54,17,3)
+    Visible = False
+    Text = ("MOVIMINETOS")
+  }
+}

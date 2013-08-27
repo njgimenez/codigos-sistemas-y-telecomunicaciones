@@ -1,0 +1,41 @@
+' Gambas module file
+
+Public Con As New Connection
+Public usuarioform As String
+Public seccion As String
+Public codigof15 As String
+Public seccionform As String
+Public reporteinv As String
+Public reportemov As String
+
+Public Procedure Connect()
+                Con.Close() ' Close the connection
+                Con = New Connection
+                Con.Type = "postgresql"
+                Con.Host = "localhost" ' Name of the server
+                Con.Login = "postgres" ' User's name for the connection
+                Con.Port = "5432" ' Port to use in the connection, usually 5432
+                Con.Name = "scc" ' Nombre de la base de datos que desea utilizar
+                Con.Password = "cidesa" 's password"
+                Con.Open() ' Open the connection
+       
+  'If Error Then 'me muestra un error si no conecta la BD
+  'Message.Error("Error al conectar la base de datos")
+  'Quit 
+  'Else 
+  'Message("Su conexion fue exitosa")
+  'Endif 
+   End
+Public Sub Main()
+ Connect() ' se ejecuta el procedimiento a conectar
+ FMain.Visible = True
+           
+        
+
+End
+Public Sub desconectar(Conex As Connection)
+    
+    Conex.Close
+    Conex = Null
+
+End

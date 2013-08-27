@@ -1,0 +1,532 @@
+' Gambas class file
+
+
+Public Sub Form_Open()
+Dim $Query As String
+ Dim $Result As Result 
+ Dim i As Integer
+ Dim seccion As String
+
+
+GridView1.columns.count = 8
+GridView1.rows.count = 1000 
+GridView1.columns.width = 100 
+GridView1.rows.height = 20
+
+GridView1.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
+GridView1.columns[0].text = "Codigo de Insumo" 
+GridView1.columns[0].width = 150
+GridView1.columns[1].Text = "Nombre" 
+GridView1.columns[1].width = 400 
+GridView1.columns[2].Text = "Tipo de insumo" 'al no poner width se asume la anchura por defecto indicada anteriormente 
+GridView1.columns[2].width = 110
+GridView1.columns[3].text = "cantidad" 
+GridView1.columns[3].width = 90
+GridView1.columns[4].text = "U.M" 
+GridView1.columns[4].width = 90
+GridView1.columns[5].text = "Fecha" 
+GridView1.columns[5].width = 100
+GridView1.columns[6].text = "Procedencia" 
+GridView1.columns[6].width = 150
+GridView1.columns[7].text = "Usuario" 
+GridView1.columns[7].width = 100
+
+conexion.Connect()
+ $Query = "select * from  secciones"
+ $Result = conexion.Con.Exec($Query)    
+ Combo_insumo.Clear
+ Combo_seccion.Clear
+ For i = 0 To $Result.Count - 1 Step 1
+ Combo_insumo.Add($Result!nombres) 
+ Combo_insumo.Refresh()
+  Combo_seccion.Add($Result!nombres) 
+ Combo_seccion.Refresh()
+ $Result.MoveNext()
+ Next
+
+End
+
+Public Sub inventario()
+
+  
+   'Realiza el procedimiento de mostrar en tabla y a parte señala con color rojo los insumos  con cantidades menores a 100'
+
+Dim $Linea As Integer, $Rec As Result, $Sql As String, seccion As String
+seccion = LCase$(Combo_insumo.Text)
+conexion.Connect()
+
+$Sql = "select * from inv" & seccion 
+$Rec = conexion.Con.exec($sql)
+gridView1.Clear
+GridView1.rows.count = $Rec.count + 1 
+For $linea = 0 To $Rec.Count - 1 Step 1      
+If $Rec!cantidadinsumo < "100"
+GridView1[$linea, 3].background = Color.Red
+Else If $Rec!cantidadinsumo > "100"
+GridView1[$linea, 0].background = Color.White
+Endif     
+GridView1[$linea, 0].text = $Rec!codigo
+ 
+GridView1[$linea, 1].text = $Rec!insumo
+ 
+GridView1[$linea, 2].text = $Rec!tipoinsumo
+
+GridView1[$linea, 3].text = $Rec!cantidadinsumo
+
+GridView1[$linea, 4].text = $Rec!unidadmedida
+
+GridView1[$linea, 5].text = $Rec!fechainsumo
+ 
+GridView1[$linea, 6].text = $Rec!proceinsumo
+
+GridView1[$linea, 7].text = $Rec!usuario
+
+$Rec.MoveNext()
+Next 
+ GridView1.Visible = True
+  
+  
+End
+
+Public Sub existente()
+
+Dim $Query As String
+Dim $result As Result
+Dim seccion As String
+
+seccion = LCase$(Combo_insumo.Text)
+
+$Query = " Select * from inv" & seccion & " where insumo = '" & str_insumo.Text & "'" 
+$Result = conexion.Con.Exec($Query)
+
+  If $result.Available Then
+  str_cantidadinsumo.Text = $Result!cantidadinsumo
+  Label12.Text = $result!unidadmedida
+
+  str_tipoinsumo.Text = $result!tipoinsumo
+  Combo_procedenciainsumo.Text = $result!proceinsumo
+  Date_registroinsumo.Value = $result!fechainsumo
+  str_cantidadinsumo.Enabled = False
+  str_tipoinsumo.Enabled = False
+  str_insumo.Enabled = False
+  Combo_procedenciainsumo.Enabled = False
+  Date_registroinsumo.Enabled = False
+  Else
+  
+  str_cantidadinsumo.Text = ""
+  
+  Combo_procedenciainsumo.Text = ""
+  Date_registroinsumo.Value = ""
+
+
+End If
+
+End
+
+
+
+Public Sub GridView1_Click()
+
+  Dim i As Integer
+Dim Preg As Integer
+Dim $sql As String
+Dim $result As Result
+Dim tipo As String
+
+
+tipo = LCase$(Combo_insumo.Text)
+
+
+If GridView1[GridView1.Row, 0].text = ""
+Return
+End If
+
+  $sql = "SELECT *  FROM inv" & tipo & " Where insumo = '" & gridView1[GridView1.Row, 1].text & "'"
+  $result = conexion.Con.Exec($sql)
+
+  Preg = 0
+  
+      Preg = Message.Question("Seleccionar?", "Si", "No")
+
+        If Preg = 1 Then
+          
+
+            str_insumo.text = GridView1[GridView1.Row, 1].Text
+            str_codigoinsumo.Text = GridView1[GridView1.Row, 0].Text
+            Label12.Text = GridView1[GridView1.Row, 4].Text
+            
+            str_tipoinsumo.Text = "medicina"
+            Combo_procedenciainsumo.Enabled = True
+            str_cantidadinsumo.Enabled = True
+            Date_registroinsumo.Enabled = True
+            existente
+             
+  End If
+
+
+End
+
+Public Sub Button1_Click()
+
+  inventario
+  Combo_insumo.Enabled = False
+  str_buscarinsumo.Enabled = True
+  
+End
+
+
+
+Public Sub str_buscarinsumo_KeyRelease()
+
+  Dim $linea As Integer
+   Dim Query As String
+   Dim $Rec As Result
+   Dim busqueda As String
+   Dim seccion As String
+
+  seccion = LCase$(Combo_insumo.Text)
+  busqueda = UCase$(str_buscarinsumo.Text)
+
+
+  Query = "select  * From inv" & seccion & " where insumo Like '%" & busqueda & "%' " 
+ $Rec = Conexion.Con.Exec(Query)
+  GridView1.Visible = True
+ 
+  For $linea = 0 To $Rec.Count - 1 Step 1
+  GridView1[$linea, 0].text = $Rec!codigo
+ 
+  GridView1[$linea, 1].text = $Rec!insumo
+ 
+  GridView1[$linea, 2].text = $Rec!tipoinsumo
+
+  GridView1[$linea, 3].text = $Rec!cantidadinsumo
+
+  GridView1[$linea, 4].text = $Rec!unidadmedida
+
+  GridView1[$linea, 5].text = $Rec!fechainsumo
+ 
+  GridView1[$linea, 6].text = $Rec!proceinsumo
+
+  GridView1[$linea, 7].text = $Rec!usuario
+  $Rec.MoveNext()
+  Next
+
+End
+
+Public Sub Combo_insumo_DblClick()
+
+  Combo_insumo.Enabled = True
+
+End
+
+Public Sub str_buscarinsumo_KeyPress()
+
+  
+  Select Case Key.Code
+        Case 65 To 90
+        Case 97 To 122
+        Case 46
+        Case Key.BackSpace
+        Case Key.Delete
+        Case Key.Tab
+        Case Else
+          Stop Event
+    End Select   
+
+End
+
+Public Sub CheckBox1_Click()
+
+Dim $Query As String
+Dim $result As Result
+Dim seccion As String
+
+
+
+  If CheckBox1.Value = True
+  Combo_seccion.Enabled = True
+  str_cantidadtraslado.Enabled = True
+  Else
+  Combo_seccion.Enabled = False
+  str_cantidadtraslado.Enabled = False
+  Combo_seccion.Text = ""
+  str_cantidadtraslado.Text = ""
+End If
+
+End
+
+Public Sub Button2_Click()
+
+
+Dim $Query As String
+Dim $result As Result
+Dim seccion As String
+Dim suma As Integer
+
+
+seccion = LCase$(Combo_seccion.Text)
+
+If str_codigoinsumo.text = "" Or Combo_seccion.Text = "" Or str_cantidadtraslado.text = "" Then
+
+Message.Error("AGREGAR DATOS")
+
+Else
+
+  If str_cantidadtraslado.Text >= str_cantidadinsumo.Text
+  Message.Info("LA CANTIDAD A ENVIAR SUPERA o IGUALA A LA CANTIDAD EXISTENTE EN EL INVENTARIO DEL INSUMO " & str_insumo.Text & "")
+
+Else
+resta
+
+
+conexion.Connect()
+
+
+  $Query = " Select * from inv" & Combo_seccion.Text & " where insumo = '" & str_insumo.Text & "'" 
+  $Result = conexion.Con.Exec($Query)
+
+  If $result.Available Then
+  TextBox10.Text = $result!cantidadinsumo
+  TextBox11.Text = $result!codigo
+  suma = str_cantidadtraslado.Text + TextBox10.Text
+  
+  $query = "UPDATE inv" & Combo_seccion.Text & " SET cantidadinsumo= '" & suma & "' where codigo = '" & TextBox11.Text & "'"
+  $result = Conexion.Con.Exec($query)
+
+  codigomovimiento
+  $query = "insert into " & seccion & "(cmov, cinsumo, insumo, tipoinsumo, cantidadmov, fechamov, modulo, usuariomov, unidadmedida, enviado, recibido)values( '" & TextBox6.Text & "', '" & str_codigoinsumo.Text & "',  '" & str_insumo.Text & "', '" & str_tipoinsumo.Text & "' ,  '" & str_cantidadtraslado.Text & "', '" & Format$(Date_registroinsumo.Value, "dd/mm/yy") & "',  '" & textbox12.text & "','" & textbox7.Text & "','" & label12.text & "', '" & Combo_seccion.text & "', '" & Combo_insumo.text & "')"
+  $result = Conexion.Con.Exec($query)
+  Message.Info("ENVIADO")
+  
+  codigomovimientos
+  $query = "insert into movimientos (cmov, cinsumo,  insumo, tipoinsumo, cantidadmov, fechamov, modulo, usuariomov, unidadmedida,  enviado, recibido)values( '" & TextBox13.Text & "', '" & str_codigoinsumo.Text & "', '" & str_insumo.Text & "', '" & str_tipoinsumo.Text & "' ,  '" & str_cantidadtraslado.Text & "', '" & Format$(Date_registroinsumo.Value, "dd/mm/yy") & "', '" & TextBox12.text & "','" & TextBox7.Text & "', '" & label12.text & "', '" & Combo_seccion.text & "', '" & Combo_insumo.text & "')"
+  $result = Conexion.Con.Exec($query)
+
+             Else
+
+  $query = "insert into inv" & seccion & " (insumo, codigo, cantidadinsumo, fechainsumo, tipoinsumo, proceinsumo, usuario, unidadmedida)values( '" & str_insumo.text & "', '" & str_codigoinsumo.Text & "','" & str_cantidadtraslado.Text & "' , '" & Format$(Date_registroinsumo.Value, "dd/mm/yy") & "' , '" & str_tipoinsumo.Text & "','" & Combo_procedenciainsumo.text & "','" & textbox7.text & "','" & Label12.text & "')"
+  $result = Conexion.Con.Exec($query)
+  
+  codigomovimiento
+  $query = "insert into " & seccion & "(cmov, cinsumo, insumo, tipoinsumo, cantidadmov, fechamov, modulo, usuariomov, unidadmedida,  enviado, recibido)values( '" & TextBox6.Text & "', '" & str_codigoinsumo.Text & "',  '" & str_insumo.Text & "', '" & str_tipoinsumo.Text & "' ,  '" & str_cantidadtraslado.Text & "', '" & Format$(Date_registroinsumo.Value, "dd/mm/yy") & "',  '" & textbox12.text & "','" & textbox7.Text & "','" & label12.text & "', '" & Combo_seccion.text & "', '" & Combo_insumo.text & "')"
+  $result = Conexion.Con.Exec($query)
+  
+  codigomovimientos
+  $query = "insert into movimientos (cmov, cinsumo,  insumo, tipoinsumo, cantidadmov, fechamov, modulo, usuariomov, unidadmedida,  enviado, recibido)values( '" & TextBox13.Text & "', '" & str_codigoinsumo.Text & "', '" & str_insumo.Text & "', '" & str_tipoinsumo.Text & "' ,  '" & str_cantidadtraslado.Text & "', '" & Format$(Date_registroinsumo.Value, "dd/mm/yy") & "', '" & TextBox12.text & "','" & TextBox7.Text & "', '" & label12.text & "', '" & Combo_seccion.text & "', '" & Combo_insumo.text & "')"
+  $result = Conexion.Con.Exec($query)
+
+  Message.Info("NO EXISTE EN INVENTARIO, SE AGREGO NUEVO")
+  
+  End If
+  End If
+  End If
+
+
+limpiar
+Combo_seccion.Enabled = False
+str_cantidadtraslado.Enabled = False
+CheckBox1.Value = False
+End
+
+Public Sub resta()
+
+  
+ Dim $query As String
+ Dim $result As Result
+ Dim resta As String 
+ Dim seccion As String
+
+seccion = LCase$(Combo_insumo.Text)
+
+   If str_codigoinsumo.Text == "" 
+      Message.Info("Llenar Campos")
+   Else
+      $query = "Select * from inv" & seccion & " where codigo = '" & str_codigoinsumo.Text & "'"
+      $result = conexion.Con.Exec($query)
+
+          resta = str_cantidadinsumo.Text - str_cantidadtraslado.Text
+      
+       If $result.Available Then
+         $query = "UPDATE inv" & seccion & " SET cantidadinsumo= '" & resta & "' where codigo = '" & str_codigoinsumo.Text & "'"
+         $result = Conexion.Con.Exec($query)
+         
+         codigomovimiento
+         $query = "insert into " & seccion & "(cmov, cinsumo, insumo, tipoinsumo, cantidadmov, fechamov, modulo, usuariomov, unidadmedida, enviado, recibido) values ( '" & TextBox6.Text & "', '" & str_codigoinsumo.Text & "',  '" & str_insumo.Text & "', '" & str_tipoinsumo.Text & "' ,  '" & str_cantidadtraslado.Text & "', '" & Format$(Date_registroinsumo.Value, "dd/mm/yy") & "', '" & textbox12.text & "','" & textbox7.Text & "','" & label12.text & "','" & Combo_seccion.text & "', '" & Combo_insumo.text & "')"
+         $result = Conexion.Con.Exec($query)
+
+         Else
+           
+         Message.Info("ERROR")
+         
+         Endif
+End If
+
+  
+  
+End
+
+Public Sub codigomovimiento()
+
+  
+   'Generando el codigo de movimiento de emergencia'
+  Dim i As Integer
+  Dim $Query As String
+  Dim $Result As Result
+  Dim $codigo As String
+  Dim $n As Integer
+  Dim seccion As String
+  seccion = LCase$(Combo_insumo.Text)
+  
+  
+  i = 1
+  Conexion.Connect()
+  $query = "Select cmov from " & seccion 
+  $result = Conexion.Con.Exec($query)
+  
+  If $result.Count == 0
+    $codigo = "Mov00000"
+   Else
+    $n = $result.Count + i
+  End If
+  
+  If $n < 10
+    $codigo = "Mov0000" & $n
+  Else            
+    If $n >= 10 And $n < 100
+    $codigo = "Mov000" & $n
+  Else
+    $codigo = "Mov00" & $n
+  End If
+  End If
+  TextBox6.Text = $codigo
+  
+End
+
+Public Sub codigomovimientos()
+  
+   'Generando el codigo de movimiento de emergencia'
+  Dim i As Integer
+  Dim $Query As String
+  Dim $Result As Result
+  Dim $codigo As String
+  Dim $n As Integer
+
+  
+  i = 1
+  Conexion.Connect()
+  $query = "Select cmov from movimientos"
+  $result = Conexion.Con.Exec($query)
+  
+  If $result.Count == 0
+    $codigo = "Mov00000"
+   Else
+    $n = $result.Count + i
+  End If
+  
+  If $n < 10
+    $codigo = "Mov0000" & $n
+  Else            
+    If $n >= 10 And $n < 100
+    $codigo = "Mov000" & $n
+  Else
+    $codigo = "Mov00" & $n
+  End If
+  End If
+  TextBox13.Text = $codigo
+  
+End
+
+Public Sub limpiar()
+
+  
+str_cantidadinsumo.Text = ""
+TextBox13.Text = ""
+str_codigoinsumo.Text = ""
+str_tipoinsumo.Text = ""
+Combo_procedenciainsumo.Text = ""
+str_insumo.Text = ""
+Date_registroinsumo.value = ""
+label12.Text = ""
+Combo_seccion.Text = ""
+str_cantidadtraslado.Text = ""
+
+
+End
+
+Public Sub Menu1_Click()
+
+  bd.Close
+
+End
+
+
+
+Public Sub Button3_Click()
+
+  Dim $Query As String
+    Dim $Result As Result
+    Dim $mensaje As String 
+    Dim nivelusuario As String
+
+
+
+
+ If textbox8.text = "" Or textbox9.text = "" Then
+
+Message.Error("LLENAR TODAS LAS CASILLAS")
+
+Else 
+ 
+ 
+   Conexion.Connect()
+   $Query = "SELECT * FROM usuario where nombreusuario='" & LCase$(TextBox8.Text) & "' and clave='" & TextBox9.text & "' and nivelusuario='" & LCase$(textbox7.text) & "' "
+   $Result = Conexion.Con.Exec($Query)  
+   If $Result.Count = 0 Then 
+           Message.info("Usuario o Contraseña no coinciden")
+   Else
+   Panel1.Enabled = True
+   gridView1.Enabled = True
+   Button1.Enabled = True
+   Button2.Enabled = True
+   Label3.Visible = False
+   Label9.Visible = False
+   TextBox8.Visible = False
+   TextBox9.Visible = False
+   Button1.Visible = True
+   Combo_insumo.Visible = True
+   str_buscarinsumo.Visible = True
+   Button3.Visible = False
+    Button4.Visible = True
+   CheckBox1.Enabled = True
+   
+End If
+
+  
+
+End If
+
+End
+
+Public Sub Button4_Click()
+
+  bd.Close
+  CheckBox1.Enabled = True
+
+End
+
+
+
+Public Sub str_cantidadtraslado_KeyPress()
+
+   
+Select Case Key.Code
+        Case 48 To 57
+        Case 46
+        Case Key.BackSpace
+        Case Key.Delete
+        Case Key.Tab
+        Case Else
+          Stop Event
+    End Select    
+
+End

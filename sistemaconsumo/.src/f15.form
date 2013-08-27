@@ -1,0 +1,121 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,217,116)
+  Background = Color.SelectedForeground
+  Text = ("F15")
+  { GridView1 GridView
+    MoveScaled(2,7,193,44)
+    Enabled = False
+  }
+  { GridView2 GridView
+    MoveScaled(2,64,160,40)
+  }
+  { Label6 Label
+    MoveScaled(70,2,21,4)
+    Font = Font["DejaVu Serif,Bold,+1"]
+    Text = ("INVENTARIO DE")
+  }
+  { Button2 Button
+    MoveScaled(56,105,24,5)
+    Enabled = False
+    Text = ("VER PLANILLA F15")
+    Picture = Picture["icon:/32/file"]
+  }
+  { Button3 Button
+    MoveScaled(184,1,11,4)
+    Text = ("SALIR")
+  }
+  { Label9 Label
+    MoveScaled(91,2,23,4)
+    Font = Font["Bold,+1"]
+    Text = ("Label9")
+  }
+  { Label7 Label
+    MoveScaled(54,60,44,4)
+    Font = Font["DejaVu Serif,Bold,+1"]
+    Text = ("LISTADO DE INSUMO PARA LA F15")
+  }
+  { Button4 Button
+    MoveScaled(4,54,20,4)
+    Text = ("Generar nueva F15")
+  }
+  { Panel1 Panel
+    MoveScaled(25,52,159,9)
+    Enabled = False
+    { Label8 Label
+      MoveScaled(145,2,13,4)
+      Font = Font["DejaVu Serif,Bold,+1"]
+      Text = ("AGREGAR")
+    }
+    { Button1 Button
+      MoveScaled(137,1,6,6)
+      Picture = Picture["icon:/32/add"]
+    }
+    { DateBox1 DateBox
+      MoveScaled(117,2,19,5)
+    }
+    { Label5 Label
+      MoveScaled(117,-2,17,6)
+      Text = ("FECHA DE PEDIDO")
+      Alignment = Align.Center
+    }
+    { TextBox4 TextBox
+      MoveScaled(97,2,18,5)
+      Enabled = False
+    }
+    { Label4 Label
+      MoveScaled(96,0,20,2)
+      Text = ("UNIDAD DE MEDIDA")
+      Alignment = Align.Center
+    }
+    { TextBox2 TextBox
+      MoveScaled(45,2,50,5)
+      Enabled = False
+    }
+    { Label2 Label
+      MoveScaled(44,0,12,2)
+      Text = ("SOLICITADO")
+      Alignment = Align.Center
+    }
+    { TextBox3 TextBox
+      MoveScaled(26,2,17,5)
+      Enabled = False
+    }
+    { Label3 Label
+      MoveScaled(26,0,8,2)
+      Text = ("CODIGO")
+      Alignment = Align.Center
+    }
+    { TextBox1 TextBox
+      MoveScaled(14,2,9,5)
+    }
+    { Label1 Label
+      MoveScaled(13,0,8,2)
+      Text = ("PEDIDO")
+      Alignment = Align.Center
+    }
+    { TextBox5 TextBox
+      MoveScaled(2,2,10,5)
+      Enabled = False
+    }
+  }
+  { Label10 Label
+    MoveScaled(2,2,24,4)
+    Text = ("Label10")
+  }
+  { CheckBox1 CheckBox
+    MoveScaled(162,63,15,4)
+    Text = ("BUSCAR F15")
+  }
+  { TextBox6 TextBox
+    MoveScaled(177,63,21,4)
+    Visible = False
+    MaxLength = 6
+  }
+  { Button5 Button
+    MoveScaled(198,63,5,4)
+    Visible = False
+    Picture = Picture["icon:/32/find"]
+  }
+}
