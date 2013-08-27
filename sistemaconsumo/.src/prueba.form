@@ -2,4 +2,12 @@
 
 { Form Form
   MoveScaled(0,0,81,64)
+  { Label1 Label
+    MoveScaled(25,18,30,21)
+    Font = Font["Bitstream Charter,Bold,+8"]
+    Text = ("PROBANDO")
+  }
+  { TextBox1 TextBox
+    MoveScaled(19,13,42,6)
+  }
 }
