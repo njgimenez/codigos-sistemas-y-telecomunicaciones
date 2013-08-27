@@ -1,0 +1,665 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,223,125)
+  Font = Font["Serif,Bold"]
+  Background = Color.SelectedForeground
+  Text = ("Sistema de Contraloria y Consumo")
+  { INICIO Menu
+    Text = ("INICIO")
+    { Menu1 Menu
+      Text = ("Buscar insumos")
+    }
+    { Menu2 Menu
+      Text = ("SALIR")
+    }
+  }
+  { Label2 Label
+    MoveScaled(26,1,9,3)
+    Text = ("Usuario")
+  }
+  { TextBox1 TextBox
+    MoveScaled(35,1,22,3)
+  }
+  { Label3 Label
+    MoveScaled(58,1,13,3)
+    Text = ("Contraseña")
+  }
+  { TextBox3 TextBox
+    MoveScaled(71,1,21,3)
+    Password = True
+  }
+  { Button1 Button
+    MoveScaled(94,1,15,3)
+    Text = ("INGRESAR")
+  }
+  { Button2 Button
+    MoveScaled(130,1,28,3)
+    Enabled = False
+    Text = ("CAMBIAR DE USUARRIO")
+  }
+  { CheckBox6 CheckBox
+    MoveScaled(94,4,15,4)
+    Text = ("Ver clave")
+  }
+  { Label29 Label
+    MoveScaled(3,1,19,3)
+    Foreground = &H0000FF&
+    Text = ("ADMINISTRADOR")
+  }
+  { Panel4 Panel
+    MoveScaled(3,52,187,50)
+    Visible = False
+    { GridView6 GridView
+      MoveScaled(0,4,182,46)
+    }
+    { Button22 Button
+      MoveScaled(182,4,5,4)
+      Picture = Picture["icon:/32/cancel"]
+    }
+    { Label30 Label
+      MoveScaled(81,1,35,3)
+      Visible = False
+      Text = ("MOVIMIENTOS DE INVENTARIOS")
+    }
+  }
+  { Panel5 Panel
+    MoveScaled(3,52,156,37)
+    Visible = False
+    { GridView3 GridView
+      MoveScaled(0,4,151,33)
+    }
+    { Button15 Button
+      MoveScaled(151,4,5,4)
+      Picture = Picture["icon:/32/cancel"]
+    }
+    { Label23 Label
+      MoveScaled(63,1,25,3)
+      Visible = False
+      Text = ("LISTADO DE USUARIOS")
+    }
+  }
+  { Panel6 Panel
+    MoveScaled(3,52,80,38)
+    Visible = False
+    { GridView5 GridView
+      MoveScaled(0,4,74,33)
+    }
+    { Button20 Button
+      MoveScaled(74,4,5,4)
+      Picture = Picture["icon:/32/cancel"]
+    }
+    { Label6 Label
+      MoveScaled(22,1,25,3)
+      Visible = False
+      Text = ("LISTADO DE INSUMOS")
+    }
+  }
+  { Panel7 Panel
+    MoveScaled(3,52,149,42)
+    Visible = False
+    { Label47 Label
+      MoveScaled(67,0,5,4)
+      Text = ("F15")
+    }
+    { GridView7 GridView
+      MoveScaled(0,4,142,38)
+    }
+    { Button24 Button
+      MoveScaled(142,4,6,4)
+      Picture = Picture["icon:/32/cancel"]
+    }
+  }
+  { PictureBox1 PictureBox
+    MoveScaled(22,10,34,35)
+    Picture = Picture["fundacion.png"]
+    Stretch = True
+  }
+  { TabStrip1 TabStrip
+    MoveScaled(3,7,183,45)
+    Visible = False
+    Background = &HFFFFFF&
+    Count = 6
+    Index = 0
+    Text = ("Agregar nuevo insumo")
+    { Label4 Label
+      MoveScaled(9,13,20,4)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("Nombre insumo:")
+    }
+    { str_nombreinsumo TextBox
+      MoveScaled(30,11,61,5)
+      Enabled = False
+    }
+    { Label5 Label
+      MoveScaled(7,19,22,4)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("Unidad de medida:")
+    }
+    { Combo_unidadmedidainsumo ComboBox
+      MoveScaled(30,18,23,4)
+      Enabled = False
+      List = [("bolsa"), ("cc"), ("cm"), ("g"), ("par"), ("sobre"), ("unidad")]
+    }
+    { Label7 Label
+      MoveScaled(44,2,35,3)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("INGRESAR NUEVO INSUMO")
+    }
+    { Label8 Label
+      MoveScaled(9,25,20,3)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("Codigo asignado:")
+    }
+    { str_codigoinsumo TextBox
+      MoveScaled(30,24,23,4)
+      Enabled = False
+    }
+    { Button3 Button
+      MoveScaled(39,29,18,5)
+      Text = ("AGREGAR")
+      Picture = Picture["icon:/32/add"]
+    }
+    { Button4 Button
+      MoveScaled(58,29,19,5)
+      Text = ("Ver listado")
+      Picture = Picture["icon:/32/find"]
+    }
+    { CheckBox2 CheckBox
+      MoveScaled(7,5,13,3)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("MMQ")
+    }
+    { CheckBox3 CheckBox
+      MoveScaled(7,8,17,3)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("Medicina")
+    }
+    { Button16 Button
+      MoveScaled(23,6,5,4)
+      Picture = Picture["icon:/32/add"]
+    }
+    { Label1 Label
+      MoveScaled(31,6,14,3)
+      Visible = False
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("Label1")
+    }
+    Index = 1
+    Text = ("Registro de Usuario")
+    { str_nombreusuario TextBox
+      MoveScaled(23,6,37,4)
+      Enabled = False
+    }
+    { Button13 Button
+      MoveScaled(2,5,6,5)
+      Picture = Picture["icon:/32/add"]
+    }
+    { Label9 Label
+      MoveScaled(13,11,9,5)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("CARGO:")
+    }
+    { Label11 Label
+      MoveScaled(11,6,13,4)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("NOMBRE:")
+    }
+    { str_cargousuario TextBox
+      MoveScaled(23,11,37,4)
+      Enabled = False
+    }
+    { Label13 Label
+      MoveScaled(7,16,16,5)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("NOMBRE \nDE USUARIO:")
+    }
+    { str_usuarionombre TextBox
+      MoveScaled(23,16,37,4)
+      Enabled = False
+    }
+    { Label14 Label
+      MoveScaled(8,22,15,5)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("SECCION\nASIGANADA:")
+    }
+    { combo_seccionasignada ComboBox
+      MoveScaled(23,22,22,5)
+      Enabled = False
+      List = [("EMERGENCIA"), ("PEDIATRIA"), ("UCI")]
+    }
+    { Button6 Button
+      MoveScaled(56,29,7,5)
+      Picture = Picture["icon:/32/erase"]
+    }
+    { Button14 Button
+      MoveScaled(64,29,18,5)
+      Text = ("Ver listado")
+      Picture = Picture["icon:/32/find"]
+    }
+    { Label16 Label
+      MoveScaled(66,21,14,6)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("FECHA DE\nREGISTRO:")
+    }
+    { Date_registrousuario DateBox
+      MoveScaled(79,22,22,5)
+      Enabled = False
+    }
+    { str_codigousuario TextBox
+      MoveScaled(79,16,22,4)
+      Enabled = False
+      Password = True
+    }
+    { CheckBox1 CheckBox
+      MoveScaled(101,16,20,5)
+      Text = ("ver contraseña")
+    }
+    { Label12 Label
+      MoveScaled(61,16,17,4)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("CONTRASEÑA:")
+    }
+    { Label10 Label
+      MoveScaled(61,6,13,4)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("APELLIDO:")
+    }
+    { str_apellidousuario TextBox
+      MoveScaled(74,6,37,4)
+      Enabled = False
+    }
+    { Label17 Label
+      MoveScaled(45,2,33,2)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("INGRESAR NUEVO USUARIO")
+    }
+    { TextBox6 TextBox
+      MoveScaled(38,32,14,2)
+      Visible = False
+    }
+    { Button5 Button
+      MoveScaled(35,29,19,5)
+      Enabled = False
+      Text = ("GUARDAR")
+      Picture = Picture["icon:/32/floppy"]
+    }
+    { Combo_nivelusuario ComboBox
+      MoveScaled(81,11,23,3)
+      Enabled = False
+      List = [("administrador"), ("usuario")]
+    }
+    { Label28 Label
+      MoveScaled(61,11,20,3)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("Nivel de usuario:")
+    }
+    Index = 2
+    Text = ("Crear nueva sección")
+    { Label18 Label
+      MoveScaled(41,2,30,3)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("CREAR NUEVA SECCIÓN")
+    }
+    { str_seccion TextBox
+      MoveScaled(23,7,36,4)
+      Font = Font["DejaVu Serif,+1"]
+    }
+    { Label15 Label
+      MoveScaled(3,7,19,4)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("Nombre seccion:")
+    }
+    { Button7 Button
+      MoveScaled(61,6,14,5)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("Crear")
+      Picture = Picture["icon:/32/add"]
+    }
+    { Button8 Button
+      MoveScaled(76,6,22,5)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("Ver listado")
+      Picture = Picture["icon:/32/find"]
+    }
+    { GridView1 GridView
+      MoveScaled(61,13,37,18)
+      Font = Font["DejaVu Serif,+1"]
+    }
+    { Label27 Label
+      MoveScaled(4,23,54,5)
+      Font = Font["DejaVu Serif,+1"]
+      Foreground = &H0000FF&
+      Text = ("En este modulo se crearan:  tabla de inventario,  \ntabla de movimiento y  seccion nueva")
+    }
+    Index = 3
+    Text = ("Crear Nuevo Servicio")
+    { Label20 Label
+      MoveScaled(46,2,34,3)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("CREAR NUEVOS SERVICIOS")
+    }
+    { Combo_seccion ComboBox
+      MoveScaled(25,7,28,4)
+      Enabled = False
+      Font = Font["DejaVu Serif,+1"]
+    }
+    { Label21 Label
+      MoveScaled(1,8,25,3)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("Seleccionar Sección:")
+    }
+    { Label19 Label
+      MoveScaled(5,13,19,4)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("Nombre servicio:")
+    }
+    { str_servicio TextBox
+      MoveScaled(25,12,28,4)
+      Enabled = False
+      Font = Font["DejaVu Serif,+1"]
+    }
+    { Button10 Button
+      MoveScaled(42,18,11,4)
+      Picture = Picture["icon:/32/erase"]
+    }
+    { Button11 Button
+      MoveScaled(54,7,4,4)
+      Picture = Picture["icon:/32/add"]
+    }
+    { Button9 Button
+      MoveScaled(25,18,16,4)
+      Enabled = False
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("CREAR")
+      Picture = Picture["icon:/32/add"]
+    }
+    { Button12 Button
+      MoveScaled(111,8,5,4)
+      Font = Font["DejaVu Serif,+1"]
+      Picture = Picture["icon:/32/apply"]
+    }
+    { Label22 Label
+      MoveScaled(109,12,11,4)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("Ver tabla")
+    }
+    { GridView2 GridView
+      MoveScaled(61,7,47,22)
+      Font = Font["DejaVu Serif,+1"]
+    }
+    Index = 4
+    Text = ("Crear Unidad de Medida")
+    { Label26 Label
+      MoveScaled(41,2,42,3)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("CREAR NUEVA UNIDAD DE MEDIDA")
+    }
+    { CheckBox5 CheckBox
+      MoveScaled(43,7,14,4)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("Medicina")
+    }
+    { CheckBox4 CheckBox
+      MoveScaled(33,7,10,4)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("MMQ")
+    }
+    { Label24 Label
+      MoveScaled(2,13,32,3)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("Ingresar Unidad de Medida:")
+    }
+    { Button17 Button
+      MoveScaled(33,18,14,4)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("CREAR")
+      Picture = Picture["icon:/32/add"]
+    }
+    { Button18 Button
+      MoveScaled(48,18,6,4)
+      Font = Font["DejaVu Serif,+1"]
+      Picture = Picture["icon:/32/erase"]
+    }
+    { Button19 Button
+      MoveScaled(93,8,5,4)
+      Font = Font["DejaVu Serif,+1"]
+      Picture = Picture["icon:/32/apply"]
+    }
+    { Label25 Label
+      MoveScaled(92,13,10,4)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("Ver tabla")
+    }
+    { GridView4 GridView
+      MoveScaled(64,8,27,27)
+      Font = Font["DejaVu Serif,+1"]
+    }
+    { Panel8 Panel
+      MoveScaled(33,12,30,5)
+      { str_unidadmedida TextBox
+        MoveScaled(0,0,30,5)
+        Enabled = False
+        Font = Font["DejaVu Serif,+1"]
+      }
+    }
+    Index = 5
+    Text = ("Movimientos general")
+    { CheckBox10 CheckBox
+      MoveScaled(2,5,21,3)
+      Text = ("Buscar registro")
+    }
+    { Panel1 Panel
+      MoveScaled(2,9,96,28)
+      Visible = False
+      { CheckBox9 CheckBox
+        MoveScaled(3,5,12,3)
+        Text = ("Modulo")
+      }
+      { CheckBox8 CheckBox
+        MoveScaled(3,21,10,1)
+        Text = ("Fecha")
+      }
+      { CheckBox7 CheckBox
+        MoveScaled(3,2,13,2)
+        Text = ("Usuario")
+      }
+      { TextBox14 TextBox
+        MoveScaled(23,9,47,4)
+      }
+      { CheckBox11 CheckBox
+        MoveScaled(3,9,11,2)
+        Text = ("Insumo")
+      }
+      { CheckBox12 CheckBox
+        MoveScaled(3,12,12,1)
+        Text = ("Servicio")
+      }
+      { CheckBox13 CheckBox
+        MoveScaled(3,15,12,3)
+        Text = ("Sección")
+      }
+      { CheckBox14 CheckBox
+        MoveScaled(3,18,13,3)
+        Text = ("Cantidad")
+      }
+      { TextBox28 TextBox
+        MoveScaled(23,17,9,4)
+        Visible = False
+      }
+      { Label48 Label
+        MoveScaled(20,24,42,4)
+        Text = ("Seleccione una opcion para la busqueda")
+      }
+      { Button21 Button
+        MoveScaled(75,23,20,4)
+        Text = ("Ver movimientos")
+      }
+      { DateBox2 DateBox
+        MoveScaled(23,21,16,3)
+        Visible = False
+      }
+      { Button26 Button
+        MoveScaled(39,21,5,3)
+        Visible = False
+        Picture = Picture["icon:/32/ok"]
+      }
+    }
+    { Label31 Label
+      MoveScaled(63,2,33,3)
+      Font = Font["DejaVu Serif,+1"]
+      Text = ("MOVIMIENTOS GENERALES")
+    }
+    { Panel2 Panel
+      MoveScaled(105,4,75,33)
+      Visible = False
+      { Label42 Label
+        MoveScaled(63,5,13,3)
+        Text = ("UM")
+      }
+      { Label33 Label
+        MoveScaled(26,1,13,3)
+        Text = ("Cod. Insumo")
+      }
+      { Label45 Label
+        MoveScaled(36,9,10,2)
+        Text = ("Cantidad")
+      }
+      { Label37 Label
+        MoveScaled(32,13,15,3)
+        Text = ("Fecha Ingreso")
+      }
+      { Label38 Label
+        MoveScaled(37,17,9,3)
+        Text = ("Servicio")
+      }
+      { Label41 Label
+        MoveScaled(33,21,13,3)
+        Text = ("Recibido de:")
+      }
+      { Label44 Label
+        MoveScaled(4,29,9,3)
+        Text = ("Usuario")
+      }
+      { Label43 Label
+        MoveScaled(4,25,8,3)
+        Text = ("Modulo")
+      }
+      { Label40 Label
+        MoveScaled(1,21,11,3)
+        Text = ("Enviado a:")
+      }
+      { Label39 Label
+        MoveScaled(4,17,8,3)
+        Text = ("Sección")
+      }
+      { Label36 Label
+        MoveScaled(1,13,12,3)
+        Text = ("Fecha Mov.")
+      }
+      { Label35 Label
+        MoveScaled(0,9,12,3)
+        Text = ("Tip. Insumo")
+      }
+      { Label34 Label
+        MoveScaled(4,5,8,3)
+        Text = ("Insumo")
+      }
+      { Label32 Label
+        MoveScaled(2,0,10,5)
+        Text = ("Cod. Mov")
+      }
+      { TextBox15 TextBox
+        MoveScaled(13,0,12,4)
+        Enabled = False
+        Text = ("TextBox15")
+      }
+      { TextBox16 TextBox
+        MoveScaled(39,0,13,4)
+        Enabled = False
+        Text = ("TextBox16")
+      }
+      { TextBox17 TextBox
+        MoveScaled(13,4,50,4)
+        Enabled = False
+        Text = ("TextBox17")
+      }
+      { TextBox18 TextBox
+        MoveScaled(13,8,22,4)
+        Enabled = False
+        Text = ("TextBox18")
+      }
+      { TextBox25 TextBox
+        MoveScaled(47,8,16,4)
+        Enabled = False
+        Text = ("TextBox25")
+      }
+      { TextBox20 TextBox
+        MoveScaled(47,12,16,4)
+        Enabled = False
+        Text = ("TextBox20")
+      }
+      { TextBox19 TextBox
+        MoveScaled(13,12,15,4)
+        Enabled = False
+        Text = ("TextBox19")
+      }
+      { TextBox21 TextBox
+        MoveScaled(13,16,15,4)
+        Enabled = False
+        Text = ("TextBox21")
+      }
+      { TextBox22 TextBox
+        MoveScaled(47,16,17,4)
+        Enabled = False
+        Text = ("TextBox22")
+      }
+      { TextBox23 TextBox
+        MoveScaled(13,20,18,4)
+        Enabled = False
+        Text = ("TextBox23")
+      }
+      { TextBox26 TextBox
+        MoveScaled(13,24,34,4)
+        Enabled = False
+        Text = ("TextBox26")
+      }
+      { TextBox24 TextBox
+        MoveScaled(47,20,17,4)
+        Enabled = False
+        Text = ("TextBox24")
+      }
+      { TextBox27 TextBox
+        MoveScaled(13,28,20,4)
+        Enabled = False
+        Text = ("TextBox27")
+      }
+      { Button25 Button
+        MoveScaled(69,0,6,5)
+        Picture = Picture["icon:/32/erase"]
+      }
+    }
+    { CheckBox15 CheckBox
+      MoveScaled(24,5,16,3)
+      Text = ("Buscar F15")
+    }
+    { Panel3 Panel
+      MoveScaled(42,3,37,12)
+      Visible = False
+      { Label46 Label
+        MoveScaled(1,1,11,5)
+        Text = ("N° de F15")
+      }
+      { TextBox29 TextBox
+        MoveScaled(13,1,22,4)
+        MaxLength = 6
+      }
+      { Button23 Button
+        MoveScaled(13,7,16,5)
+        Text = ("BUSCAR")
+        Picture = Picture["icon:/32/find"]
+      }
+    }
+    Index = 0
+  }
+}

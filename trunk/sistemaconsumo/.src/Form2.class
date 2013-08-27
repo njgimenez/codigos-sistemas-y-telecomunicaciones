@@ -1,0 +1,1830 @@
+' Gambas class file
+
+
+Public Sub Form_Open()
+llenarcombo
+GridView1.columns.count = 1
+GridView1.rows.count = 50 
+GridView1.columns.width = 100 
+GridView1.rows.height = 20
+
+GridView1.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
+GridView1.columns[0].text = "Sección" 
+GridView1.columns[0].width = 100
+
+GridView2.columns.count = 2
+GridView2.rows.count = 50 
+GridView2.columns.width = 100 
+GridView2.rows.height = 20
+
+GridView2.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
+GridView2.columns[0].text = "Sección" 
+GridView2.columns[0].width = 100
+GridView2.columns[1].text = "Servicio" 
+GridView2.columns[1].width = 100
+
+GridView3.columns.count = 8
+GridView3.rows.count = 50 
+GridView3.columns.width = 100 
+GridView3.rows.height = 20
+
+GridView3.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
+GridView3.columns[0].text = "Codigo" 
+GridView3.columns[0].width = 100
+GridView3.columns[1].text = "Nombres" 
+GridView3.columns[1].width = 200
+GridView3.columns[2].text = "Apellidos" 
+GridView3.columns[2].width = 200
+GridView3.columns[3].text = "Cargo" 
+GridView3.columns[3].width = 100
+GridView3.columns[4].text = "Nombre de usuario" 
+GridView3.columns[4].width = 200
+GridView3.columns[5].text = "Servicio" 
+GridView3.columns[5].width = 100
+GridView3.columns[6].text = "Fecha de registro" 
+GridView3.columns[6].width = 100
+GridView3.columns[7].text = "Nivel de usuario" 
+GridView3.columns[7].width = 100
+
+GridView4.columns.count = 2
+GridView4.rows.count = 50 
+GridView4.columns.width = 100 
+GridView4.rows.height = 20
+
+GridView4.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
+GridView4.columns[0].text = "nombre" 
+GridView4.columns[0].width = 100
+GridView4.columns[1].text = "tipo insumo" 
+GridView4.columns[1].width = 100
+
+GridView5.columns.count = 3
+GridView5.rows.count = 50 
+GridView5.columns.width = 100 
+GridView5.rows.height = 20
+
+GridView5.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
+GridView5.columns[0].text = "Codigo" 
+GridView5.columns[0].width = 100
+GridView5.columns[1].text = "Insumo" 
+GridView5.columns[1].width = 100
+GridView5.columns[2].text = "Unidad de medida" 
+GridView5.columns[2].width = 100
+
+GridView6.columns.count = 13
+GridView6.rows.count = 1000 
+GridView6.columns.width = 100 
+GridView6.rows.height = 20
+
+GridView6.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
+GridView6.columns[0].text = "Codigo de Movimiento"
+GridView6.columns[0].width = 150
+GridView6.columns[1].Text = "Codigo de Insumo" 
+GridView6.columns[1].width = 150
+GridView6.columns[2].Text = "Insumo"
+GridView6.columns[2].width = 400
+GridView6.columns[3].text = "Tipo de insumo"
+GridView6.columns[3].width = 110
+GridView6.columns[4].text = "Cant. a movilizar"
+GridView6.columns[4].width = 90
+GridView6.columns[5].text = "U.M"
+GridView6.columns[5].width = 90
+GridView6.columns[6].text = "Fecha Movimiento"
+GridView6.columns[6].width = 100
+GridView6.columns[7].text = "Servicio" 
+GridView6.columns[7].width = 150
+GridView6.columns[8].text = "Enviado a" 
+GridView6.columns[8].width = 150
+GridView6.columns[9].text = "Recibido de" 
+GridView6.columns[9].width = 150
+GridView6.columns[10].text = "Seccion"  
+GridView6.columns[10].width = 200
+GridView6.columns[11].text = "Modulo" 
+GridView6.columns[11].width = 150
+GridView6.columns[12].text = "Usuario" 
+GridView6.columns[12].width = 100
+
+GridView7.columns.count = 8
+GridView7.rows.count = 1000 
+GridView7.columns.width = 100 
+GridView7.rows.height = 20
+
+GridView7.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
+GridView7.columns[0].text = "Codigo F15" 
+GridView7.columns[0].width = 150
+GridView7.columns[1].text = "PEDIDO" 
+GridView7.columns[1].width = 150
+GridView7.columns[2].Text = "INSUMO" 
+GridView7.columns[2].width = 200 
+GridView7.columns[3].Text = "CODIGO" 
+GridView7.columns[3].width = 200
+GridView7.columns[4].text = "UNIDAD DE MEDIDA" 
+GridView7.columns[4].width = 70
+GridView7.columns[5].text = "FECHA DE PEDIDO" 
+GridView7.columns[5].width = 100
+GridView7.columns[6].text = "SECCION" 
+GridView7.columns[6].width = 100
+GridView7.columns[7].text = "USUARIO" 
+GridView7.columns[7].width = 100
+
+End
+
+Public Sub Menu1_Click()
+
+  BD.Show
+
+End
+Public Sub codigogeneradomedicina()
+
+  Dim $query As String
+  Dim $result As Result
+  Dim i As Integer
+  Dim $codigomedicina As String
+  Dim $n As Integer 
+  
+  i = 1
+  Conexion.Connect()
+  $query = "Select codigo from medicina"
+  $result = Conexion.Con.Exec($query)
+  
+  If $result.Count == 0
+    $codigomedicina = "ME0000"
+    Else
+    $n = $result.Count
+  End If
+  
+  If $n < 10
+    $codigomedicina = "ME000" & $n
+  Else            
+    If $n >= 10 And $n < 100
+    $codigomedicina = "ME0" & $n
+  Else
+    $codigomedicina = "ME" & $n
+  End If
+  End If
+  str_codigoinsumo.Text = $codigomedicina
+  
+End
+
+Public Sub Button2_Click()
+   Dim respuesta As Integer
+   respuesta = Message.Question("¿Desea cambiar de usuario?", "&SI", "&NO")
+   If respuesta = 1 Then
+   TabStrip1.Visible = False
+   
+   Button1.Visible = True
+   Label2.Visible = True
+   Label3.Visible = True
+   TextBox3.Visible = True
+   TextBox1.Visible = True
+   Button2.Enabled = False
+   CheckBox6.Visible = True
+  
+End If
+End
+
+Public Sub Button4_Click()
+  
+  Panel6.Visible = True
+  
+End
+
+Public Sub Menu2_Click()
+
+  Form2.Close
+  FMain.Show
+
+End
+
+Public Sub codigogeneradommq()
+
+  Dim $query As String
+  Dim $result As Result
+  Dim i As Integer
+  Dim $codigommq As String
+  Dim $n As Integer 
+  
+  
+  i = 1
+  Conexion.Connect()
+  $query = "Select codigo from mmq"
+  $result = Conexion.Con.Exec($query)
+  
+  If $result.Count == 0
+    $codigommq = "MA0000"
+    Else
+    $n = $result.Count
+  End If
+  
+  If $n < 10
+    $codigommq = "MA000" & $n
+  Else            
+    If $n >= 10 And $n < 100
+    $codigommq = "MA0" & $n
+  Else
+    $codigommq = "MA" & $n
+  End If
+  End If
+  str_codigoinsumo.Text = $codigommq
+  
+End
+
+
+Public Sub Button3_Click()
+
+Dim $Query As String
+Dim $Result As Result
+
+
+If str_nombreinsumo.text = "" Or Combo_unidadmedidainsumo.text = "" Then
+
+Message.Error("LLENAR TODAS LAS CASILLAS")
+
+Else 
+
+  Conexion.Connect()
+  
+  codigogeneradommq
+  
+  $Query = "insert into " & UCase$(Label1.Text) & " (nombre, unidadmedida, codigo) values ('" & UCase$(str_nombreinsumo.Text) & "','" & UCase$(Combo_unidadmedidainsumo.Text) & "', '" & UCase$(str_codigoinsumo.Text) & "')"
+  $Result = Conexion.Con.Exec($Query)
+   
+  Message("Agredado")
+  
+
+
+  Combo_unidadmedidainsumo.Text = ""
+  str_nombreinsumo.text = ""
+  str_codigoinsumo.Text = ""
+  Combo_unidadmedidainsumo.Enabled = False
+  str_nombreinsumo.Enabled = False
+
+  codigogeneradommq
+End If
+End
+
+
+
+Public Sub Button5_Click()
+
+Dim $query As String
+Dim $result As Result
+
+
+If str_codigousuario.text = "" Or str_nombreusuario.text = "" Or str_apellidousuario.text = "" Or str_cargousuario.text = "" Or str_usuarionombre.text = "" Or combo_seccionasignada.text = "" Or Date_registrousuario.value = "" Or Combo_nivelusuario.text = "" Then
+
+Message.Error("LLENAR TODAS LAS CASILLAS")
+
+Else 
+  
+  
+  Conexion.Connect()
+  
+  $Query = " Select * from usuario where nombreusuario = '" & UCase$(str_usuarionombre.Text) & "'" 
+  $Result = conexion.Con.Exec($Query)
+
+  If $result.Available Then
+  
+  Message.Info("EL NOMBRE DE USUARIO YA EXISTE")
+  
+  
+  Else
+  
+  codigogeneradousuario
+ 
+  $query = "insert into usuario ( nombres , apellidos, cargo, nombreusuario, clave, servicio, codigousuario, nivelusuario, fecharegistro ) values ('" & UCase$(str_nombreusuario.text) & "','" & UCase$(str_apellidousuario.text) & "','" & UCase$(str_cargousuario.text) & "','" & UCase$(str_usuarionombre.text) & "','" & str_codigousuario.text & "', '" & UCase$(combo_seccionasignada.text) & "','" & textbox6.text & "','" & UCase$(Combo_nivelusuario.text) & "', '" & Format$(Date_registrousuario.Value, "dd/mm/yy") & "')"
+  $result = Conexion.Con.Exec($query)
+
+  Message("REGISTRADO")
+  
+
+  str_usuarionombre.Text = ""
+  str_cargousuario.Text = ""
+  str_apellidousuario.Text = ""
+  str_nombreusuario.Text = ""
+  str_codigousuario.Text = ""
+  combo_seccionasignada.Text = ""
+  Combo_nivelusuario.text = ""
+  Date_registrousuario.Value = ""  
+  CheckBox6.Visible = True
+  str_nombreusuario.Enabled = False
+  str_apellidousuario.Enabled = False
+  str_cargousuario.Enabled = False
+  str_usuarionombre.Enabled = False
+  str_codigousuario.Enabled = False
+  combo_seccionasignada.Enabled = False
+  textbox6.Enabled = False
+  Date_registrousuario.Enabled = False
+  Button5.Enabled = False
+
+   codigogeneradousuario
+   usuario
+   End If
+   End If
+End
+Public Sub codigogeneradousuario()
+  
+  Dim $query As String
+  Dim $result As Result
+  Dim i As Integer
+  Dim $codigo As String
+  Dim $n As Integer
+  
+  i = 1
+  Conexion.Connect()
+  $query = "Select codigousuario from usuario"
+  $result = Conexion.Con.Exec($query)
+  
+  If $result.Count == 0
+    $codigo = "U000"
+   Else
+    $n = $result.Count
+  End If
+  
+  If $n < 10
+    $codigo = "U00" & $n
+  Else            
+    If $n >= 10 And $n < 100
+    $codigo = "U0" & $n
+  Else
+    $codigo = "U" & $n
+  End If
+  End If
+  TextBox6.Text = $codigo
+  
+End
+
+Public Sub CheckBox1_Click()
+
+   If CheckBox1.Value = True Then
+    str_codigousuario.Password = False
+    Else
+    str_codigousuario.Password = True
+  Endif
+
+End
+
+Public Sub Button7_Click()
+
+Dim $query As String
+Dim $Result As Result
+Dim seccion As String
+Dim Preg As Integer
+
+If str_seccion.text = "" Then
+
+Message.Error("LLENAR TODAS LAS CASILLAS")
+
+Else 
+
+
+  Preg = 0
+  
+      Preg = Message.Question("¡Se creara: Seccion nueva=" & str_seccion.Text & ", tabla de inventario= inv" & str_seccion.Text & " y tabla de movimiento=" & str_seccion.text & "! ¿Esta de acuerdo?", "Si", "No")
+
+        If Preg = 1 Then
+          
+  
+seccion = UCase$(str_seccion.Text)
+
+conexion.Connect()
+$query = "Create TABLE INV" & seccion & " (codigo character varying(50),insumo character varying(50),tipoinsumo character varying(50),proceinsumo character varying(50),cantidadinsumo character varying(10),fechainsumo date, usuario character varying(50), unidadmedida character varying(20))"
+$result = Conexion.Con.Exec($query)
+
+conexion.Connect()
+$query = "insert into secciones (nombres)values('" & UCase$(str_seccion.text) & "')" 
+$result = Conexion.Con.Exec($query)
+
+conexion.Connect
+$query = " Create TABLE " & seccion & " (cmov character varying(50), cinsumo character varying(50), insumo character varying(50), cantidadmov character varying(10),tipoinsumo character varying(50), servicio character varying(50), seccion character varying(50), usuariomov character varying(50),fechamov Date, modulo character varying(50), unidadmedida character varying(20), enviado character varying(50), recibido character varying(50))"
+$result = conexion.Con.Exec($query)
+
+   str_seccion.Text = ""
+        
+ Else If Preg = 2
+   
+   str_seccion.Text = ""
+  
+End If
+
+End If
+End
+
+
+
+
+
+
+
+
+
+Public Sub Button8_Click()
+
+  seccion
+
+End
+Public Sub seccion()
+
+  
+Dim $Linea As Integer, $Rec As Result, $Sql As String
+
+conexion.Connect()
+
+$Sql = "select * from secciones" 
+$Rec = conexion.Con.exec($sql)
+gridView1.Clear
+GridView1.rows.count = $Rec.count + 1 
+For $linea = 0 To $Rec.Count - 1 Step 1      
+GridView1[$linea, 0].text = $Rec!nombres
+$Rec.MoveNext()
+Next 
+
+End
+
+Public Sub Button6_Click()
+
+
+   str_nombreusuario.text = ""
+   str_apellidousuario.text = ""
+   str_cargousuario.text = ""
+   str_usuarionombre.text = ""
+   str_codigousuario.text = ""
+   combo_seccionasignada.text = ""
+   textbox6.text = ""
+   Combo_nivelusuario.text = ""
+     str_nombreusuario.Enabled = False
+  str_apellidousuario.Enabled = False
+  str_cargousuario.Enabled = False
+  str_usuarionombre.Enabled = False
+  str_codigousuario.Enabled = False
+  combo_seccionasignada.Enabled = False
+  textbox6.Enabled = False
+  Date_registrousuario.Enabled = False
+  Button5.Enabled = False
+  Combo_nivelusuario.Enabled = False
+  
+
+End
+
+Public Sub servicios()
+  
+Dim $Linea As Integer, $Rec As Result, $Sql As String
+
+conexion.Connect()
+
+$Sql = "select * from servicios" 
+$Rec = conexion.Con.exec($sql)
+gridView2.Clear
+GridView2.rows.count = $Rec.count + 1 
+For $linea = 0 To $Rec.Count - 1 Step 1      
+GridView2[$linea, 0].text = $Rec!secciones
+GridView2[$linea, 1].text = $Rec!servicio
+$Rec.MoveNext()
+Next 
+
+  
+End
+
+
+Public Sub llenarcombo()
+  
+  Dim $query As String
+  Dim $result As Result
+  Dim i As Integer
+  
+
+ conexion.Connect()
+ $Query = "select * from secciones"
+ $Result = conexion.Con.Exec($Query)    
+ Combo_seccion.Clear
+ For i = 0 To $Result.Count - 1 Step 1
+ Combo_seccion.Add($Result!nombres) 
+ Combo_seccion.Refresh()
+ $Result.MoveNext()
+ Next
+ 
+ conexion.Connect()
+ $Query = "select * from secciones"
+ $Result = conexion.Con.Exec($Query)
+ combo_seccionasignada.Clear    
+ For i = 0 To $Result.Count - 1 Step 1
+ combo_seccionasignada.Add($Result!nombres) 
+ combo_seccionasignada.Refresh()
+ $Result.MoveNext()
+ Next
+
+End
+
+
+Public Sub Combo_seccion_KeyRelease()
+
+  
+  llenarcombo
+
+
+End
+
+Public Sub Button9_Click()
+
+   
+  Dim $query As String
+  Dim $result As Result
+  Dim i As Integer
+  Dim Preg As Integer
+  
+  
+  If str_servicio.text = "" Or Combo_seccion.text = "" Then
+
+  Message.Error("LLENAR TODAS LAS CASILLAS")
+
+  Else 
+  
+  Preg = 0
+  
+  Preg = Message.Question("¿Se guardara el siguiente servicio= " & str_servicio.text & " de la seccion= " & Combo_seccion.text & " ?", "Si", "No")
+
+  If Preg = 1 Then
+   
+  
+  $query = "insert into servicios (secciones, servicio)values('" & UCase$(Combo_seccion.Text) & "', '" & UCase$(str_servicio.Text) & "')"
+  $result = Conexion.Con.Exec($query)
+  
+  servicios
+  
+  Combo_seccion.Enabled = False
+  str_servicio.Enabled = False
+  Combo_seccion.Text = ""
+  str_servicio.text = ""
+  Button9.Enabled = False
+
+  Else
+  
+    If Preg = 2
+      
+        Combo_seccion.Enabled = False
+        str_servicio.Enabled = False
+        Button9.Enabled = False
+        Combo_seccion.Text = ""
+        str_servicio.text = ""
+
+    
+      
+    Endif
+    
+    
+    
+  Endif
+End If
+End
+
+Public Sub Button11_Click()
+
+
+  Combo_seccion.Enabled = True
+  str_servicio.Enabled = True
+  Button9.Enabled = True
+  llenarcombo
+
+End
+
+
+
+Public Sub Button10_Click()
+
+    Combo_seccion.text = ""
+  str_servicio.Text = ""
+
+
+End
+
+Public Sub Button12_Click()
+
+  servicios
+
+End
+
+Public Sub GridView2_Click()
+
+  Dim $sql As String
+  Dim $result As Result
+  Dim Preg As Integer
+  Dim i As Integer
+  
+   $sql = "SELECT *  FROM servicios Where secciones = '" & GridView2[GridView2.Row, 0].text & "'"
+   $result = conexion.Con.Exec($sql)
+
+  Preg = 0
+      
+  Preg = Message.Question("¿Que desea hacer?", "Eliminar", "Cancelar")
+
+      If Preg = 1 Then
+
+         $sql = "DELETE From servicios Where secciones = '" & GridView2[GridView2.Row, 0].text & "'"
+         $result = conexion.Con.Exec($sql)
+         
+servicios
+      If Preg = 2 Then
+
+         
+      servicios
+  
+   End If
+
+  End If
+
+
+End
+
+
+
+Public Sub str_nombreusuario_KeyPress()
+
+  If (Key.Code >= Asc("0") And Key.Code <= Asc("9")) Then
+
+  Message.Warning("Disculpe, solo debe ingresar valores alfabéticos")
+
+  Stop Event
+
+  Endif
+
+End
+
+Public Sub str_apellidousuario_KeyPress()
+
+  If (Key.Code >= Asc("0") And Key.Code <= Asc("9")) Then
+
+Message.Warning("Disculpe, solo debe ingresar valores alfabéticos")
+
+Stop Event
+
+Endif
+
+End
+
+Public Sub Button13_Click()
+
+   str_nombreusuario.Enabled = True
+   str_apellidousuario.Enabled = True
+   str_cargousuario.Enabled = True
+   str_usuarionombre.Enabled = True
+   str_codigousuario.Enabled = True
+   combo_seccionasignada.Enabled = True
+   textbox6.Enabled = True
+   Date_registrousuario.Enabled = True
+   Button5.Enabled = True
+   Combo_nivelusuario.Enabled = True
+
+llenarcombo
+End
+
+
+Public Sub Button14_Click()
+
+usuario
+
+End
+Public Sub usuario()
+
+Dim $Linea As Integer
+Dim $Rec As Result
+Dim $Sql As String
+
+conexion.Connect()
+
+$Sql = "select * from usuario" 
+$Rec = conexion.Con.exec($Sql)
+GridView3.Clear
+GridView3.rows.count = $Rec.count + 1 
+For $linea = 0 To $Rec.Count - 1 Step 1 
+ 
+GridView3[$linea, 0].text = $Rec!codigousuario 
+GridView3[$linea, 1].text = $Rec!nombres
+GridView3[$linea, 2].text = $Rec!apellidos
+GridView3[$linea, 3].text = $Rec!cargo
+GridView3[$linea, 4].text = $Rec!nombreusuario
+GridView3[$linea, 5].text = $Rec!servicio
+GridView3[$linea, 6].text = $Rec!fecharegistro
+GridView3[$linea, 7].text = $Rec!nivelusuario
+$Rec.MoveNext
+Next
+Panel5.Visible = True
+End
+
+
+
+Public Sub Button15_Click()
+Panel5.Visible = False
+End
+Public Sub GridView3_Click()
+
+Dim i As Integer
+Dim Preg As Integer
+Dim $sql As String
+Dim $result As Result
+
+If GridView3[GridView3.Row, 0].text = ""
+Return
+End If
+
+  $sql = "SELECT *  FROM usuario Where codigousuario = '" & gridView3[GridView3.Row, 0].text & "'"
+         $result = conexion.Con.Exec($sql)
+  Preg = 0
+      Preg = Message.Question("¿QUE DECEA HACER?", "Eliminar", "Cancelar")
+
+        If Preg = 1 Then
+      
+
+         $sql = "DELETE  From usuario Where codigousuario = '" & GridView3[GridView3.Row, 0].text & "' "
+         $result = conexion.Con.Exec($sql)
+  
+  
+  usuario
+  End If
+
+
+End
+
+Public Sub unidadmedida()
+  
+Dim $Linea As Integer, $Rec As Result, $Sql As String
+
+conexion.Connect()
+
+$Sql = "select * from unidadmedida" 
+$Rec = conexion.Con.exec($sql)
+gridView4.Clear
+GridView4.rows.count = $Rec.count + 1 
+For $linea = 0 To $Rec.Count - 1 Step 1      
+GridView4[$linea, 0].text = $Rec!nombre
+GridView4[$linea, 1].text = $Rec!tipoinsumo
+$Rec.MoveNext()
+Next 
+
+  
+End
+
+
+
+
+
+
+
+Public Sub Button17_Click()
+
+Dim i As Integer
+Dim Preg As Integer
+Dim $sql As String
+Dim $result As Result
+
+    
+  If str_unidadmedida.text = "" 
+
+  Message.Error("LlENAR TODAS LAS CASILLAS")
+
+  Else 
+
+
+Preg = 0
+  
+  Preg = Message.Question("¿Se guardara la unidad de medida= " & str_unidadmedida.text & " ?", "Si", "No")
+
+  If Preg = 1 Then
+
+
+If CheckBox4.Value = True Then
+
+$sql = " insert into unidadmedida (tipoinsumo,nombre)values('" & UCase$(CheckBox4.Text) & "','" & UCase$(str_unidadmedida.Text) & "')"
+$result = Conexion.Con.Exec($sql)
+
+str_unidadmedida.Text = ""
+unidadmedida
+
+Else
+  
+CheckBox5.Value = True
+
+$sql = " insert into unidadmedida (tipoinsumo,nombre)values('" & LCase$(CheckBox5.Text) & "','" & str_unidadmedida.Text & "')"
+$result = Conexion.Con.Exec($sql)
+
+str_unidadmedida.Text = ""
+unidadmedida
+End If
+End If
+End If
+
+
+End
+
+
+
+
+Public Sub CheckBox4_Click()
+
+  If CheckBox4.Value = True Then
+    
+     CheckBox5.Value = False
+  
+     str_unidadmedida.Enabled = True  
+     
+     Else
+     
+              str_unidadmedida.Text = ""  
+
+  Endif
+
+End
+
+Public Sub CheckBox5_Click()
+
+   If CheckBox5.Value = True Then
+    
+     CheckBox4.Value = False
+  
+     str_unidadmedida.Enabled = True  
+     
+     Else
+     
+         str_unidadmedida.Text = ""
+
+  Endif
+
+End
+
+Public Sub Button19_Click()
+
+  unidadmedida
+
+End
+
+Public Sub str_unidadmedida_KeyPress()
+    
+  Select Case Key.Code
+        Case 65 To 90
+        Case 32
+        Case Key.BackSpace
+        Case Key.Delete
+        Case Key.Tab
+        Case Else
+        Stop Event
+    End Select
+    
+       
+    If CheckBox5.Value = False And CheckBox4.Value = False
+    Message.Info("Seleccione una opcion")
+    str_unidadmedida.Enabled = False
+
+  Else
+    
+    str_unidadmedida.Enabled = True
+End If
+
+
+End
+
+Public Sub CheckBox2_Click()
+
+  Dim $query As String
+  Dim $result As Result
+  Dim i As Integer
+ 
+ 
+  If CheckBox2.Value = True Then
+    CheckBox3.Value = False
+    conexion.Connect()
+    Label1.Caption = "mmq"
+    codigogeneradommq
+ $Query = "select * from unidadmedida where tipoinsumo='" & LCase$(CheckBox2.Text) & "'"
+ $Result = conexion.Con.Exec($Query)
+ Combo_unidadmedidainsumo.Clear    
+ For i = 0 To $Result.Count - 1 Step 1
+ Combo_unidadmedidainsumo.Add($Result!nombre) 
+ Combo_unidadmedidainsumo.Refresh()
+ $Result.MoveNext()
+ Next
+ Else
+ Endif
+  
+  mmq
+ 
+End
+
+Public Sub CheckBox3_Click()
+
+    Dim $query As String
+  Dim $result As Result
+  Dim i As Integer
+ 
+ 
+  If CheckBox3.Value = True Then
+    CheckBox2.Value = False
+    Label1.Caption = "medicina"
+    codigogeneradomedicina
+    conexion.Connect()
+ $Query = "select * from unidadmedida where tipoinsumo='" & LCase$(CheckBox3.Text) & "'"
+ $Result = conexion.Con.Exec($Query)
+ Combo_unidadmedidainsumo.Clear    
+ For i = 0 To $Result.Count - 1 Step 1
+ Combo_unidadmedidainsumo.Add($Result!nombre) 
+ Combo_unidadmedidainsumo.Refresh()
+ $Result.MoveNext()
+ Next
+  Else
+  Endif
+medicina
+End
+
+
+Public Sub GridView1_Click()
+
+  Dim $sql As String
+  Dim $result As Result
+  Dim Preg As Integer
+  Dim i As Integer
+  
+   $sql = "SELECT *  FROM secciones Where nombres = '" & GridView1[GridView1.Row, 0].text & "'"
+   $result = conexion.Con.Exec($sql)
+
+  Preg = 0
+      
+  Preg = Message.Question("¿Que desea hacer?", "Eliminar", "Cancelar")
+
+      If Preg = 1 Then
+        Message.Info("Se eliminaran las tablas de inventario y movimiento que lleven este nombre=" & GridView1[GridView1.Row, 0].text & "")
+         $sql = "DELETE From secciones Where nombres = '" & GridView1[GridView1.Row, 0].text & "'"
+         $result = conexion.Con.Exec($sql)
+         
+         $sql = "DROP table " & GridView1[GridView1.Row, 0].text & ""
+         $result = conexion.Con.Exec($sql)
+         
+         $sql = "DROP table inv" & GridView1[GridView1.Row, 0].text & ""
+         $result = conexion.Con.Exec($sql)
+         
+    seccion
+      If Preg = 2 Then
+
+         
+      seccion
+  
+   End If
+
+  End If
+
+
+
+End
+
+
+Public Sub Button16_Click()
+
+  If CheckBox2.Value = False And CheckBox3.Value = False
+  
+  Message.Info("Seleccionar casillas") 
+  
+  Else
+  
+  str_nombreinsumo.Enabled = True
+  Combo_unidadmedidainsumo.Enabled = True
+End If
+End
+
+Public Sub mmq()
+
+ Dim $Linea As Integer, $Rec As Result, $Sql As String
+
+conexion.Connect()
+
+$Sql = "select * from mmq" 
+$Rec = conexion.Con.exec($sql)
+gridView5.Clear
+GridView5.rows.count = $Rec.count + 1 
+For $linea = 0 To $Rec.Count - 1 Step 1      
+GridView5[$linea, 0].text = $Rec!codigo
+GridView5[$linea, 1].text = $Rec!nombre
+GridView5[$linea, 2].text = $Rec!unidadmedida
+$Rec.MoveNext()
+Next 
+
+
+End
+Public Sub medicina()
+
+  Dim $Linea As Integer, $Rec As Result, $Sql As String
+
+conexion.Connect()
+
+$Sql = "select * from medicina" 
+$Rec = conexion.Con.exec($sql)
+gridView5.Clear
+GridView5.rows.count = $Rec.count + 1 
+For $linea = 0 To $Rec.Count - 1 Step 1      
+GridView5[$linea, 0].text = $Rec!codigo
+GridView5[$linea, 1].text = $Rec!nombre
+GridView5[$linea, 2].text = $Rec!unidadmedida
+$Rec.MoveNext()
+Next 
+
+
+End
+
+
+
+Public Sub Button20_Click()
+  Panel6.Visible = False
+End
+
+Public Sub CheckBox6_Click()
+
+    If CheckBox6.Value = True
+      TextBox3.Password = False
+  Else
+    TextBox3.Password = True
+    End If
+    
+End
+
+
+Public Sub Button1_Click()
+
+  Dim $Query As String
+    Dim $Result As Result
+    Dim $mensaje As String 
+    Dim nivelusuario As String
+    
+
+
+ If textbox1.text = "" Or textbox3.text = "" Then
+
+Message.Error("LLENAR TODAS LAS CASILLAS")
+
+Else 
+  
+   Conexion.Connect()
+   $Query = "SELECT * FROM usuario where nombreusuario='" & UCase$(TextBox1.Text) & "' and clave='" & TextBox3.text & "' and nivelusuario='" & UCase$(label29.text) & "' "
+   $Result = Conexion.Con.Exec($Query)  
+   If $Result.Count = 0 Then 
+   Message.info("Usuario o Contraseña no coinciden")
+   Else
+   TabStrip1.Visible = True
+   CheckBox6.Visible = False
+   textbox3.Visible = False
+   Label2.Visible = False
+   Label3.Visible = False
+   TextBox3.Visible = False
+   TextBox1.Visible = False
+   Button1.Visible = False
+   Button2.Enabled = True
+   CheckBox6.Visible = False
+   textbox3.Text = ""
+   textbox1.Text = ""
+End If
+End If
+End
+
+
+Public Sub str_nombreinsumo_KeyPress()
+
+  If CheckBox2.Value = False And CheckBox3.Value = False
+  
+  str_nombreinsumo.Enabled = False
+  
+  Else
+  
+ str_nombreinsumo.Enabled = True
+End If  
+
+End
+
+
+
+
+
+
+
+
+Public Sub Menu3_Click()
+
+
+  BD.Show
+
+End
+
+Public Sub movimiento()
+  
+
+Dim $Linea As Integer, $Rec As Result, $Sql As String
+Dim seccion As String
+
+conexion.Connect()
+
+$Sql = "select * from movimientos"  
+$Rec = conexion.Con.exec($Sql) 
+
+gridview6.rows.count = $Rec.count + 1 
+For $linea = 0 To $Rec.Count - 1 Step 1      
+ 
+
+GridView6[$linea, 0].text = $Rec!cmov
+ 
+GridView6[$linea, 1].text = $Rec!cinsumo
+ 
+GridView6[$linea, 2].text = $Rec!insumo
+
+GridView6[$linea, 3].text = $Rec!tipoinsumo
+
+GridView6[$linea, 4].text = $Rec!cantidadmov
+
+GridView6[$linea, 5].text = $Rec!unidadmedida
+
+GridView6[$linea, 6].text = $Rec!fechamov
+
+GridView6[$linea, 7].text = $Rec!servicio
+
+GridView6[$linea, 8].text = $Rec!enviado
+
+GridView6[$linea, 9].text = $Rec!recibido
+
+GridView6[$linea, 10].text = $Rec!seccion
+
+GridView6[$linea, 11].text = $Rec!modulo
+
+GridView6[$linea, 12].text = $Rec!usuariomov
+
+$Rec.MoveNext()
+Next 
+ GridView6.Visible = True
+  
+End
+
+
+
+Public Sub Button21_Click()
+
+  movimiento
+  Panel4.Visible = True
+
+End
+
+Public Sub TextBox14_KeyRelease()
+
+Dim $Linea As Integer, $Rec As Result, $Sql As String
+Dim seccion As String
+
+conexion.Connect()
+
+If CheckBox7.Value = True
+
+$Sql = "select * from movimientos where usuariomov like '" & UCase$(TextBox14.Text) & "%'"  
+$Rec = conexion.Con.exec($Sql) 
+
+For $linea = 0 To $Rec.Count - 1 Step 1      
+ 
+
+GridView6[$linea, 0].text = $Rec!cmov
+ 
+GridView6[$linea, 1].text = $Rec!cinsumo
+ 
+GridView6[$linea, 2].text = $Rec!insumo
+
+GridView6[$linea, 3].text = $Rec!tipoinsumo
+
+GridView6[$linea, 4].text = $Rec!cantidadmov
+
+GridView6[$linea, 5].text = $Rec!unidadmedida
+
+GridView6[$linea, 6].text = $Rec!fechaingreso
+ 
+GridView6[$linea, 7].text = $Rec!fechamov
+
+GridView6[$linea, 8].text = $Rec!servicio
+
+GridView6[$linea, 9].text = $Rec!enviado
+
+GridView6[$linea, 10].text = $Rec!recibido
+
+GridView6[$linea, 11].text = $Rec!seccion
+
+GridView6[$linea, 12].text = $Rec!modulo
+
+GridView6[$linea, 13].text = $Rec!usuariomov
+
+$Rec.MoveNext()
+Next 
+ 
+ Else
+   
+If checkBox9.Value = True
+
+$Sql = "select * from movimientos  where modulo like '" & UCase$(TextBox14.Text) & " %'"  
+$Rec = conexion.Con.exec($Sql) 
+
+For $linea = 0 To $Rec.Count - 1 Step 1      
+ 
+
+GridView6[$linea, 0].text = $Rec!cmov
+ 
+GridView6[$linea, 1].text = $Rec!cinsumo
+ 
+GridView6[$linea, 2].text = $Rec!insumo
+
+GridView6[$linea, 3].text = $Rec!tipoinsumo
+
+GridView6[$linea, 4].text = $Rec!cantidadmov
+
+GridView6[$linea, 5].text = $Rec!unidadmedida
+
+GridView6[$linea, 6].text = $Rec!fechaingreso
+ 
+GridView6[$linea, 7].text = $Rec!fechamov
+
+GridView6[$linea, 8].text = $Rec!servicio
+
+GridView6[$linea, 9].text = $Rec!enviado
+
+GridView6[$linea, 10].text = $Rec!recibido
+
+GridView6[$linea, 11].text = $Rec!seccion
+
+GridView6[$linea, 12].text = $Rec!modulo
+
+GridView6[$linea, 13].text = $Rec!usuariomov
+
+$Rec.MoveNext()
+Next 
+
+Else 
+
+If CheckBox11.Value = True
+  
+$Sql = "select * from movimientos where insumo like '%" & UCase$(TextBox14.Text) & " %'"  
+$Rec = conexion.Con.exec($Sql) 
+
+For $linea = 0 To $Rec.Count - 1 Step 1      
+
+GridView6[$linea, 0].text = $Rec!cmov
+ 
+GridView6[$linea, 1].text = $Rec!cinsumo
+ 
+GridView6[$linea, 2].text = $Rec!insumo
+
+GridView6[$linea, 3].text = $Rec!tipoinsumo
+
+GridView6[$linea, 4].text = $Rec!cantidadmov
+
+GridView6[$linea, 5].text = $Rec!unidadmedida
+
+GridView6[$linea, 6].text = $Rec!fechaingreso
+ 
+GridView6[$linea, 7].text = $Rec!fechamov
+
+GridView6[$linea, 8].text = $Rec!servicio
+
+GridView6[$linea, 9].text = $Rec!enviado
+
+GridView6[$linea, 10].text = $Rec!recibido
+
+GridView6[$linea, 11].text = $Rec!seccion
+
+GridView6[$linea, 12].text = $Rec!modulo
+
+GridView6[$linea, 13].text = $Rec!usuariomov
+
+$Rec.MoveNext()
+Next 
+
+Else
+  
+If CheckBox12.Value = True
+  
+$Sql = "select * from movimientos where servicio like '%" & UCase$(TextBox14.Text) & " %'"  
+$Rec = conexion.Con.exec($Sql) 
+
+For $linea = 0 To $Rec.Count - 1 Step 1      
+
+GridView6[$linea, 0].text = $Rec!cmov
+ 
+GridView6[$linea, 1].text = $Rec!cinsumo
+ 
+GridView6[$linea, 2].text = $Rec!insumo
+
+GridView6[$linea, 3].text = $Rec!tipoinsumo
+
+GridView6[$linea, 4].text = $Rec!cantidadmov
+
+GridView6[$linea, 5].text = $Rec!unidadmedida
+
+GridView6[$linea, 6].text = $Rec!fechaingreso
+ 
+GridView6[$linea, 7].text = $Rec!fechamov
+
+GridView6[$linea, 8].text = $Rec!servicio
+
+GridView6[$linea, 9].text = $Rec!enviado
+
+GridView6[$linea, 10].text = $Rec!recibido
+
+GridView6[$linea, 11].text = $Rec!seccion
+
+GridView6[$linea, 12].text = $Rec!modulo
+
+GridView6[$linea, 13].text = $Rec!usuariomov
+
+$Rec.MoveNext()
+Next
+
+Else
+
+If CheckBox13.Value = True
+  
+$Sql = "select * from movimientos where seccion like '" & UCase$(TextBox14.Text) & " %'"  
+$Rec = conexion.Con.exec($Sql) 
+
+For $linea = 0 To $Rec.Count - 1 Step 1      
+
+GridView6[$linea, 0].text = $Rec!cmov
+ 
+GridView6[$linea, 1].text = $Rec!cinsumo
+ 
+GridView6[$linea, 2].text = $Rec!insumo
+
+GridView6[$linea, 3].text = $Rec!tipoinsumo
+
+GridView6[$linea, 4].text = $Rec!cantidadmov
+
+GridView6[$linea, 5].text = $Rec!unidadmedida
+
+GridView6[$linea, 6].text = $Rec!fechaingreso
+ 
+GridView6[$linea, 7].text = $Rec!fechamov
+
+GridView6[$linea, 8].text = $Rec!servicio
+
+GridView6[$linea, 9].text = $Rec!enviado
+
+GridView6[$linea, 10].text = $Rec!recibido
+
+GridView6[$linea, 11].text = $Rec!seccion
+
+GridView6[$linea, 12].text = $Rec!modulo
+
+GridView6[$linea, 13].text = $Rec!usuariomov
+
+$Rec.MoveNext()
+Next 
+
+Else
+  
+  If CheckBox8.Value = True
+  
+$Sql = "select * from movimientos where fechamov = '" & Format$(DateBox2.Value, "dd/mm/yyyy") & "'"  
+$Rec = conexion.Con.exec($Sql) 
+
+For $linea = 0 To $Rec.Count - 1 Step 1      
+
+GridView6[$linea, 0].text = $Rec!cmov
+ 
+GridView6[$linea, 1].text = $Rec!cinsumo
+ 
+GridView6[$linea, 2].text = $Rec!insumo
+
+GridView6[$linea, 3].text = $Rec!tipoinsumo
+
+GridView6[$linea, 4].text = $Rec!cantidadmov
+
+GridView6[$linea, 5].text = $Rec!unidadmedida
+
+GridView6[$linea, 6].text = $Rec!fechaingreso
+ 
+GridView6[$linea, 7].text = $Rec!fechamov
+
+GridView6[$linea, 8].text = $Rec!servicio
+
+GridView6[$linea, 9].text = $Rec!enviado
+
+GridView6[$linea, 10].text = $Rec!recibido
+
+GridView6[$linea, 11].text = $Rec!seccion
+
+GridView6[$linea, 12].text = $Rec!modulo
+
+GridView6[$linea, 13].text = $Rec!usuariomov
+
+$Rec.MoveNext()
+Next 
+
+End If
+End If
+End If
+End If
+End If
+End If
+End
+Public Sub Button22_Click()
+
+  Label30.Visible = False
+  gridview6.Visible = False
+  Button22.Visible = False  
+
+End
+
+Public Sub CheckBox7_Click()
+
+  If CheckBox7.Value = True
+    CheckBox8.Value = False
+    CheckBox9.Value = False
+    CheckBox11.Value = False
+    CheckBox12.Value = False
+    CheckBox13.Value = False
+    CheckBox14.Value = False
+    Else
+    TextBox14.Text = ""
+    
+End If
+End
+
+Public Sub CheckBox8_Click()
+
+    If CheckBox8.Value = True
+    CheckBox7.Value = False
+    CheckBox9.Value = False
+    CheckBox11.Value = False
+    CheckBox12.Value = False
+    CheckBox13.Value = False
+    CheckBox14.Value = False
+    DateBox2.Visible = True
+    Button26.Visible = True
+        Else
+    TextBox14.Text = ""
+    DateBox2.Visible = False
+    Button26.Visible = False
+End If
+
+End
+
+Public Sub CheckBox9_Click()
+
+    If CheckBox9.Value = True
+    CheckBox7.Value = False
+    CheckBox8.Value = False
+    CheckBox11.Value = False
+    CheckBox12.Value = False
+    CheckBox13.Value = False
+    CheckBox14.Value = False
+        Else
+    TextBox14.Text = ""
+End If
+
+End
+
+
+
+Public Sub CheckBox10_Click()
+
+ If CheckBox10.Value = True
+    Panel4.Visible = True
+    Panel1.Visible = True
+    movimiento
+    CheckBox15.Value = False
+    Else
+     Panel4.Visible = False
+     Panel1.Visible = False
+     
+End If
+
+End
+
+Public Sub CheckBox11_Click()
+
+  If CheckBox11.Value = True
+    CheckBox9.Value = False
+    CheckBox7.Value = False
+    CheckBox8.Value = False
+    CheckBox12.Value = False
+    CheckBox13.Value = False
+    CheckBox14.Value = False
+        Else
+    TextBox14.Text = ""
+  End If
+    
+
+End
+
+
+
+Public Sub GridView6_Click()
+
+Dim $Rec As Result, $Sql As String, Preg As Integer, i As Integer
+
+
+
+
+If GridView6[GridView6.Row, 0].text = ""
+Return
+End If
+
+  $sql = "SELECT *  FROM movimientos Where cmov = '" & gridView6[GridView6.Row, 0].text & "' AND cinsumo='" & GridView6[gridView6.Row, 1].text & "' "
+         $Rec = conexion.Con.Exec($sql)
+
+  Preg = 0
+      Preg = Message.Question("¿Seleccionar movimientos?", "SI", "NO")
+
+        If Preg = 1 Then
+       Panel2.Visible = True
+       textBox15.Text = GridView6[GridView6.Row, 0].Text
+       TextBox16.Text = GridView6[GridView6.Row, 1].Text
+       textBox17.Text = GridView6[GridView6.Row, 2].Text
+       TextBox18.Text = GridView6[GridView6.Row, 3].Text
+       TextBox25.Text = GridView6[GridView6.Row, 4].Text
+       label42.Text = GridView6[GridView6.Row, 5].Text
+       TextBox20.Text = GridView6[GridView6.Row, 6].Text
+       textbox19.Text = GridView6[GridView6.Row, 7].Text
+       textbox22.Text = GridView6[GridView6.Row, 8].Text
+       textbox23.Text = GridView6[GridView6.Row, 9].Text
+       textbox24.Text = GridView6[GridView6.Row, 10].Text
+       textbox21.Text = GridView6[GridView6.Row, 11].Text
+       textbox26.Text = GridView6[GridView6.Row, 12].Text
+       TextBox27.Text = GridView6[GridView6.Row, 13].Text
+End If
+
+End
+
+
+Public Sub CheckBox12_Click()
+
+  If CheckBox12.Value = True
+    CheckBox7.Value = False
+    CheckBox8.Value = False
+    CheckBox9.Value = False
+    CheckBox13.Value = False
+    CheckBox14.Value = False
+    CheckBox11.Value = False
+        Else
+    TextBox14.Text = ""
+End If
+End 
+
+Public Sub CheckBox13_Click()
+  If CheckBox13.Value = True
+    CheckBox7.Value = False
+    CheckBox8.Value = False
+    CheckBox9.Value = False
+    CheckBox14.Value = False
+    CheckBox12.Value = False
+    CheckBox11.Value = False
+        Else
+    TextBox14.Text = ""
+End If
+End 
+
+Public Sub CheckBox14_Click()
+textBox28.Text = 0
+  If CheckBox14.Value = True
+    CheckBox7.Value = False
+    CheckBox8.Value = False
+    CheckBox9.Value = False
+    CheckBox13.Value = False
+    CheckBox12.Value = False
+    CheckBox11.Value = False
+    TextBox28.Visible = True
+        Else
+    TextBox28.Visible = False
+    TextBox28.Text = ""
+End If
+  
+
+End
+
+Public Sub TextBox14_KeyPress()
+
+  Select Case Key.Code
+        Case 48 To 57
+        Case 65 To 90
+        Case 97 To 122
+        Case 46
+        Case Key.BackSpace
+        Case Key.Delete
+        Case Key.Tab
+        Case Else
+          Stop Event
+    End Select    
+  
+
+End
+
+Public Sub TextBox28_KeyRelease()
+Dim $Linea As Integer, $Rec As Result, $Sql As String
+Dim seccion As String
+
+If CheckBox14.Value = True
+
+$Sql = "select * from movimientos where cantidadmov = '" & TextBox28.Text & "'" 
+$Rec = conexion.Con.exec($Sql)
+
+For $linea = 0 To $Rec.Count - 1 Step 1      
+
+GridView6[$linea, 0].text = $Rec!cmov
+ 
+GridView6[$linea, 1].text = $Rec!cinsumo
+ 
+GridView6[$linea, 2].text = $Rec!insumo
+
+GridView6[$linea, 3].text = $Rec!tipoinsumo
+
+GridView6[$linea, 4].text = $Rec!cantidadmov
+
+GridView6[$linea, 5].text = $Rec!unidadmedida
+
+GridView6[$linea, 6].text = $Rec!fechaingreso
+ 
+GridView6[$linea, 7].text = $Rec!fechamov
+
+GridView6[$linea, 8].text = $Rec!servicio
+
+GridView6[$linea, 9].text = $Rec!enviado
+
+GridView6[$linea, 10].text = $Rec!recibido
+
+GridView6[$linea, 11].text = $Rec!seccion
+
+GridView6[$linea, 12].text = $Rec!modulo
+
+GridView6[$linea, 13].text = $Rec!usuariomov
+
+$Rec.MoveNext()
+Next 
+End If
+
+End
+
+Public Sub TextBox28_KeyPress()
+
+  If textBox28.Text = "" Then
+    textBox28.Text = 0
+  Endif
+
+End
+
+
+Public Sub Button23_Click()
+
+Dim $Linea As Integer, $Rec As Result, $Sql As String, seccion As String
+
+conexion.Connect()
+
+$Sql = "select * from f15 where codigof15='" & UCase$(textbox29.Text) & "'"
+$Rec = conexion.Con.exec($sql) 
+
+If $Rec.Available Then
+Message.Info("F15 encontrada")
+For $linea = 0 To $Rec.Count - 1 Step 1 
+  
+GridView7[$linea, 0].text = $Rec!codigof15
+
+GridView7[$linea, 1].text = $Rec!pedido
+ 
+GridView7[$linea, 2].text = $Rec!solicitado
+ 
+GridView7[$linea, 3].text = $Rec!codigo
+
+GridView7[$linea, 4].text = $Rec!unidadmedida
+
+GridView7[$linea, 5].text = $Rec!fechapedido
+
+GridView7[$linea, 6].text = $Rec!seccion
+
+GridView7[$linea, 7].text = $Rec!usuario
+  
+$Rec.MoveNext()
+Next
+Panel7.Visible = True
+Else
+  Message.Info("F15 NO encontrada")
+End If
+End
+
+
+
+Public Sub CheckBox15_Click()
+
+  If CheckBox15.Value = True
+    CheckBox10.Value = False
+    Panel3.Visible = True
+  Else
+    textbox29.Text = ""
+    Panel7.Visible = False
+    Panel3.Visible = False
+  End If
+End
+
+Public Sub Button24_Click()
+
+  Panel7.Visible = False
+
+End
+
+Public Sub Button25_Click()
+
+  Panel2.Visible = False
+
+End
+
+Public Sub TextBox29_KeyPress()
+
+  Select Case Key.Code
+        Case 48 To 57
+        Case 65 To 90
+        Case 97 To 122
+        Case 46
+        Case Key.BackSpace
+        Case Key.Delete
+        Case Key.Tab
+        Case Else
+          Stop Event
+    End Select    
+
+End
+
+Public Sub str_seccion_KeyPress()
+
+  Select Case Key.Code
+        Case 65 To 90
+        Case 32
+        Case Key.BackSpace
+        Case Key.Delete
+        Case Key.Tab
+        Case Else
+        Stop Event
+    End Select 
+    
+End
+
+Public Sub str_servicio_KeyPress()
+
+  
+  Select Case Key.Code
+        Case 65 To 90
+        Case 32
+        Case Key.BackSpace
+        Case Key.Delete
+        Case Key.Tab
+        Case Else
+        Stop Event
+    End Select
+End
+
+Public Sub Button26_Click()
+
+Dim $sql As String
+Dim $Rec As Result
+Dim $linea As Integer
+
+  DateBox2.Enabled = False
+  TextBox14.Text = Format$(DateBox2.Value, "dd/mm/yyyy")
+  $Sql = "select * from movimientos where fechamov = '" & Format$(DateBox2.Value, "dd/mm/yyyy") & "'"  
+  $Rec = conexion.Con.exec($Sql) 
+
+For $linea = 0 To $Rec.Count - 1 Step 1      
+
+GridView6[$linea, 0].text = $Rec!cmov
+ 
+GridView6[$linea, 1].text = $Rec!cinsumo
+ 
+GridView6[$linea, 2].text = $Rec!insumo
+
+GridView6[$linea, 3].text = $Rec!tipoinsumo
+
+GridView6[$linea, 4].text = $Rec!cantidadmov
+
+GridView6[$linea, 5].text = $Rec!unidadmedida
+
+GridView6[$linea, 6].text = $Rec!fechaingreso
+ 
+GridView6[$linea, 7].text = $Rec!fechamov
+
+GridView6[$linea, 8].text = $Rec!servicio
+
+GridView6[$linea, 9].text = $Rec!enviado
+
+GridView6[$linea, 10].text = $Rec!recibido
+
+GridView6[$linea, 11].text = $Rec!seccion
+
+GridView6[$linea, 12].text = $Rec!modulo
+
+GridView6[$linea, 13].text = $Rec!usuariomov
+
+$Rec.MoveNext()
+Next 
+
+ Button26.Enabled = False
+  
+  
+  
+  
+End
+
+
+
+Public Sub DateBox2_DblClick()
+
+  DateBox2.Enabled = True
+ Button26.Enabled = True
+End

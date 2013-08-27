@@ -1,0 +1,91 @@
+' Gambas class file
+
+Public Con As New Connection
+
+Public $query As String
+Public $result As Result
+Public $codigo As String
+Public $datos As Integer
+Public $contador As Integer
+Public $n As Integer
+
+
+
+
+
+ 
+
+Public Sub Button2_Click()
+
+Form3.Show
+FMain.Visible = False
+
+End
+
+
+
+
+
+
+
+Public Sub Frame1_MouseDown()
+
+End
+
+
+
+
+Public Sub volver_Click()
+
+  
+  FMain.show
+
+
+End
+
+Public Sub TextBox1_KeyPress()
+
+If (Key.Code >= Asc("0") And Key.Code <= Asc("9")) Then
+
+Message.Warning("Disculpe, solo debe ingresar valores alfabéticos")
+
+Stop Event
+
+Endif
+
+End
+
+
+
+
+
+
+
+
+
+
+Public Sub Menu5_Click()
+
+  Form2.Show
+
+End
+
+
+Public Sub Menu4_Click()
+
+  Form2.Show
+  FMain.Hide
+
+End
+
+
+Public Sub Menu2_Click()
+
+    FMain.Close
+
+
+End
+Public Sub Form_Open()
+
+
+End

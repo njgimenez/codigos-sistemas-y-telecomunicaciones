@@ -1,0 +1,35 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,136,84)
+  Background = &HFFFFFF&
+  Text = ("Sistema de Contraloria y Consumo")
+  { Menu1 Menu
+    Text = ("INICIO")
+    { Menu2 Menu
+      Text = ("SALIR")
+    }
+  }
+  { Menu3 Menu
+    Text = ("ADMINISTRADOR")
+    { Menu4 Menu
+      Text = ("INGRESAR")
+    }
+  }
+  { Panel1 Panel
+    MoveScaled(41,4,64,17)
+    Background = Color.SelectedForeground
+    { Label1 Label
+      MoveScaled(3,3,58,4)
+      Font = Font["DejaVu Sans,Bold,+1"]
+      Padding = 1
+      Text = ("Bienvenidos al Sistema de Contraloria y Consumo")
+    }
+    { Button2 Button
+      MoveScaled(21,7,21,5)
+      Background = &HFFFFFF&
+      Text = ("INGRESAR")
+      Picture = Picture["icon:/32/forward"]
+    }
+  }
+}
