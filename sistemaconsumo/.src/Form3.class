@@ -1165,6 +1165,7 @@ Public Sub str_insumo_KeyRelease()
   Query = "select  * From mmq where nombre Like '%" & UCase$(str_insumo.Text) & "%' " 
   $Result = Conexion.Con.Exec(Query)
   GridView3.Visible = True
+  GridView3.Clear
   For i = 0 To $Result.Count - 1 Step 1
   GridView3[i, 0].text = $Result!nombre
   GridView3[i, 1].text = $Result!codigo
@@ -1179,6 +1180,7 @@ Public Sub str_insumo_KeyRelease()
   Query = "select * From medicina where nombre Like '%" & UCase$(str_insumo.Text) & "%' " 
   $Result = Conexion.Con.Exec(Query)
   GridView3.Visible = True
+  GridView3.Clear
   For i = 0 To $Result.Count - 1 Step 1
   GridView3[i, 0].text = $Result!nombre
   GridView3[i, 1].text = $Result!codigo

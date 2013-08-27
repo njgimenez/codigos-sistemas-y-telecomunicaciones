@@ -186,9 +186,6 @@
         Foreground = &H0000FF&
         Text = ("Label3")
       }
-      { str_insumo TextBox
-        MoveScaled(11,4,44,4)
-      }
       { CheckBox5 CheckBox
         MoveScaled(19,1,12,3)
         Text = ("Medicina")
@@ -223,6 +220,9 @@
       { GridView3 GridView
         MoveScaled(56,4,57,27)
         Visible = False
+      }
+      { str_insumo TextBox
+        MoveScaled(11,4,44,4)
       }
     }
     Index = 1
