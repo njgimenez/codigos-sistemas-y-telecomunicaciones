@@ -151,17 +151,16 @@
     }
   }
   { Label9 Label
-    MoveScaled(4,90,47,5)
+    MoveScaled(6,87,19,5)
     Font = Font["Bold"]
-    Text = ("Total de Registros:")
+    Text = ("Total de Registros")
   }
   { LCDLabel1 LCDLabel
-    MoveScaled(21,89,21,9)
+    MoveScaled(6,91,15,7)
     Background = &H004F9F&
     Foreground = &H94E3FF&
     Text = ("000")
     Alignment = Align.Center
-    Border = True
     HighlightColor = &H00FFFF&
   }
 }

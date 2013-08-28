@@ -76,7 +76,11 @@ Public Sub GridView2_DblClick()
   
   Dim Elemento As String
   
-  Elemento = GridView2[GridView2.Row, 0].Text & " " & GridView2[GridView2.Row, 1].Text
+  Try Elemento = GridView2[GridView2.Row, 0].Text & " " & GridView2[GridView2.Row, 1].Text
+   If Error Then 
+    Message.Error(Mid(Error.Text, 1, 40))
+    Return
+  Endif 
   If ListBox1.Find(Elemento) < 0 Then
     ListBox1.Add(Elemento)
     ListBox1.Sorted = True
