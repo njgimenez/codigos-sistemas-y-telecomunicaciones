@@ -54,7 +54,6 @@
   }
   { TableView1 TableView
     MoveScaled(3,41,195,45)
-    Header = GridView.Horizontal
   }
   { PictureBox1 PictureBox
     MoveScaled(3,1,8,11)
@@ -72,7 +71,7 @@
     Text = ("Unidad de nomina")
   }
   { Frame4 Frame
-    MoveScaled(123,91,74,26)
+    MoveScaled(123,87,74,37)
     Text = ("Opciones de Impresión")
     { Frame3 Frame
       MoveScaled(25,13,23,10)
@@ -110,5 +109,59 @@
       Font = Font["Bold"]
       Text = ("Titulo del Reporte")
     }
+    { Frame5 Frame
+      MoveScaled(1,25,71,10)
+      Text = ("Margenes")
+      { superior SpinBox
+        MoveScaled(7,5,11,4)
+        Value = 10
+      }
+      { inferior SpinBox
+        MoveScaled(21,5,11,4)
+        Value = 15
+      }
+      { derecho SpinBox
+        MoveScaled(35,5,11,4)
+        Value = 10
+      }
+      { izquierdo SpinBox
+        MoveScaled(49,5,11,4)
+        Value = 10
+      }
+      { Label10 Label
+        MoveScaled(7,3,11,2)
+        Text = ("Superior")
+        Alignment = Align.Center
+      }
+      { Label11 Label
+        MoveScaled(21,3,11,2)
+        Text = ("Inferior")
+        Alignment = Align.Center
+      }
+      { Label13 Label
+        MoveScaled(35,3,11,2)
+        Text = ("Derecho")
+        Alignment = Align.Center
+      }
+      { Label14 Label
+        MoveScaled(49,3,11,2)
+        Text = ("Izquierdo")
+        Alignment = Align.Center
+      }
+    }
+  }
+  { Label9 Label
+    MoveScaled(4,90,47,5)
+    Font = Font["Bold"]
+    Text = ("Total de Registros:")
+  }
+  { LCDLabel1 LCDLabel
+    MoveScaled(21,89,21,9)
+    Background = &H004F9F&
+    Foreground = &H94E3FF&
+    Text = ("000")
+    Alignment = Align.Center
+    Border = True
+    HighlightColor = &H00FFFF&
   }
 }
