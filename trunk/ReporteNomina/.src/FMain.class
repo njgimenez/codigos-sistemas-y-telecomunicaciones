@@ -57,7 +57,12 @@ Public Sub ComboBox1_Click()
     "From " &
     "nom002 where tipo_nomina='" & Mid(ComboBox1.Text, 1, 2) & "' order by cod_concepto"
   $Result = conexion.$Con.Exec($Query)
-  GridView2.Clear
+LCDLabel1.Text = "000"
+TableView1.Clear
+TableView1.Rows.Count = 0
+TableView1.Header = 0
+ListBox1.Clear
+GridView2.Clear
   GridView2.Rows.Count = $Result.Count 
   For i = 0 To $Result.Count - 1 Step 1                                       
     GridView2[i, 0].Text = $Result!cod_concepto
@@ -218,6 +223,7 @@ Public Sub ToggleButton2_Click()
   TableView1.Columns[2].Width = 230
   TableView1.Columns[3].Text = "Fecha de Ingreso"
   TableView1.Columns[3].Width = 190
+  TableView1.Header = 1
   
   For i = 0 To ListBox1.Count - 1 Step 1 
     TableView1.Columns[i + 4].Text = Mid(ListBox1[i].Text, 1, 3)
@@ -248,7 +254,7 @@ Public Sub ToggleButton2_Click()
     TableView1[i, $Result.Fields.Count + 3].Text = Format$(Acumulado, "Bs #.##")
     grantotal += Acumulado
    If Acumulado == 0 Then 
-' ' '       TableView1[i, j + 3].Text = "Bs 0,00"/home/servidor/Escritorio/valla.jpg
+      TableView1[i, j + 3].Text = "Bs 0,00"
     Endif
     $Result.MoveNext()
   Next
@@ -261,13 +267,16 @@ Public Sub ToggleButton2_Click()
     Next
   
     TableView1[TableView1.Rows.Count - 1, TableView1.Columns.Count - 1].Text = Format$(grantotal, "Bs #.##")
+     LCDLabel1.Text = Str$(TableView1.Rows.Count - 1)
   End
+
 
 Public Function BuscarDato(codigo As String, DatoaBuscar As String) As String
   
   Dim $Query, a As String
   Dim $Result As Result
   Dim cadena As String
+  Dim margenabajo As Integer
   
   $Query = " Select " &
     "nom006.nombre, " &
@@ -307,7 +316,7 @@ Public Sub Botones_Click()
   
   
   cadena &= ".ajustar{"
-  cadena &= "width: 150px;"
+  cadena &= "width: 100px;"
   cadena &= "float: center;"
   cadena &= "align: center;"
   cadena &= "white-space: pre; /* CSS 2.0 */"
@@ -327,10 +336,11 @@ Public Sub Botones_Click()
   cadena &= "</style> \n" 
   cadena &= "<table align='center' border=0> \n" 
   cadena &= "<tr> \n"
-  cadena &= "<td rowspan='2'><IMG SRC='logo2peq.png' VSPACE=3 HSPACE=20 ALT='Obra de K. Haring'></td> \n"
+  cadena &= "<td rowspan='3'><IMG SRC='logo2peq.png' VSPACE=3 HSPACE=20 ALT='Obra de K. Haring'></td> \n"
   cadena &= "<td width='500px' align='center'><font size=1 % font-family='arial'>REPUBLICA BOLIVARIANA DE VENEZUELA<BR> GOBIERNO BOLIVARIANO DEL ESTADO YARACUY<BR>SECRETARÍA DE DESARROLLO SOCIAL<BR> FUNDACIÓN NIÑO JESÚS DEL ESTADO YARACUY</font></td> \n" 
   cadena &= "</tr> \n" 
   cadena &= "<tr><td align='center'>" & Upper$(TituloRpt.Text) & "</td></tr> \n"
+  cadena &= "<tr><td align='center'>" & Mid(ComboBox1.Text, 4, 50) & "</td></tr> \n"
   cadena &= "<tr> \n"
   cadena &= "<td align='left'> \n"
   cadena &= "Fecha:" & Format$(Now(), "dd/mm/yyyy") & " \n "
@@ -342,8 +352,14 @@ Public Sub Botones_Click()
   cadena &= "</table> \n"  
   cadena &= "<table  align='center' class ='myTable'> \n"
   cadena &= "<tr> \n"
+  
   For i = 0 To 4 - 1 Step 1  
-  cadena &= "<td class='ajustar'><font size=1 % font-family='arial' color='blue'>" & Upper$(TableView1.Columns[i].Text) & "</font></th> \n"
+  Try cadena &= "<td class='ajustar'><font size=1 % font-family='arial' color='blue'>" & Upper$(TableView1.Columns[i].Text) & "</font></th> \n"
+  If Error Then 
+    Message.Error(Mid(Error.Text, 1, 40) & "...\n Data para la impresión no esta definida!")
+    Return
+  Endif 
+ 
   Next
   For i = 0 To ListBox1.Count - 1 Step 1  
   cadena &= "<td class='ajustar'><font size=1 % font-family='arial' color='blue'>" & Upper$(Mid(ListBox1[i].Text, 4, 80)) & "</font></th> \n"
@@ -358,10 +374,18 @@ Public Sub Botones_Click()
     cadena &= " </Tr> \n"
   Next
   cadena &= " </table > \n"
+  cadena &= " <tr > \n"
+  cadena &= " </tr > \n"
+  cadena &= " <tr > \n"
+  cadena &= " </tr > \n"
+  cadena &= "<table align='right' border=0> \n" 
+  cadena &= "<tr><td align='right'>Cantidad de Registros: " & LCDLabel1.Text & "</td></tr> \n"
+  cadena &= " </table > \n"
+  
   cadena &= "</body></html>"
   File.Save(User.home & "/nuevo.html", cadena)
   tamano = ComboBox2.Text
-  sentencia = "wkhtmltopdf " & User.home & "/nuevo.html " & User.home & "/nuevo.pdf -O " & oriente & " -s " & tamano 
+  sentencia = "wkhtmltopdf " & User.home & "/nuevo.html " & User.home & "/nuevo.pdf  -H -O " & oriente & " -B " & inferior.Value & " -T " & superior.Value & " -R " & derecho.Value & " -L " & izquierdo.Value & " -s " & tamano 
   Shell sentencia Wait
   Shell "evince " & User.home & "/nuevo.pdf"
   
