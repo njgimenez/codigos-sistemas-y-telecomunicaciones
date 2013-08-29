@@ -12,12 +12,12 @@ Public Sub _new()
 End
 
 Public Sub Form_Open()
-
+  
   Dim $Query As String
   Dim $Result As Result
   Dim i As Integer
   Dim patrulla As Float
-
+  
   oriente = "landscape"
   patrulla = 0
   tamano = "letter"
@@ -36,7 +36,7 @@ Public Sub Form_Open()
   GridView2.Columns[0].Width = 100
   GridView2.Columns[1].Text = "Denominacion"
   GridView2.Columns[1].Width = 100
-
+  
 End
 
 Public Sub TableView1_Change()
@@ -57,12 +57,12 @@ Public Sub ComboBox1_Click()
     "From " &
     "nom002 where tipo_nomina='" & Mid(ComboBox1.Text, 1, 2) & "' order by cod_concepto"
   $Result = conexion.$Con.Exec($Query)
-LCDLabel1.Text = "000"
-TableView1.Clear
-TableView1.Rows.Count = 0
-TableView1.Header = 0
-ListBox1.Clear
-GridView2.Clear
+  LCDLabel1.Text = "000"
+  TableView1.Clear
+  TableView1.Rows.Count = 0
+  TableView1.Header = 0
+  ListBox1.Clear
+  GridView2.Clear
   GridView2.Rows.Count = $Result.Count 
   For i = 0 To $Result.Count - 1 Step 1                                       
     GridView2[i, 0].Text = $Result!cod_concepto
@@ -77,7 +77,7 @@ Public Sub GridView2_DblClick()
   Dim Elemento As String
   
   Try Elemento = GridView2[GridView2.Row, 0].Text & " " & GridView2[GridView2.Row, 1].Text
-   If Error Then 
+  If Error Then 
     Message.Error(Mid(Error.Text, 1, 40))
     Return
   Endif 
@@ -140,7 +140,7 @@ Public Sub ToggleButton2_Click()
     "nom018.des_concepto,nom018.asig_ded_apo,nom018.tipo_asigna,nom006.fecha_ingreso " &
     "ORDER BY " &
     "nom018.tipo_nomina,nom018.cod_empleado,nom018.cod_concepto"
- 
+  
   Try $Result = conexion.$Con.Exec($Query)
   If Error Then 
     Message.Error(Mid(Error.Text, 1, 40) & "...\n Verifique que los criterios de busqueda esten llenos!")
@@ -247,7 +247,7 @@ Public Sub ToggleButton2_Click()
     TableView1[i, 3].Text = BuscarDato($Result!cod_empleado, "fecha_ingreso")
     For j = 1 To $Result.Fields.Count - 1 Step 1    
       TableView1[i, j + 3].Text = Format$($Result["camp" & Str(j)], "Bs #.##")
-       totales[j - 1] = totales[j - 1] + CFloat($Result["camp" & Str(j)])
+      totales[j - 1] = totales[j - 1] + CFloat($Result["camp" & Str(j)])
       If $Result["camp" & Str(j)] == 0 Then 
         TableView1[i, j + 3].Text = "Bs 0,00"
       Endif
@@ -257,23 +257,23 @@ Public Sub ToggleButton2_Click()
     
     TableView1[i, $Result.Fields.Count + 3].Text = Format$(Acumulado, "Bs #.##")
     grantotal += Acumulado
-   If Acumulado == 0 Then 
+    If Acumulado == 0 Then 
       TableView1[i, j + 3].Text = "Bs 0,00"
     Endif
     $Result.MoveNext()
   Next
-   TableView1[TableView1.Rows.Count - 1, 3].Text = "Totales"
-    For j = 0 To totales.Count - 1 Step 1 
-      TableView1[TableView1.Rows.Count - 1, j + 4].Text = Format$(totales[j], "Bs #.##")
-       If totales[j] == 0 Then 
-       TableView1[TableView1.Rows.Count - 1, j + 4].Text = "Bs 0,00"
+  TableView1[TableView1.Rows.Count - 1, 3].Text = "Totales"
+  For j = 0 To totales.Count - 1 Step 1 
+    TableView1[TableView1.Rows.Count - 1, j + 4].Text = Format$(totales[j], "Bs #.##")
+    If totales[j] == 0 Then 
+      TableView1[TableView1.Rows.Count - 1, j + 4].Text = "Bs 0,00"
     Endif
-    Next
+  Next
   
-    TableView1[TableView1.Rows.Count - 1, TableView1.Columns.Count - 1].Text = Format$(grantotal, "Bs #.##")
-     LCDLabel1.Text = Str$(TableView1.Rows.Count - 1)
-  End
-
+  TableView1[TableView1.Rows.Count - 1, TableView1.Columns.Count - 1].Text = Format$(grantotal, "Bs #.##")
+  LCDLabel1.Text = Str$(TableView1.Rows.Count - 1)
+  
+End
 
 Public Function BuscarDato(codigo As String, DatoaBuscar As String) As String
   
@@ -298,7 +298,7 @@ Public Function BuscarDato(codigo As String, DatoaBuscar As String) As String
   
   $Result = conexion.$Con.Exec($Query) 
   Return $Result[DatoaBuscar] 'Devolvemos el valor de la operación
-
+  
 End
 
 Public Sub ToggleButton1_Click()
@@ -306,18 +306,18 @@ Public Sub ToggleButton1_Click()
 End
 
 Public Sub Botones_Click()
-
+  
   Dim sentencia As String
   Dim btn As Button
   Dim i, j As Integer
   Dim cadena As String
-
+  Dim contador As Integer
+  
   cadena = "<html><head> <meta http-equiv=" & Chr(34) & "Content-Type" & Chr(34) & " content=" & Chr(34) & "text/Html; charset=UTF-8" & Chr(34) & "/> </head> <body>\n"
   cadena &= "<style type ='text/css'> \n"
   cadena &= ".myTable { background-color:#ffffff;border-collapse:collapse; } \n"
   cadena &= ".myTable th { background-color:#d9e5ee;color:white; } \n"
   cadena &= ".myTable td, .myTable th { padding:5px;border:1px solid #000000; } \n"
-  
   
   cadena &= ".ajustar{"
   cadena &= "width: 100px;"
@@ -336,8 +336,8 @@ Public Sub Botones_Click()
   cadena &= "clear: both;"
   cadena &= "}"
   
-  
   cadena &= "</style> \n" 
+  
   cadena &= "<table align='center' border=0> \n" 
   cadena &= "<tr> \n"
   cadena &= "<td rowspan='3'><IMG SRC='logo2peq.png' VSPACE=3 HSPACE=20 ALT='Obra de K. Haring'></td> \n"
@@ -354,28 +354,53 @@ Public Sub Botones_Click()
   cadena &= "</td> \n"  
   cadena &= "</tr> \n"
   cadena &= "</table> \n"  
+  
   cadena &= "<table  align='center' class ='myTable'> \n"
   cadena &= "<tr> \n"
-  
+  cadena &= "<td class='ajustar'><font size=1 % font-family='arial' color='blue'>index</font></th> \n"
   For i = 0 To 4 - 1 Step 1  
-  Try cadena &= "<td class='ajustar'><font size=1 % font-family='arial' color='blue'>" & Upper$(TableView1.Columns[i].Text) & "</font></th> \n"
-  If Error Then 
-    Message.Error(Mid(Error.Text, 1, 40) & "...\n Data para la impresión no esta definida!")
-    Return
-  Endif 
- 
+    Try cadena &= "<td class='ajustar'><font size=1 % font-family='arial' color='blue'>" & Upper$(TableView1.Columns[i].Text) & "</font></th> \n"
+    If Error Then 
+      Message.Error(Mid(Error.Text, 1, 40) & "...\n Data para la impresión no esta definida!")
+      Return
+    Endif 
+    
   Next
+  
   For i = 0 To ListBox1.Count - 1 Step 1  
-  cadena &= "<td class='ajustar'><font size=1 % font-family='arial' color='blue'>" & Upper$(Mid(ListBox1[i].Text, 4, 80)) & "</font></th> \n"
+    cadena &= "<td class='ajustar'><font size=1 % font-family='arial' color='blue'>" & Upper$(Mid(ListBox1[i].Text, 4, 80)) & "</font></th> \n"
   Next
-   cadena &= "<td class='ajustar'><font size=1 % font-family='arial' color='blue'>TOTAL</font></th> \n"
+  cadena &= "<td class='ajustar'><font size=1 % font-family='arial' color='blue'>TOTAL</font></th> \n"
   cadena &= " </tr> \n"
+  contador = 0
   For i = 0 To TableView1.Rows.Count - 1 Step 1     
     cadena &= " <Tr> \n"
+    cadena &= " <td class='ajustar'><font size=1 % <font face='serif'>" & (i + 1) & "</font></td> \n"
+    If contador = 21 Then 
+      contador = 0
+      cadena &= "<table align='center' border=0> \n" 
+      cadena &= "<tr> \n"
+      cadena &= "<td rowspan='3'><IMG SRC='logo2peq.png' VSPACE=3 HSPACE=20 ALT='Obra de K. Haring'></td> \n"
+      cadena &= "<td width='500px' align='center'><font size=1 % font-family='arial'>REPUBLICA BOLIVARIANA DE VENEZUELA<BR> GOBIERNO BOLIVARIANO DEL ESTADO YARACUY<BR>SECRETARÍA DE DESARROLLO SOCIAL<BR> FUNDACIÓN NIÑO JESÚS DEL ESTADO YARACUY</font></td> \n" 
+      cadena &= "</tr> \n" 
+      cadena &= "<tr><td align='center'>" & Upper$(TituloRpt.Text) & "</td></tr> \n"
+      cadena &= "<tr><td align='center'>" & Mid(ComboBox1.Text, 4, 50) & "</td></tr> \n"
+      cadena &= "<tr> \n"
+      cadena &= "<td align='left'> \n"
+      cadena &= "Fecha:" & Format$(Now(), "dd/mm/yyyy") & " \n "
+      cadena &= "</td> \n"
+      cadena &= "<td align='center'> \n"
+      cadena &= "Periodo desde: " & DateBox1.Value & " - hasta: " & DateBox2.Value & " \n "
+      cadena &= "</td> \n"  
+      cadena &= "</tr> \n"
+      cadena &= "</table> \n"  
+    Endif
     For j = 0 To TableView1.Columns.Count - 1 Step 1
+      
       cadena &= " <td class='ajustar'><font size=1 % <font face='serif'>" & TableView1[i, j].Text & "</font></td> \n"
     Next
     cadena &= " </Tr> \n"
+    contador += 1
   Next
   cadena &= " </table > \n"
   cadena &= " <tr > \n"
@@ -388,7 +413,7 @@ Public Sub Botones_Click()
   
   cadena &= "</body></html>"
   File.Save(User.home & "/nuevo.html", cadena)
-  tamano = ComboBox2.Text
+  'tamano = ComboBox2.Text
   sentencia = "wkhtmltopdf " & User.home & "/nuevo.html " & User.home & "/nuevo.pdf  -H -O " & oriente & " -B " & inferior.Value & " -T " & superior.Value & " -R " & derecho.Value & " -L " & izquierdo.Value & " -s " & tamano 
   Shell sentencia Wait
   Shell "evince " & User.home & "/nuevo.pdf"
@@ -402,13 +427,24 @@ Public Sub RadioButton1_Click()
 End
 
 Public Sub RadioButton2_Click()
-
+  
   oriente = "portrait"
-
+  
 End
 
 Public Sub Label7_MouseDown()
-
   
+End
 
+Public Sub ComboBox2_Click()
+  
+  Select Case ComboBox2.Text
+    Case "Carta"
+      tamano = "letter"
+    Case "Oficio"
+      tamano = "folio"
+    Case "Extra-Oficio"
+      tamano = "legal"
+  End Select 
+  
 End

@@ -78,7 +78,7 @@
       Text = ("Tamaño del Papel")
       { ComboBox2 ComboBox
         MoveScaled(2,4,19,4)
-        List = [("Letter"), ("Legal"), ("A4"), ("Folio"), ("Executive")]
+        List = [("Carta"), ("Oficio"), ("Extra-Oficio")]
         Text = ("Seleccione")
       }
     }
