@@ -1,0 +1,196 @@
+# Gambas Form File 3.0
+
+{ Report Report
+  #MoveScaled(0,0,131,120)
+  Padding = ReportPadding["Top:10mm;Bottom:10mm;Left:10mm;Right:10mm"]
+  Paper = Printer.Letter
+  Orientation = Printer.Landscape
+  Index = 0
+  Text = ("")
+  { ReportHBox1 ReportHBox
+    #MoveScaled(2,0,115,20)
+    Width = "2cm"
+    Height = "30mm"
+    Fixed = True
+    { ReportHBox4 ReportHBox
+      #MoveScaled(0,20,54,15)
+    }
+    { ReportHBox2 ReportHBox
+      #MoveScaled(2,1,24,18)
+      Width = "30mm"
+      Height = "30mm"
+      { ReportImage2 ReportImage
+        #MoveScaled(5,1,17,16)
+        Expand = True
+        Image = Image.Load("gobierno-bolivariano-de-yaracuy-logo-primary.jpg")
+      }
+    }
+    { ReportLabel1 ReportLabel
+      #MoveScaled(26,1,62,18)
+      Fixed = True
+      Font = Font["DejaVu Serif,+1"]
+      Expand = True
+      Text = ("REPUBLICA BOLIVARIANA DE VENEZUELA\nMINISTERIO DEL PODER POPULAR PARA LA SALUD\nGOBIERNO DEL ESTADO YARACUY\nFUNDACION NIÑO JESUS DEL ESTADO YARACUY\nHOSPITAL PEDIATRICO NIÑO JESUS\nSAN FELIPE - ESTADO YARACUY ")
+      Alignment = Align.Center
+    }
+    { ReportHBox3 ReportHBox
+      #MoveScaled(89,1,25,18)
+      Width = "30mm"
+      Height = "30mm"
+      { ReportImage1 ReportImage
+        #MoveScaled(2,1,18,16)
+        Expand = True
+        Image = Image.Load("misionn")
+      }
+    }
+  }
+  { ReportHBox5 ReportHBox
+    #MoveScaled(2,20,115,7)
+    Height = "20mm"
+    Fixed = True
+    Border = ReportBorder["Top:1pt #000000;Bottom:1pt #000000;Left:1pt #000000;Right:1pt #000000"]
+    { ReportLabel2 ReportLabel
+      #MoveScaled(1,0,114,7)
+      Fixed = True
+      Font = Font["Bold,+3"]
+      Expand = True
+      Text = ("INVENTARIO ")
+      Alignment = Align.Center
+    }
+  }
+  { ReportHBox6 ReportHBox
+    #MoveScaled(2,27,115,6)
+    Height = "5mm"
+    Fixed = True
+    Border = ReportBorder["Top:1pt #000000;Bottom:1pt #000000;Left:1pt #000000;Right:1pt #000000"]
+    { ReportLabel3 ReportLabel
+      #MoveScaled(1,0,12,6)
+      Fixed = True
+      Font = Font["DejaVu Serif,Bold"]
+      Expand = True
+      Text = ("DEPOSITO:")
+      Alignment = Align.Center
+    }
+    { Report_depositoreport ReportLabel
+      #MoveScaled(13,0,23,6)
+      Fixed = True
+      Font = Font["Bold"]
+      Expand = True
+    }
+    { ReportLabel5 ReportLabel
+      #MoveScaled(36,0,8,7)
+      Fixed = True
+      Font = Font["Bold"]
+      Expand = True
+      Text = ("FECHA:")
+      Alignment = Align.Center
+    }
+    { Report_fechareport ReportLabel
+      #MoveScaled(44,0,17,6)
+      Fixed = True
+      Font = Font["Bold"]
+      Expand = True
+    }
+    { ReportLabel13 ReportLabel
+      #MoveScaled(61,0,11,7)
+      Fixed = True
+      Font = Font["Bold"]
+      Expand = True
+      Text = ("USUARIO:")
+      Alignment = Align.Center
+    }
+    { Report_usuarioreport ReportLabel
+      #MoveScaled(72,0,17,6)
+      Fixed = True
+      Font = Font["Bold"]
+      Expand = True
+    }
+  }
+  { ReportVBox1 ReportVBox
+    #MoveScaled(2,33,115,54)
+    Fixed = True
+    Expand = True
+    Border = ReportBorder["Top:1pt #000000;Bottom:1pt #000000;Left:1pt #000000;Right:1pt #000000"]
+    { ReportHBox8 ReportHBox
+      #MoveScaled(0,0,115,6)
+      Height = "10mm"
+      Fixed = True
+      { ReportLabel7 ReportLabel
+        #MoveScaled(1,0,9,5)
+        Width = "30mm"
+        Fixed = True
+        Font = Font["DejaVu Serif"]
+        Expand = True
+        AutoResize = True
+        Text = ("CODIGO")
+        Alignment = Align.Left
+      }
+      { ReportLabel8 ReportLabel
+        #MoveScaled(10,0,36,5)
+        Width = "50mm"
+        Fixed = True
+        Font = Font["DejaVu Serif"]
+        Expand = True
+        AutoResize = True
+        Text = ("INSUMO")
+        Alignment = Align.Left
+      }
+      { ReportLabel9 ReportLabel
+        #MoveScaled(47,0,6,5)
+        Width = "20mm"
+        Fixed = True
+        Font = Font["DejaVu Serif"]
+        Expand = True
+        AutoResize = True
+        Text = ("U.M")
+        Alignment = Align.Right
+      }
+      { ReportLabel10 ReportLabel
+        #MoveScaled(53,0,9,5)
+        Width = "20mm"
+        Fixed = True
+        Font = Font["DejaVu Serif"]
+        Expand = True
+        AutoResize = True
+        Text = ("CANTIDAD")
+        Alignment = Align.Center
+      }
+      { ReportLabel11 ReportLabel
+        #MoveScaled(62,0,16,5)
+        Width = "20mm"
+        Fixed = True
+        Font = Font["DejaVu Serif"]
+        Expand = True
+        AutoResize = True
+        Text = ("TIPO INSUMO")
+        Alignment = Align.Center
+      }
+      { ReportLabel4 ReportLabel
+        #MoveScaled(78,0,20,5)
+        Width = "20mm"
+        Fixed = True
+        Font = Font["DejaVu Serif"]
+        Expand = True
+        AutoResize = True
+        Text = ("PROC. INSUMO")
+        Alignment = Align.Center
+      }
+      { ReportLabel12 ReportLabel
+        #MoveScaled(98,0,16,5)
+        Width = "30mm"
+        Fixed = True
+        Font = Font["DejaVu Serif"]
+        Expand = True
+        AutoResize = True
+        Text = ("FECHA INGRESO")
+        Alignment = Align.Center
+      }
+    }
+    { listabox ReportVBox
+      #MoveScaled(1,7,113,44)
+      Expand = True
+      Border = ReportBorder["Top:1pt #000000;Bottom:1pt #000000;Left:1pt #000000;Right:1pt #000000"]
+    }
+  }
+  Index = 0
+}

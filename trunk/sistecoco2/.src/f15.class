@@ -1,0 +1,358 @@
+' Gambas class file
+
+Public deposito As String
+Public query As String
+Public Result As Result
+Public codigof15 As String
+
+
+Public Sub Form_Open()
+
+Label_deposito.Text = inventario.nombredepositof15
+Label_nombreusuario.Text = inventario.nombreusuariof15
+inventario
+End
+
+Public Sub inventario()
+
+Dim $Linea As Integer, $Rec As Result, $Sql As String, seccion As String
+
+GridView1.columns.count = 8
+GridView1.rows.count = 1000 
+GridView1.columns.width = 100 
+GridView1.rows.height = 20
+
+GridView1.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
+GridView1.columns[0].text = "Codigo de Insumo" 
+GridView1.columns[0].width = 150
+GridView1.columns[1].Text = "Nombre" 
+GridView1.columns[1].width = 400 
+GridView1.columns[2].Text = "Tipo de insumo" 'al no poner width se asume la anchura por defecto indicada anteriormente 
+GridView1.columns[2].width = 100
+GridView1.columns[3].text = "cantidad" 
+GridView1.columns[3].width = 50
+GridView1.columns[4].text = "Unidad de Medida" 
+GridView1.columns[4].width = 50
+GridView1.columns[5].text = "Fecha" 
+GridView1.columns[5].width = 100
+GridView1.columns[6].text = "Procedencia" 
+GridView1.columns[6].width = 150
+GridView1.columns[7].text = "Usuario" 
+GridView1.columns[7].width = 100
+
+
+deposito = LCase$(inventario.nombredepositof15)
+
+conexion.Connect()
+
+query = "select * from inv" & deposito 
+Result = conexion.Con.exec(query)
+gridView1.Clear
+GridView1.rows.count = Result.count + 1 
+For $linea = 0 To Result.Count - 1 Step 1      
+    
+GridView1[$linea, 0].text = Result!codigo
+ 
+GridView1[$linea, 1].text = Result!insumo
+ 
+GridView1[$linea, 2].text = Result!tipoinsumo
+
+GridView1[$linea, 3].text = Result!cantidadinsumo
+
+GridView1[$linea, 4].text = Result!unidadmedida
+
+GridView1[$linea, 5].text = Result!fechainsumo
+ 
+GridView1[$linea, 6].text = Result!proceinsumo
+
+GridView1[$linea, 7].text = Result!usuario
+
+Result.MoveNext()
+Next 
+
+End
+
+
+Public Sub GridView1_Click()
+
+Dim i As Integer
+Dim Preg As Integer
+
+deposito = LCase$(inventario.nombredepositof15)
+
+If GridView1[GridView1.Row, 0].text = ""
+Return
+End If
+
+  query = "SELECT *  FROM inv" & deposito & " Where codigo = '" & GridView1[GridView1.Row, 0].text & "'" 
+  result = conexion.Con.Exec(query)
+
+  Preg = 0
+  
+      Preg = Message.Question("Seleccionar?", "Si", "No")
+
+        If Preg = 1 Then
+                  
+            str_codigoinsumof15.Text = GridView1[GridView1.Row, 0].Text
+            str_insumof15.Text = GridView1[GridView1.Row, 1].Text
+            str_unidadmedidaf15.Text = GridView1[GridView1.Row, 4].Text
+            str_cantidadpedidof15.SetFocus
+            
+        Endif
+End
+
+
+Public Sub Button1_Click()
+
+Dim Preg As Integer
+
+generarcodigof15
+
+Preg = 0
+
+Preg = Message.Question("Se generara un nuevo reporte con el codigo '" & str_codigof15.Text & "'", "Aceptar", "Cancelar")
+
+ If Preg = 1 Then
+ Button1.Enabled = False
+ Button2.Enabled = True
+ str_cantidadpedidof15.Enabled = True
+ codigof15 = str_codigof15.Text
+ gridView1.Enabled = True
+ Date_fechapedido.Value = Format$(Date, "dd/mm/yy")
+ Else 
+    
+    If Preg = 2
+    
+    str_codigof15.Text = ""
+
+End If
+End If
+End
+Public Sub generarcodigof15()
+  Dim i As Integer
+  Dim $codigo As String
+  Dim $n As Integer
+  
+  i = 1
+  Conexion.Connect()
+  query = "Select codigo from codigof15"
+  result = Conexion.Con.Exec(query)
+  
+  If result.Count = 0
+    $codigo = "00001"
+   Else
+    $n = result.Count
+  End If
+  
+  If $n < 10
+    $codigo = "0000" & $n
+  Else            
+    If $n >= 10 And $n < 100
+    $codigo = "000" & $n
+  Else
+    $codigo = "00" & $n
+  End If
+  End If
+  str_codigof15.Text = $codigo
+  
+End
+ 
+
+Public Sub Button2_Click()
+
+Dim Preg As Integer
+
+If str_codigof15.text = "" Or str_codigoinsumof15.text = "" Or str_insumof15.text = "" Or str_cantidadpedidof15.text = "" Or Date_fechapedido.Value = "" Then
+
+Message.Error("AGREGAR DATOS")
+
+Else
+
+conexion.Connect()
+
+query = "insert into f15 (pedido, solicitado, codigo, unidadmedida, fechapedido, codigof15, usuario, seccion)VALUES( '" & str_cantidadpedidof15.text & "','" & str_insumof15.text & "','" & str_codigoinsumof15.text & "','" & str_unidadmedidaf15.text & "','" & Format$(Date_fechapedido.value, "dd/mm/yy") & "', '" & str_codigof15.text & "', '" & UCase$(Label_nombreusuario.Text) & "', '" & UCase$(Label_deposito.text) & "')" 
+result = conexion.Con.Exec(query)
+
+f15
+
+str_codigoinsumof15.Text = ""
+str_insumof15.text = ""
+str_unidadmedidaf15.text = ""
+str_cantidadpedidof15.Text = ""
+Button3.Enabled = True
+
+End If
+
+End
+
+Public Sub f15()
+
+Dim $Linea As Integer
+
+GridView2.columns.count = 8
+GridView2.rows.count = 1000 
+GridView2.columns.width = 100 
+GridView2.rows.height = 20
+
+GridView2.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
+GridView2.columns[0].text = "Codigo F15" 
+GridView2.columns[0].width = 150
+GridView2.columns[1].text = "PEDIDO" 
+GridView2.columns[1].width = 150
+GridView2.columns[2].Text = "INSUMO" 
+GridView2.columns[2].width = 200 
+GridView2.columns[3].Text = "CODIGO" 
+GridView2.columns[3].width = 200
+GridView2.columns[4].text = "UNIDAD DE MEDIDA" 
+GridView2.columns[4].width = 70
+GridView2.columns[5].text = "FECHA DE PEDIDO" 
+GridView2.columns[5].width = 100
+GridView2.columns[6].text = "SECCION" 
+GridView2.columns[6].width = 100
+GridView2.columns[7].text = "USUARIO" 
+GridView2.columns[7].width = 100
+
+conexion.Connect()
+
+query = "select * from f15 where codigof15='" & str_codigof15.Text & "'"
+Result = conexion.Con.exec(query) 
+
+For $linea = 0 To Result.Count - 1 Step 1 
+  
+GridView2[$linea, 0].text = Result!codigof15
+
+GridView2[$linea, 1].text = Result!pedido
+ 
+GridView2[$linea, 2].text = Result!solicitado
+ 
+GridView2[$linea, 3].text = Result!codigo
+
+GridView2[$linea, 4].text = Result!unidadmedida
+
+GridView2[$linea, 5].text = Result!fechapedido
+
+GridView2[$linea, 6].text = Result!seccion
+
+GridView2[$linea, 7].text = Result!usuario
+  
+Result.MoveNext()
+Next
+GridView2.Visible = True
+End
+  
+
+Public Sub Button3_Click()
+
+
+  
+Dim Preg As Integer
+
+
+If str_codigof15.Text = "" Then
+Message.Info("INGRESE INSUMOS A LA F15")
+Else
+Preg = 0
+Preg = Message.Question("AL GENERAR LA PLANILLA F15 NO PODRA EDITARLA NUVAMENTE, ¿Esta de acuerdo?", "Si", "No")
+
+If Preg = 1 Then
+
+conexion.Connect()
+
+Query = "insert into codigof15 (codigo)values('" & str_codigof15.Text & "')"
+result = Conexion.Con.Exec(Query)
+Button2.Enabled = False
+Button3.Enabled = False
+str_cantidadpedidof15.Enabled = False
+str_codigof15.Text = ""
+Date_fechapedido.Value = ""
+End If
+End If
+End
+
+
+Public Sub GridView2_Click()
+
+Dim i As Integer
+Dim Preg As Integer
+
+If GridView2[GridView2.Row, 0].text = ""
+Return
+End If
+
+  query = "SELECT * FROM f15 Where codigo = '" & GridView2[GridView2.Row, 0].text & "'" 
+  result = conexion.Con.Exec(query)
+
+Preg = 0
+  Preg = Message.Question("¿ESTA SEGURO DE ELIMINAR?", "SI", "NO")
+   
+   If Preg = 1
+         query = "DELETE  From f15 Where codigo = '" & GridView2[GridView2.Row, 0].text & "' "
+         result = conexion.Con.Exec(query)
+         f15
+        Endif
+
+
+End
+
+Public Sub CheckBox1_Click()
+
+  If CheckBox1.Value = True Then
+    TextBox3.Enabled = True
+    Button4.Enabled = True
+    f15
+    Else
+    TextBox3.Text = ""
+    TextBox3.Enabled = False
+    Button4.Enabled = False
+  Endif
+
+End
+
+Public Sub Button4_Click()
+
+Dim $Linea As Integer 
+
+conexion.Connect()
+
+
+query = "select * from f15 where codigof15='" & UCase$(TextBox3.Text) & "'"
+Result = conexion.Con.exec(query) 
+
+If Result.Available Then
+
+Message.Info("F15 encontrada")
+
+codigof15 = TextBox3.Text
+
+For $linea = 0 To Result.Count - 1 Step 1 
+  
+GridView2[$linea, 0].text = Result!codigof15
+
+GridView2[$linea, 1].text = Result!pedido
+ 
+GridView2[$linea, 2].text = Result!solicitado
+ 
+GridView2[$linea, 3].text = Result!codigo
+
+GridView2[$linea, 4].text = Result!unidadmedida
+
+GridView2[$linea, 5].text = Result!fechapedido
+
+GridView2[$linea, 6].text = Result!seccion
+
+GridView2[$linea, 7].text = Result!usuario
+  
+Result.MoveNext()
+Next
+GridView2.Visible = True
+Else
+Message.Info("F15 NO encontrada")  
+End If
+End
+
+
+Public Sub Button5_Click()
+
+
+
+End

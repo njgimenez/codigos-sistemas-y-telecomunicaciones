@@ -1,0 +1,76 @@
+' Gambas class file
+
+Public query As String
+Public result As Result
+Private Hcox As Connection
+Public deposito As String
+
+Public Sub _new()
+
+Dim RHBox As ReportHBox 
+Dim Rep1, Rep2, Rep3, Rep4, Rep5, Rep6, Rep7 As Reportlabel
+
+'Hcox = New Connection
+
+
+conexion.Connect()
+deposito = LCase$(INVENTARIO.nombredepositof15)
+Report_depositoreport.Text = UCase$(INVENTARIO.nombredepositof15)
+Report_usuarioreport.Text = UCase(INVENTARIO.nombreusuariof15)
+query = "SELECt * FROM inv" & deposito
+result = conexion.Con.Exec(query)
+
+If result.Available 
+
+Report_fechareport.Text = Format$(Date, "dd/mm/yyyy")
+
+For Each result
+
+RHBox = New ReportHBox(listabox)
+RHBox.Height = "5mm"
+RHBox.Font.Size = "1"
+
+Rep1 = New ReportLabel(RHBox)
+Rep1.Width = "20 mm "
+Rep1.Alignment = Align.Left
+Rep1.Text = result!codigo
+
+Rep2 = New ReportLabel(RHBox)
+Rep2.Width = "80mm"
+Rep2.Alignment = Align.Left
+Rep2.Text = result!insumo
+ 
+Rep3 = New ReportLabel(RHBox)
+Rep3.Width = "20mm"
+Rep3.Alignment = Align.Justify
+Rep3.Text = result!unidadmedida
+
+Rep4 = New ReportLabel(RHBox)
+Rep4.Width = "20mm"
+Rep4.Alignment = Align.Center
+Rep4.Text = result!cantidadinsumo
+
+Rep5 = New ReportLabel(RHBox)
+Rep5.Width = "50mm"
+Rep5.Alignment = Align.Center
+Rep5.Text = result!tipoinsumo
+
+Rep6 = New ReportLabel(RHBox)
+Rep6.Width = "40mm"
+Rep6.Alignment = Align.Left
+Rep6.Text = result!proceinsumo
+
+Rep7 = New ReportLabel(RHBox)
+Rep7.Width = "25mm"
+Rep7.Alignment = Align.Left
+Rep7.Text = result!fechainsumo
+
+Next
+
+Else
+  Message.Info("NO HAY REGISTRO")
+  
+  
+  End If
+  
+End
