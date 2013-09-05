@@ -1,0 +1,504 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,207,120)
+  Background = &HFFFFFF&
+  { Button1 Button
+    MoveScaled(135,11,17,4)
+    Font = Font["Bold,+2"]
+    Text = ("INICIAR")
+  }
+  { Button2 Button
+    MoveScaled(135,25,31,4)
+    Visible = False
+    Font = Font["Bold,+2"]
+    Text = ("CAMBIAR DE USUARIO")
+  }
+  { PictureBox2 PictureBox
+    MoveScaled(180,0,26,28)
+    Picture = Picture["misionn"]
+    Stretch = True
+  }
+  { PictureBox1 PictureBox
+    MoveScaled(0,1,21,27)
+    Picture = Picture["gobierno-bolivariano-de-yaracuy-logo-primary.jpg"]
+  }
+  { Label3 Label
+    MoveScaled(62,4,80,6)
+    Font = Font["DejaVu Serif,Bold,+4"]
+    Foreground = &H0000BF&
+    Text = ("MODULO PARA EL CONTROL DE INVENTARIO")
+  }
+  { DrawingArea1 DrawingArea
+    MoveScaled(2,30,185,50)
+    Visible = False
+    Background = &H0000BF&
+    Foreground = &H00001F&
+    { DrawingArea2 DrawingArea
+      MoveScaled(1,1,183,48)
+      Background = &HFFFFFF&
+      Foreground = &H00001F&
+      { IconPanel1 IconPanel
+        MoveScaled(0,0,181,47)
+        Count = 4
+        Index = 0
+        Text = ("INGRESAR INSUMO\nAL DEPOSITO")
+        { check_medicina CheckBox
+          MoveScaled(19,1,14,3)
+          Font = Font["DejaVu Serif,Bold,+1"]
+          Text = ("Medicina")
+        }
+        { Check_mmq CheckBox
+          MoveScaled(35,1,10,3)
+          Font = Font["DejaVu Serif,Bold,+1"]
+          Text = ("MMQ")
+        }
+        { str_insumo TextBox
+          MoveScaled(17,4,58,5)
+          Font = Font["DejaVu Serif,Bold,+1"]
+        }
+        { Label5 Label
+          MoveScaled(7,5,9,3)
+          Font = Font["DejaVu Serif,Bold,+1"]
+          Text = ("Insumo:")
+        }
+        { Label8 Label
+          MoveScaled(8,11,9,3)
+          Font = Font["DejaVu Serif,Bold,+1"]
+          Text = ("Codigo:")
+        }
+        { str_codigoinsumo TextBox
+          MoveScaled(17,10,14,5)
+          Enabled = False
+          Font = Font["DejaVu Serif,Bold,+1"]
+        }
+        { Label7 Label
+          MoveScaled(7,16,10,5)
+          Font = Font["DejaVu Serif,Bold,+1"]
+          Text = ("Tipo de\nInsumo:")
+        }
+        { str_tipoinsumo TextBox
+          MoveScaled(17,16,28,5)
+          Enabled = False
+          Font = Font["DejaVu Serif,Bold,+1"]
+          MaxLength = 8
+        }
+        { Label11 Label
+          MoveScaled(1,24,16,3)
+          Font = Font["DejaVu Serif,Bold,+1"]
+          Text = ("Procedencia:")
+        }
+        { Combo_procedenciainsumo ComboBox
+          MoveScaled(17,22,28,5)
+          Enabled = False
+          Font = Font["DejaVu Serif,Bold,+1"]
+          List = [("farmacia"), ("almacen")]
+          MaxLength = 8
+        }
+        { Label6 Label
+          MoveScaled(4,29,12,3)
+          Font = Font["DejaVu Serif,Bold,+1"]
+          Text = ("Cantidad:")
+        }
+        { str_cantidadinsumo TextBox
+          MoveScaled(17,28,8,5)
+          Enabled = False
+          Font = Font["DejaVu Serif,Bold,+1"]
+          MaxLength = 5
+        }
+        { Label32 Label
+          MoveScaled(27,29,24,3)
+          Font = Font["DejaVu Serif,Bold,+1"]
+          Text = ("Unidad de Medida:")
+        }
+        { Label12 Label
+          MoveScaled(50,29,12,3)
+          Font = Font["DejaVu Serif,Bold,+1"]
+        }
+        { date_fechaingreso DateBox
+          MoveScaled(17,34,20,5)
+          Enabled = False
+          Font = Font["DejaVu Serif,Bold,+1"]
+        }
+        { Label9 Label
+          MoveScaled(7,34,10,5)
+          Font = Font["DejaVu Serif,Bold,+1"]
+          Text = ("Fecha\nIngreso:")
+        }
+        { Button3 Button
+          MoveScaled(9,40,20,4)
+          Background = Color.Background
+          Text = ("Guardar insumo")
+          Picture = Picture["icon:/22/floppy"]
+        }
+        { Button20 Button
+          MoveScaled(30,40,5,4)
+          Picture = Picture["icon:/22/erase"]
+        }
+        { Grid_insumos GridView
+          MoveScaled(77,4,68,32)
+          Visible = False
+        }
+        { Button13 Button
+          MoveScaled(89,0)
+        }
+        { Button4 Button
+          MoveScaled(36,40,18,4)
+          Enabled = False
+          Text = ("Editar insumo")
+          Picture = Picture["icon:/22/edit"]
+        }
+        { Label33 Label
+          MoveScaled(76,40,68,5)
+          Font = Font["Courier 10 Pitch,+3"]
+          Foreground = &H0000FF&
+        }
+        Index = 1
+        Text = ("DISTRIBUIR INSUMOS")
+        { Label15 Label
+          MoveScaled(10,4,11,4)
+          Font = Font["DejaVu Serif,Bold,+1"]
+          Text = ("Insumo:")
+        }
+        { Label18 Label
+          MoveScaled(10,10,9,3)
+          Font = Font["DejaVu Serif,Bold,+1"]
+          Text = ("Codigo:")
+        }
+        { Label16 Label
+          MoveScaled(1,17,19,2)
+          Font = Font["DejaVu Serif,Bold,+1"]
+          Text = ("Tipo de insumo:")
+        }
+        { str_tipoinsumoD TextBox
+          MoveScaled(20,15,35,5)
+          Enabled = False
+          Font = Font["DejaVu Serif,Bold,+1"]
+        }
+        { str_cantidadinsumoD TextBox
+          MoveScaled(20,21,15,6)
+          Enabled = False
+          Font = Font["DejaVu Serif,Bold,+1"]
+        }
+        { Label14 Label
+          MoveScaled(35,22,9,4)
+          Visible = False
+          Font = Font["DejaVu Serif,Bold,+1"]
+          Text = ("Label9")
+        }
+        { Label20 Label
+          MoveScaled(45,21,14,5)
+          Font = Font["DejaVu Serif,Bold,+1"]
+          Text = ("Cantidad a\ndistribuir:")
+        }
+        { str_cantidaddistribuirD TextBox
+          MoveScaled(60,21,15,6)
+          Font = Font["DejaVu Serif,Bold,+1"]
+          MaxLength = 5
+        }
+        { Label17 Label
+          MoveScaled(75,22,9,4)
+          Visible = False
+          Font = Font["DejaVu Serif,Bold,+1"]
+        }
+        { Label21 Label
+          MoveScaled(9,28,10,3)
+          Font = Font["DejaVu Serif,Bold,+1"]
+          Text = ("Destino:")
+        }
+        { combo_destinoinsumoD ComboBox
+          MoveScaled(20,28,49,5)
+          Font = Font["DejaVu Serif,Bold,+1"]
+        }
+        { Label22 Label
+          MoveScaled(11,35,8,3)
+          Font = Font["DejaVu Serif,Bold,+1"]
+          Text = ("Fecha:")
+        }
+        { Date_fechadistribucionD DateBox
+          MoveScaled(20,34,22,5)
+          Font = Font["DejaVu Serif,Bold,+1"]
+        }
+        { Button6 Button
+          MoveScaled(30,40,16,4)
+          Text = ("Enviar")
+          Picture = Picture["icon:/32/bottom"]
+        }
+        { Button22 Button
+          MoveScaled(46,40,8,4)
+          Picture = Picture["icon:/32/erase"]
+        }
+        { Label19 Label
+          MoveScaled(4,21,15,5)
+          Font = Font["DejaVu Serif,Bold,+1"]
+          Text = ("Cantidad en\ninventario:")
+        }
+        { str_insumobusquedaD TextBox
+          MoveScaled(20,3,53,5)
+          Enabled = False
+          Font = Font["Bold,+1"]
+        }
+        { str_codigoinsumoD TextBox
+          MoveScaled(20,9,20,5)
+          Enabled = False
+          Font = Font["DejaVu Serif,Bold,+1"]
+        }
+        { Button7 Button
+          MoveScaled(74,3,5,5)
+          Picture = Picture["icon:/22/find"]
+        }
+        Index = 2
+        Text = ("EDITAR INSUMOS\nDEL INVENTARIO")
+        { Label28 Label
+          MoveScaled(7,5,11,3)
+          Font = Font["Bold,+1"]
+          Text = ("Insumo:")
+        }
+        { Button23 Button
+          MoveScaled(84,3,5,5)
+          Picture = Picture["icon:/32/erase"]
+        }
+        { Label26 Label
+          MoveScaled(8,9,9,5)
+          Font = Font["Bold,+1"]
+          Text = ("Codigo:")
+        }
+        { str_codigoinsumoE TextBox
+          MoveScaled(17,9,17,5)
+          Enabled = False
+          Font = Font["Bitstream Charter,Bold,+1"]
+        }
+        { Button10 Button
+          MoveScaled(79,9,13,6)
+          Enabled = False
+          Text = ("Editar")
+          Picture = Picture["icon:/32/edit"]
+        }
+        { Button11 Button
+          MoveScaled(79,16,13,6)
+          Enabled = False
+          Text = ("Sumar")
+          Picture = Picture["icon:/32/calculator"]
+        }
+        { PictureBox3 PictureBox
+          MoveScaled(75,17,4,5)
+          Visible = False
+          Picture = Picture["icon:/32/forward"]
+        }
+        { Button16 Button
+          MoveScaled(79,23,13,6)
+          Text = ("Eliminar\nregistro")
+          Picture = Picture["icon:/32/remove"]
+        }
+        { Button12 Button
+          MoveScaled(79,30,13,6)
+          Enabled = False
+          Text = ("Guardar")
+          Picture = Picture["icon:/32/add"]
+        }
+        { date_fechamovimientoE DateBox
+          MoveScaled(17,37,19,5)
+          Enabled = False
+          Font = Font["Bitstream Charter,Bold,+1"]
+        }
+        { Label31 Label
+          MoveScaled(7,36,10,7)
+          Font = Font["Bold,+1"]
+          Text = ("Fecha\ningreso:")
+        }
+        { Label_unidadmedidaE Label
+          MoveScaled(17,33,12,4)
+          Font = Font["Bold,+1"]
+        }
+        { Label30 Label
+          MoveScaled(5,30,11,3)
+          Font = Font["Bold,+1"]
+          Text = ("Cantidad:")
+        }
+        { str_cantidadinsumoE TextBox
+          MoveScaled(17,28,8,5)
+          Enabled = False
+          Font = Font["Bitstream Charter,Bold,+1"]
+          MaxLength = 5
+        }
+        { Combo_procedenciainsumoE ComboBox
+          MoveScaled(17,21,26,6)
+          Enabled = False
+          Font = Font["Bitstream Charter,Bold,+1"]
+          List = [("farmacia"), ("almacen")]
+          MaxLength = 8
+        }
+        { Label29 Label
+          MoveScaled(1,23,15,3)
+          Font = Font["Bold,+1"]
+          Text = ("Procedencia:")
+        }
+        { Label25 Label
+          MoveScaled(7,15,11,6)
+          Font = Font["Bold,+1"]
+          Text = ("Tipo de \nInsumo:")
+        }
+        { str_tipoinsumoE TextBox
+          MoveScaled(17,15,26,5)
+          Enabled = False
+          Font = Font["Bitstream Charter,Bold,+1"]
+          MaxLength = 8
+        }
+        { str_insumobusquedaE TextBox
+          MoveScaled(17,3,62,5)
+          Font = Font["Bitstream Charter,Bold,+1"]
+        }
+        { Button9 Button
+          MoveScaled(79,3,5,5)
+          Picture = Picture["icon:/32/find"]
+        }
+        { Panel3 Panel
+          MoveScaled(26,28,50,6)
+          Visible = False
+          { Label23 Label
+            MoveScaled(0,2,3,3)
+            Text = ("+")
+          }
+          { str_cantidadinsumosumaE TextBox
+            MoveScaled(3,0,8,5)
+            Font = Font["Bitstream Charter,Bold,+1"]
+            MaxLength = 5
+          }
+          { Label24 Label
+            MoveScaled(12,1,35,4)
+            Font = Font["DejaVu Serif,Bold,+1"]
+            Text = ("INGRESE NUEVA CANTIDAD")
+          }
+        }
+        Index = 3
+        Text = ("MOVIMIENTOS")
+        { Grid_movimientos GridView
+          MoveScaled(1,2,155,43)
+          Visible = False
+        }
+        Index = 0
+      }
+    }
+  }
+  { Panel1 Panel
+    MoveScaled(35,10,98,10)
+    { Label1 Label
+      MoveScaled(0,1,27,3)
+      Font = Font["Bold,+2"]
+      Text = ("INGRESE USUARIO:")
+    }
+    { str_nombreusuario TextBox
+      MoveScaled(27,0,29,4)
+      Font = Font["Bold,+2"]
+    }
+    { Label2 Label
+      MoveScaled(59,1,11,3)
+      Font = Font["Bold,+2"]
+      Text = ("CLAVE:")
+    }
+    { str_claveusuario TextBox
+      MoveScaled(70,0,27,4)
+      Font = Font["Bold,+2"]
+      Tracking = True
+      Password = True
+    }
+    { CheckBox1 CheckBox
+      MoveScaled(70,4,20,3)
+      Font = Font["Bold,+2"]
+      Text = ("Ver clave")
+    }
+  }
+  { Panel2 Panel
+    MoveScaled(35,20,98,9)
+    Visible = False
+    { Label_nombreusuario Label
+      MoveScaled(67,5,29,3)
+      Font = Font["Bold,+2"]
+      Foreground = &H0000BF&
+    }
+    { Label10 Label
+      MoveScaled(47,2,19,6)
+      Font = Font["DejaVu Serif,Bold,+2"]
+      Text = ("NOMBRE DEL \nUSUARIO:")
+    }
+    { Label_deposito Label
+      MoveScaled(21,5,21,3)
+      Font = Font["Bold,+2"]
+      Foreground = &H0000BF&
+    }
+    { Label4 Label
+      MoveScaled(1,2,19,6)
+      Font = Font["DejaVu Serif,Bold,+2"]
+      Text = ("NOMBRE DEL \nDEPOSITO:")
+    }
+  }
+  { DrawingArea3 DrawingArea
+    MoveScaled(2,80,185,39)
+    Visible = False
+    Background = &H0000DF&
+    { DrawingArea4 DrawingArea
+      MoveScaled(1,1,183,37)
+      Background = &HFFFFFF&
+      { Grid_inventario GridView
+        MoveScaled(61,1,122,35)
+        Visible = False
+      }
+      { Label13 Label
+        MoveScaled(2,4,11,4)
+        Font = Font["DejaVu Serif,Bold,+1"]
+        Text = ("INSUMO:")
+      }
+      { TextBox1 TextBox
+        MoveScaled(14,3,46,5)
+      }
+      { Frame1 Frame
+        MoveScaled(2,11,29,20)
+        Text = ("ORDERNAR POR:")
+        { Check_ordernarporfecha CheckBox
+          MoveScaled(2,4,19,3)
+          Text = ("FECHA INGRESO")
+        }
+        { Check_ordenarcantidadinsumo CheckBox
+          MoveScaled(2,8,22,3)
+          Text = ("CANTIDAD INSUMO")
+        }
+        { Check_ordenartipoinsumo CheckBox
+          MoveScaled(2,12,16,3)
+          Text = ("TIPO INSUMO")
+        }
+        { Check_ordenarproceinsumo CheckBox
+          MoveScaled(2,16,25,3)
+          Text = ("PROCEDENCIA INSUMO")
+        }
+      }
+      { Frame2 Frame
+        MoveScaled(32,11,25,10)
+        Text = ("GENERAR F15")
+        { CheckBox2 CheckBox
+          MoveScaled(1,3,18,3)
+          Text = ("NUEVA F15")
+        }
+        { CheckBox3 CheckBox
+          MoveScaled(1,6,19,3)
+          Text = ("CONSULTAR F15")
+        }
+      }
+      { Frame3 Frame
+        MoveScaled(32,21,28,10)
+        Text = ("GENERAR REPORTES")
+        { CheckBox4 CheckBox
+          MoveScaled(1,3,14,3)
+          Text = ("INVENTARIO")
+        }
+        { CheckBox5 CheckBox
+          MoveScaled(1,6,17,3)
+          Text = ("MOVIMIENTOS")
+        }
+      }
+    }
+  }
+  { Button8 Button
+    MoveScaled(190,81,9,9)
+    Picture = Picture["icon:/64/calculator"]
+  }
+}

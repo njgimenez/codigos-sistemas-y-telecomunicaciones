@@ -1,0 +1,1272 @@
+' Gambas class file
+
+ Public query As String
+ Public Result As Result
+ Public codigousuario As String
+ Public deposito2 As String
+Public deposito3 As String
+Public Sub Button13_Click()
+
+   str_nombreusuario.Enabled = True
+   str_apellidousuario.Enabled = True
+   str_cargousuario.Enabled = True
+   str_usuarionombre.Enabled = True
+   str_codigousuario.Enabled = True
+   combo_depositoasignada.Enabled = True
+   Date_registrousuario.Enabled = True
+   Button5.Enabled = True
+   Combo_nivelusuario.Enabled = True
+
+End
+
+Public Sub str_nombreusuario_KeyPress()
+
+   If (Key.Code >= Asc("0") And Key.Code <= Asc("9")) Then
+
+  Message.Warning("Disculpe, solo debe ingresar valores alfabéticos")
+
+  Stop Event
+
+  Endif
+
+End
+
+Public Sub str_apellidousuario_KeyPress()
+
+   If (Key.Code >= Asc("0") And Key.Code <= Asc("9")) Then
+
+  Message.Warning("Disculpe, solo debe ingresar valores alfabéticos")
+
+  Stop Event
+
+  Endif
+
+End
+
+Public Sub Button5_Click()
+
+
+If str_codigousuario.text = "" Or str_nombreusuario.text = "" Or str_apellidousuario.text = "" Or str_cargousuario.text = "" Or str_usuarionombre.text = "" Or combo_depositoasignada.text = "" Or Date_registrousuario.value = "" Or Combo_nivelusuario.text = "" Then
+
+Message.Error("LLENAR TODAS LAS CASILLAS")
+
+Else 
+  
+Conexion.Connect()
+  
+Query = " Select * from usuario where nombreusuario = '" & UCase$(str_usuarionombre.Text) & "'" 
+Result = conexion.Con.Exec(Query)
+
+  If result.Available Then
+  
+  Message.Info("ESTE NOMBRE DE USUARIO YA EXISTE")
+    
+  Else
+  
+  codigogeneradousuario
+ 
+  query = "insert into usuario ( nombres , apellidos, cargo, nombreusuario, clave, servicio, codigousuario, nivelusuario, fecharegistro ) values ('" & UCase$(str_nombreusuario.text) & "','" & UCase$(str_apellidousuario.text) & "','" & UCase$(str_cargousuario.text) & "','" & UCase$(str_usuarionombre.text) & "','" & str_codigousuario.text & "', '" & UCase$(combo_depositoasignada.text) & "','" & codigousuario & "','" & UCase$(Combo_nivelusuario.text) & "', '" & Format$(Date_registrousuario.Value, "dd/mm/yy") & "')"
+  result = Conexion.Con.Exec(query)
+
+  Message("USUARIO " & str_usuarionombre & "REGISTRADO")
+  
+
+  str_usuarionombre.Text = ""
+  str_cargousuario.Text = ""
+  str_apellidousuario.Text = ""
+  str_nombreusuario.Text = ""
+  str_codigousuario.Text = ""
+  Combo_depositoasignada.Text = ""
+  Combo_nivelusuario.text = ""
+  Date_registrousuario.Value = ""  
+  str_nombreusuario.Enabled = False
+  str_apellidousuario.Enabled = False
+  str_cargousuario.Enabled = False
+  str_usuarionombre.Enabled = False
+  str_codigousuario.Enabled = False
+  Combo_depositoasignada.Enabled = False
+  Combo_nivelusuario.Enabled = False
+  Date_registrousuario.Enabled = False
+  Button5.Enabled = False
+
+  usuarios
+  End If
+  End If
+
+End
+
+Public Sub codigogeneradousuario()
+
+  Dim i As Integer
+  Dim $codigo As String
+  Dim $n As Integer
+  
+  i = 1
+  
+  Conexion.Connect()
+  
+  query = "Select codigousuario from usuario"
+  result = Conexion.Con.Exec(query)
+  
+  If result.Count == 0
+    $codigo = "000"
+   Else
+    $n = result.Count
+  End If
+  
+  If $n < 10
+    $codigo = "00" & $n
+  Else            
+    If $n >= 10 And $n < 100
+    $codigo = "0" & $n
+  Else
+    $codigo = "U" & $n
+  End If
+  End If
+  codigousuario = $codigo
+End
+
+
+
+Public Sub usuarios()
+
+Dim $Linea As Integer
+
+grid_usuarios.columns.count = 8
+grid_usuarios.rows.count = 50 
+grid_usuarios.columns.width = 100 
+grid_usuarios.rows.height = 20
+
+grid_usuarios.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
+grid_usuarios.columns[0].text = "Codigo" 
+grid_usuarios.columns[0].width = 100
+grid_usuarios.columns[1].text = "Nombres" 
+grid_usuarios.columns[1].width = 200
+grid_usuarios.columns[2].text = "Apellidos" 
+grid_usuarios.columns[2].width = 200
+grid_usuarios.columns[3].text = "Cargo" 
+grid_usuarios.columns[3].width = 100
+grid_usuarios.columns[4].text = "Nombre de usuario" 
+grid_usuarios.columns[4].width = 200
+grid_usuarios.columns[5].text = "Servicio" 
+grid_usuarios.columns[5].width = 100
+grid_usuarios.columns[6].text = "Fecha de registro" 
+grid_usuarios.columns[6].width = 100
+grid_usuarios.columns[7].text = "Nivel de usuario" 
+grid_usuarios.columns[7].width = 100
+
+conexion.Connect()
+
+query = "select * from usuario" 
+Result = conexion.Con.exec(query)
+Grid_usuarios.Clear
+Grid_usuarios.rows.count = Result.count + 1 
+For $linea = 0 To Result.Count - 1 Step 1 
+ 
+Grid_usuarios[$linea, 0].text = Result!codigousuario 
+Grid_usuarios[$linea, 1].text = Result!nombres
+Grid_usuarios[$linea, 2].text = Result!apellidos
+Grid_usuarios[$linea, 3].text = Result!cargo
+Grid_usuarios[$linea, 4].text = Result!nombreusuario
+Grid_usuarios[$linea, 5].text = Result!servicio
+Grid_usuarios[$linea, 6].text = Result!fecharegistro
+Grid_usuarios[$linea, 7].text = Result!nivelusuario
+Result.MoveNext
+Next
+End
+
+
+Public Sub Check_mmq_Click()
+
+Dim i As Integer
+  
+If Check_mmq.Value = True 
+    
+Check_medicina.Value = False
+Button15.Visible = True
+Label1.Caption = "mmq"
+Label1.Visible = True
+Grid_insumos.Visible = True
+codigogeneradommq
+ 
+conexion.Connect()
+ 
+ Query = "select * from unidadmedida where tipoinsumo='" & UCase$(Check_mmq.Text) & "'"
+ Result = conexion.Con.Exec(Query)
+ Combo_unidadmedidainsumo.Clear    
+ For i = 0 To Result.Count - 1 Step 1
+ Combo_unidadmedidainsumo.Add(Result!nombre) 
+ Combo_unidadmedidainsumo.Refresh()
+ Result.MoveNext()
+ Next
+Else
+  Combo_unidadmedidainsumo.Text = ""
+  str_nombreinsumo.text = ""
+  str_codigoinsumo.Text = ""
+  Combo_unidadmedidainsumo.Enabled = False
+  str_nombreinsumo.Enabled = False
+  
+End If  
+  mmq
+
+End
+
+Public Sub Check_medicina_Click()
+
+  
+Dim i As Integer
+ 
+ 
+If Check_medicina.Value = True Then
+Button15.Visible = True
+Check_mmq.Value = False
+Label1.Caption = "medicina"
+Label1.Visible = True
+Grid_insumos.Visible = True
+codigogeneradomedicina
+
+conexion.Connect()
+
+Query = "select * from unidadmedida where tipoinsumo='" & LCase$(Check_medicina.Text) & "'"
+Result = conexion.Con.Exec(Query)
+Combo_unidadmedidainsumo.Clear    
+For i = 0 To Result.Count - 1 Step 1
+Combo_unidadmedidainsumo.Add(Result!nombre) 
+Combo_unidadmedidainsumo.Refresh()
+Result.MoveNext()
+Next
+Else
+
+Combo_unidadmedidainsumo.Text = ""
+  str_nombreinsumo.text = ""
+  str_codigoinsumo.Text = ""
+  Combo_unidadmedidainsumo.Enabled = False
+  str_nombreinsumo.Enabled = False
+Endif
+
+medicina
+
+End
+
+Public Sub codigogeneradommq()
+
+  Dim i As Integer
+  Dim $codigommq As String
+  Dim $n As Integer 
+  
+  
+  i = 1
+  
+  Conexion.Connect()
+  query = "Select codigo from mmq"
+  result = Conexion.Con.Exec(query)
+  
+  If result.Count == 0
+    $codigommq = "MA0000"
+    Else
+    $n = result.Count
+  End If
+  
+  If $n < 10
+    $codigommq = "MA000" & $n
+  Else            
+    If $n >= 10 And $n < 100
+    $codigommq = "MA0" & $n
+  Else
+    $codigommq = "MA" & $n
+  End If
+  End If
+  str_codigoinsumo.Text = $codigommq
+  
+End
+
+Public Sub codigogeneradomedicina()
+
+  Dim i As Integer
+  Dim $codigomedicina As String
+  Dim $n As Integer 
+  
+  i = 1
+  
+  Conexion.Connect()
+  
+  query = "Select codigo from medicina"
+  result = Conexion.Con.Exec(query)
+  
+  If result.Count == 0
+    $codigomedicina = "ME0000"
+    Else
+    $n = result.Count
+  End If
+  
+  If $n < 10
+    $codigomedicina = "ME000" & $n
+  Else            
+    If $n >= 10 And $n < 100
+    $codigomedicina = "ME0" & $n
+  Else
+    $codigomedicina = "ME" & $n
+  End If
+  End If
+  str_codigoinsumo.Text = $codigomedicina
+  
+End
+
+Public Sub mmq()
+
+Dim $Linea As Integer
+
+Grid_insumos.columns.count = 3
+Grid_insumos.rows.count = 50 
+Grid_insumos.columns.width = 100 
+Grid_insumos.rows.height = 20
+
+Grid_insumos.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
+Grid_insumos.columns[0].text = "Codigo" 
+Grid_insumos.columns[0].width = 100
+Grid_insumos.columns[1].text = "Insumo" 
+Grid_insumos.columns[1].width = 250
+Grid_insumos.columns[2].text = "Unidad de medida" 
+Grid_insumos.columns[2].width = 100
+
+
+
+conexion.Connect()
+
+query = "select * from mmq" 
+Result = conexion.Con.exec(query)
+Grid_insumos.Clear
+Grid_insumos.rows.count = Result.count + 1 
+For $linea = 0 To Result.Count - 1 Step 1      
+Grid_insumos[$linea, 0].text = Result!codigo
+Grid_insumos[$linea, 1].text = Result!nombre
+Grid_insumos[$linea, 2].text = Result!unidadmedida
+Result.MoveNext()
+Next 
+
+End
+
+Public Sub medicina()
+
+Dim $Linea As Integer
+
+Grid_insumos.columns.count = 3
+Grid_insumos.rows.count = 50 
+Grid_insumos.columns.width = 100 
+Grid_insumos.rows.height = 20
+
+Grid_insumos.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
+Grid_insumos.columns[0].text = "Codigo" 
+Grid_insumos.columns[0].width = 100
+Grid_insumos.columns[1].text = "Insumo" 
+Grid_insumos.columns[1].width = 250
+Grid_insumos.columns[2].text = "Unidad de medida" 
+Grid_insumos.columns[2].width = 100
+
+conexion.Connect()
+
+query = "select * from medicina" 
+Result = conexion.Con.exec(query)
+Grid_insumos.Clear
+Grid_insumos.rows.count = Result.count + 1 
+For $linea = 0 To Result.Count - 1 Step 1      
+Grid_insumos[$linea, 0].text = Result!codigo
+Grid_insumos[$linea, 1].text = Result!nombre
+Grid_insumos[$linea, 2].text = Result!unidadmedida
+Result.MoveNext()
+Next 
+
+
+End
+
+Public Sub Button16_Click()
+  
+  If Check_mmq.Value = False And Check_medicina.Value = False
+  
+  Message.Info("SELECCIONA UNA CASILLA") 
+  
+  Else
+  
+  str_nombreinsumo.Enabled = True
+  Combo_unidadmedidainsumo.Enabled = True
+  Button3.Enabled = True
+
+  
+
+End If
+
+End
+
+Public Sub Button3_Click()
+
+If str_nombreinsumo.text = "" Or Combo_unidadmedidainsumo.text = "" Then
+
+Message.Error("LLENAR TODAS LAS CASILLAS")
+
+Else 
+
+Conexion.Connect()
+  
+codigogeneradommq
+  
+  Query = "insert into " & LCase$(Label1.Text) & " (nombre, unidadmedida, codigo) values ('" & UCase$(str_nombreinsumo.Text) & "','" & UCase$(Combo_unidadmedidainsumo.Text) & "', '" & UCase$(str_codigoinsumo.Text) & "')"
+  Result = Conexion.Con.Exec(Query)
+   
+  Message("INSUMO AGREGADO")
+  
+  Combo_unidadmedidainsumo.Text = ""
+  str_nombreinsumo.text = ""
+  str_codigoinsumo.Text = ""
+  Combo_unidadmedidainsumo.Enabled = False
+  str_nombreinsumo.Enabled = False
+  Button3.Enabled = True
+  Button4.Enabled = True
+ 
+End If
+End
+
+
+Public Sub Button4_Click()
+
+Grid_insumos.Visible = True
+Label22.Visible = True
+Label1.Visible = True
+Button15.Visible = True
+End
+
+Public Sub Button15_Click()
+
+  Label22.Visible = False
+  Grid_insumos.Visible = False
+  Button15.Visible = False
+  Check_mmq.Value = False
+  Check_medicina.Value = False
+  Label1.Visible = False
+End
+
+Public Sub str_deposito_KeyPress()
+
+    Select Case Key.Code
+        Case 65 To 90
+        Case 32
+        Case Key.BackSpace
+        Case Key.Delete
+        Case Key.Tab
+        Case Else
+        Stop Event
+    End Select 
+    
+
+End
+
+Public Sub Button7_Click()
+
+Dim deposito As String
+Dim Preg As Integer
+
+If str_deposito.text = "" Then
+
+Message.Error("LLENAR TODAS LAS CASILLAS")
+
+Else 
+
+  Preg = 0
+  
+      Preg = Message.Question("¡Se creara: DEPOSITO NUEVO=" & str_deposito.Text & ", INVENTARIO DEL DEPOSITO= inv" & str_deposito.Text & " Y TABLA DE MOVIMIENTOS=" & str_deposito.text & "! ¿Esta de acuerdo?", "Si", "No")
+
+        If Preg = 1 Then
+          
+  
+deposito = UCase$(str_deposito.Text)
+
+conexion.Connect()
+query = "Create TABLE INV" & deposito & " (codigo character varying(50),insumo character varying(50),tipoinsumo character varying(50),proceinsumo character varying(50),cantidadinsumo character varying(10),fechainsumo date, usuario character varying(50), unidadmedida character varying(20))"
+result = Conexion.Con.Exec(query)
+
+conexion.Connect()
+query = "insert into secciones (nombres)values('" & UCase$(str_deposito.text) & "')" 
+result = Conexion.Con.Exec(query)
+
+conexion.Connect
+
+query = " Create TABLE " & deposito & " (cmov character varying(50), cinsumo character varying(50), insumo character varying(50), cantidadmov character varying(10),tipoinsumo character varying(50), servicio character varying(50), seccion character varying(50), usuariomov character varying(50),fechamov Date, modulo character varying(50), unidadmedida character varying(20), enviado character varying(50), recibido character varying(50))"
+result = conexion.Con.Exec(query)
+
+str_deposito.Text = ""
+        
+ Else If Preg = 2
+   
+str_deposito.Text = ""
+  
+End If
+End If
+End
+
+Public Sub deposito()
+
+  
+Dim $Linea As Integer, $Rec As Result, $Sql As String
+
+Grid_depositos.columns.count = 1
+Grid_depositos.rows.count = 50 
+Grid_depositos.columns.width = 100 
+Grid_depositos.rows.height = 20
+
+Grid_depositos.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
+Grid_depositos.columns[0].text = "Sección" 
+Grid_depositos.columns[0].width = 150
+
+conexion.Connect()
+
+query = "select * from secciones" 
+Result = conexion.Con.exec(query)
+Grid_depositos.Clear
+Grid_depositos.rows.count = Result.count + 1 
+For $linea = 0 To Result.Count - 1 Step 1      
+Grid_depositos[$linea, 0].text = Result!nombres
+Result.MoveNext()
+Next 
+
+End
+
+
+
+Public Sub Button8_Click()
+
+  deposito
+  Grid_depositos.Visible = True
+  Button19.Visible = True
+End
+
+Public Sub Button19_Click()
+
+  Grid_depositos.Visible = False
+  Button19.Visible = False
+End
+
+Public Sub Button11_Click()
+
+Dim i As Integer
+  Combo_deposito.Enabled = True
+  str_servicio.Enabled = True
+  Button9.Enabled = True
+  
+  conexion.Connect()
+ 
+ Query = "select * from secciones"
+ Result = conexion.Con.Exec(Query)    
+ Combo_deposito.Clear
+ For i = 0 To Result.Count - 1 Step 1
+ Combo_deposito.Add(Result!nombres) 
+ Combo_deposito.Refresh()
+ Result.MoveNext()
+ Next
+  
+
+End
+
+Public Sub Button9_Click()
+
+  Dim i As Integer
+  Dim Preg As Integer
+  
+  
+  If str_servicio.text = "" Or Combo_deposito.text = "" Then
+
+  Message.Error("LLENAR TODAS LAS CASILLAS")
+
+  Else 
+  
+  Preg = 0
+  
+  Preg = Message.Question("¿Se guardara el siguiente servicio= " & str_servicio.text & " del depositon= " & Combo_deposito.text & " ?", "Si", "No")
+
+  If Preg = 1 Then
+   
+  
+ query = "insert into servicios (secciones, servicio)values('" & UCase$(Combo_deposito.Text) & "', '" & UCase$(str_servicio.Text) & "')"
+ result = Conexion.Con.Exec(query)
+  
+  servicios
+ 
+  Combo_deposito.Enabled = False
+  str_servicio.Enabled = False
+  Combo_deposito.Text = ""
+  str_servicio.text = ""
+  Button9.Enabled = False
+
+  Else
+  
+    If Preg = 2
+      
+        Combo_deposito.Enabled = False
+        str_servicio.Enabled = False
+        Button9.Enabled = False
+        Combo_deposito.Text = ""
+        str_servicio.text = ""
+
+    
+      
+    Endif
+    
+    
+    
+  Endif
+End If
+
+End
+
+Public Sub servicios()
+
+Dim $Linea As Integer
+
+Grid_servicios.columns.count = 2
+Grid_servicios.rows.count = 50 
+Grid_servicios.columns.width = 100 
+Grid_servicios.rows.height = 20
+
+Grid_servicios.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
+Grid_servicios.columns[0].text = "Deposito" 
+Grid_servicios.columns[0].width = 200
+Grid_servicios.columns[1].text = "Servicio" 
+Grid_servicios.columns[1].width = 200
+
+
+conexion.Connect()
+
+query = "select * from servicios" 
+Result = conexion.Con.exec(query)
+Grid_servicios.Clear
+Grid_servicios.rows.count = Result.count + 1 
+For $linea = 0 To Result.Count - 1 Step 1      
+Grid_servicios[$linea, 0].text = Result!secciones
+Grid_servicios[$linea, 1].text = Result!servicio
+Result.MoveNext()
+Next 
+
+ 
+
+End
+
+Public Sub Button20_Click()
+
+  Grid_servicios.Visible = False
+  Button20.Visible = False
+
+End
+
+Public Sub Button12_Click()
+  servicios
+  Grid_servicios.Visible = True
+  Button20.Visible = True
+
+End
+
+Public Sub check_mmq2_Click()
+
+   If Check_mmq2.Value = True Then
+    
+     Check_medicina.Value = False
+  
+     str_unidadmedida.Enabled = True  
+     
+     Else
+     str_unidadmedida.Text = ""  
+
+  Endif
+
+End
+
+Public Sub Check_medicina2_Click()
+
+  If Check_medicina2.Value = True Then
+    
+     check_mmq2.Value = False
+  
+     str_unidadmedida.Enabled = True  
+     
+     Else
+     
+     str_unidadmedida.Text = ""
+
+  Endif
+
+End
+
+Public Sub str_unidadmedida_KeyPress()
+
+    Select Case Key.Code
+        Case 65 To 90
+        Case 32
+        Case Key.BackSpace
+        Case Key.Delete
+        Case Key.Tab
+        Case Else
+        Stop Event
+    End Select
+    
+       
+    If Check_mmq2.Value = False And Check_medicina2.Value = False
+    Message.Info("Seleccione una opcion")
+    str_unidadmedida.Enabled = False
+  Else
+    str_unidadmedida.Enabled = True
+End If
+
+
+End
+
+Public Sub Button17_Click()
+
+Dim i As Integer
+Dim Preg As Integer
+
+
+    
+  If str_unidadmedida.text = "" 
+
+  Message.Error("LlENAR TODAS LAS CASILLAS")
+
+  Else 
+
+
+Preg = 0
+  
+  Preg = Message.Question("¿Se guardara la unidad de medida= " & str_unidadmedida.text & " ?", "Si", "No")
+
+  If Preg = 1 Then
+
+
+If Check_mmq2.Value = True Then
+
+query = " insert into unidadmedida (tipoinsumo,nombre)values('" & UCase$(Check_mmq2.Text) & "','" & UCase$(str_unidadmedida.Text) & "')"
+result = Conexion.Con.Exec(query)
+
+str_unidadmedida.Text = ""
+unidadmedida
+
+Else
+  
+Check_medicina2.Value = True
+
+query = " insert into unidadmedida (tipoinsumo,nombre)values('" & LCase$(Check_medicina2.Text) & "','" & str_unidadmedida.Text & "')"
+result = Conexion.Con.Exec(query)
+
+str_unidadmedida.Text = ""
+unidadmedida
+End If
+End If
+End If
+
+End
+
+Public Sub unidadmedida()
+  
+Dim $Linea As Integer
+  
+Grid_unidadmedida.columns.count = 2
+Grid_unidadmedida.rows.count = 50 
+Grid_unidadmedida.columns.width = 100 
+Grid_unidadmedida.rows.height = 20
+
+Grid_unidadmedida.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
+Grid_unidadmedida.columns[0].text = "nombre" 
+Grid_unidadmedida.columns[0].width = 200
+Grid_unidadmedida.columns[1].text = "tipo insumo" 
+Grid_unidadmedida.columns[1].width = 200
+
+conexion.Connect()
+
+query = "select * from unidadmedida" 
+Result = conexion.Con.exec(query)
+Grid_unidadmedida.Clear
+Grid_unidadmedida.rows.count = Result.count + 1 
+For $linea = 0 To Result.Count - 1 Step 1      
+Grid_unidadmedida[$linea, 0].text = Result!nombre
+Grid_unidadmedida[$linea, 1].text = Result!tipoinsumo
+Result.MoveNext()
+Next 
+
+  
+End
+
+
+Public Sub Button21_Click()
+
+  unidadmedida
+  Grid_unidadmedida.Visible = True
+  Button22.Visible = True
+End
+
+Public Sub Button22_Click()
+
+  Grid_unidadmedida.Visible = False
+  Button22.Visible = False
+End
+
+Public Sub Button18_Click()
+
+  str_unidadmedida.Text = ""
+
+End
+
+Public Sub Button14_Click()
+
+  usuarios
+  grid_usuarios.Visible = True
+  Button23.Visible = True
+
+End
+
+Public Sub Button23_Click()
+
+  grid_usuarios.Visible = False
+  Button23.Visible = False
+
+End
+
+
+Public Sub Button1_Click()
+
+ Dim $mensaje As String 
+ Dim nivelusuario As String
+ 
+ nivelusuario = "administrador"
+
+
+ If str_ingresousuario.Text = "" Or str_ingresoclave.Text = "" Then
+
+Message.Error("INGRESAR LOS DATOS NECESARIOS")
+
+Else 
+  
+   Conexion.Connect()
+   
+   Query = "SELECT * FROM usuario where nombreusuario='" & UCase$(str_ingresousuario.Text) & "' and clave='" & str_ingresoclave.text & "' and nivelusuario='" & UCase$(nivelusuario) & "' "
+   Result = Conexion.Con.Exec(Query)  
+   If Result.Count = 0 Then 
+   Message.info("Usuario o Contraseña no coinciden")
+   Else
+   Label2.Visible = False
+   Label3.Visible = False
+   str_ingresoclave.Visible = False
+   str_ingresousuario.X = 140
+   str_ingresousuario.y = 126
+   str_ingresousuario.Enabled = False
+   Button2.Visible = True
+   Button2.Enabled = True
+   DrawingArea1.Visible = True
+   Button1.Visible = False
+   CheckBox6.Visible = False
+   Label23.Visible = True
+End If
+End If
+
+End
+
+Public Sub Button2_Click()
+
+Dim Preg As Integer
+
+Preg = 0
+
+Preg = Message.Question("¿DESEA CERRAR SESIÓN?", "SI", "NO")
+
+If Preg = 1
+   str_ingresoclave.Text = "" 
+   str_ingresousuario.Text = "" 
+   Label2.Visible = True
+   Label3.Visible = True
+   str_ingresoclave.Visible = True
+   str_ingresousuario.X = 294
+   str_ingresousuario.y = 49
+   Button2.Visible = False
+   button2.Enabled = False
+   str_ingresousuario.Enabled = True
+   DrawingArea1.Visible = False
+   Button1.Visible = True
+    CheckBox6.Visible = True
+    Label23.Visible = False
+   
+End If
+End
+
+Public Sub CheckBox6_Click()
+
+  If CheckBox6.Value = True
+    str_ingresoclave.Password = False
+  Else
+    str_ingresoclave.Password = True
+  End If
+End
+
+Public Sub Button10_Click()
+
+  str_servicio.Text = ""
+  Combo_deposito.Text = ""
+
+End
+
+Public Sub Combo_inventariodeposito_DblClick()
+Dim i As Integer
+ conexion.Connect()
+ 
+ Query = "select * from secciones"
+ Result = conexion.Con.Exec(Query)    
+ Combo_inventariodeposito.Clear
+ For i = 0 To Result.Count - 1 Step 1
+ Combo_inventariodeposito.Add(Result!nombres) 
+ Combo_inventariodeposito.Refresh()
+ Result.MoveNext()
+ Next
+ 
+ Combo_inventariodeposito.Enabled = True
+
+End
+
+
+Public Sub inventario()
+
+Dim $Linea As Integer
+  'Realiza el procedimiento de mostrar en tabla y a parte señala con color rojo los insumos  con cantidades menores a 100'
+Grid_inventario.columns.count = 8
+Grid_inventario.rows.count = 1000 
+Grid_inventario.columns.width = 100 
+Grid_inventario.rows.height = 20
+
+Grid_inventario.header = 3 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
+Grid_inventario.columns[0].text = "Codigo de Insumo" 
+Grid_inventario.columns[0].width = 0
+Grid_inventario.columns[1].Text = "Nombre" 
+Grid_inventario.columns[1].width = 400 
+Grid_inventario.columns[2].Text = "Tipo de insumo" 'al no poner width se asume la anchura por defecto indicada anteriormente 
+Grid_inventario.columns[2].width = 110
+Grid_inventario.columns[3].text = "cantidad" 
+Grid_inventario.columns[3].width = 90
+Grid_inventario.columns[4].text = "U.M" 
+Grid_inventario.columns[4].width = 90
+Grid_inventario.columns[5].text = "Fecha Ingreso" 
+Grid_inventario.columns[5].width = 0
+Grid_inventario.columns[6].text = "Procedencia" 
+Grid_inventario.columns[6].width = 150
+Grid_inventario.columns[7].text = "Usuario" 
+Grid_inventario.columns[7].width = 100
+
+
+deposito2 = LCase$(Combo_inventariodeposito.Text)
+
+conexion.Connect()
+
+query = "select * from inv" & deposito2 & " order by codigo"
+Result = conexion.Con.exec(query)
+Grid_inventario.Clear
+Grid_inventario.rows.count = Result.count + 1 
+For $linea = 0 To Result.Count - 1 Step 1      
+
+Grid_inventario[$linea, 0].text = Result!codigo
+ 
+Grid_inventario[$linea, 1].text = Result!insumo
+ 
+Grid_inventario[$linea, 2].text = Result!tipoinsumo
+
+Grid_inventario[$linea, 3].text = Result!cantidadinsumo
+
+Grid_inventario[$linea, 4].text = Result!unidadmedida
+
+Grid_inventario[$linea, 5].text = Result!fechainsumo
+ 
+Grid_inventario[$linea, 6].text = Result!proceinsumo
+
+Grid_inventario[$linea, 7].text = Result!usuario
+
+Result.MoveNext()
+Next 
+Grid_inventario.Visible = True
+ 'GridView1.Visible = True
+ 'CheckBox7.Value = True
+ 'TextBox12.Visible = True
+ 'Label17.Visible = True
+End
+  
+
+Public Sub Form_Open()
+
+  
+
+End
+
+Public Sub Button24_Click()
+
+  inventario
+
+End
+
+Public Sub CheckBox2_Click()
+
+  If CheckBox2.Value = True
+DrawingArea5.Visible = True
+  Else
+DrawingArea5.Visible = False
+  End If
+
+End
+
+Public Sub Grid_inventario_Click()
+
+Dim i As Integer
+Dim Preg As Integer
+Dim tipo As String
+
+deposito2 = LCase$(Combo_inventariodeposito.Text)
+
+
+If Grid_inventario[Grid_inventario.Row, 0].text = ""
+Return
+End If
+
+  query = "SELECT *  FROM inv" & deposito2 & " Where codigo = '" & Grid_inventario[Grid_inventario.Row, 0].text & "'"
+  result = conexion.Con.Exec(query)
+
+  Preg = 0
+  
+      Preg = Message.Question("¿Seleccionar?", "Si", "No")
+
+        If Preg = 1 Then
+            str_codigoinsumotraslado.Text = Grid_inventario[Grid_inventario.Row, 0].Text
+            str_insumotraslado.text = Grid_inventario[Grid_inventario.Row, 1].Text
+            str_tipoinsumotraslado.Text = Grid_inventario[Grid_inventario.Row, 2].Text
+            str_cantidadinsumotraslado.Text = Grid_inventario[Grid_inventario.Row, 3].Text
+            Label32.Caption = Grid_inventario[Grid_inventario.Row, 4].Text
+            str_procedenciainsumotraslado.Text = Grid_inventario[Grid_inventario.Row, 6].Text
+    
+         
+      
+  End If
+
+
+End 
+
+
+
+
+Public Sub Combo_depositoatrasladar_DblClick()
+
+  Dim i As Integer
+ conexion.Connect()
+ 
+ Query = "select * from secciones"
+ Result = conexion.Con.Exec(Query)    
+ Combo_depositoatrasladar.Clear
+ For i = 0 To Result.Count - 1 Step 1
+Combo_depositoatrasladar.Add(Result!nombres) 
+ Combo_depositoatrasladar.Refresh()
+ Result.MoveNext()
+ Next
+ 
+ Combo_depositoatrasladar.Enabled = True
+
+End
+
+Public Sub restatraslado()
+
+  
+ Dim $query As String
+ Dim $result As Result
+ Dim resta As String 
+ Dim seccion As String
+ Dim modulo As String
+
+modulo = "traslado de insumo"
+deposito2 = LCase$(Combo_inventariodeposito.Text)
+
+resta = str_cantidadinsumotraslado.Text - str_cantidadatrasladar.Text
+  
+         query = "UPDATE inv" & deposito2 & " SET cantidadinsumo= '" & resta & "' where codigo = '" & str_codigoinsumotraslado.Text & "'"
+         result = Conexion.Con.Exec(query)
+         
+         codigomovimiento
+         query = "insert into " & deposito2 & "(cmov, cinsumo, insumo, cantidadmov, fechamov, modulo, usuariomov, unidadmedida, enviado, recibido) values ( '" & inventario.codmovimiento & "', '" & str_codigoinsumotraslado.Text & "',  '" & str_insumotraslado.Text & "',  '" & str_cantidadatrasladar.Text & "', '" & Format$(DateBox1.Value, "dd/mm/yy") & "', '" & UCase$(modulo) & "','" & LCase$(str_ingresousuario.Text) & "','" & label32.text & "','" & UCase$(Combo_depositoatrasladar.text) & "', '" & UCase$(Combo_inventariodeposito.text) & "')"
+         result = Conexion.Con.Exec(query)
+         
+
+inventario
+End
+
+Public Sub codigomovimiento()
+
+  
+   'Generando el codigo de movimiento de emergencia'
+  Dim i As Integer
+  Dim $codigo As String
+  Dim $n As Integer
+  Dim deposito2 As String
+  deposito2 = LCase$(Combo_inventariodeposito.Text)
+  
+  
+  i = 1
+  Conexion.Connect()
+  query = "Select cmov from " & deposito2 
+  result = Conexion.Con.Exec(query)
+  
+  If result.Count == 0
+    $codigo = "MOV00000"
+   Else
+    $n = result.Count
+  End If
+  
+  If $n < 10
+    $codigo = "MOV0000" & $n
+  Else            
+    If $n >= 10 And $n < 100
+    $codigo = "MOV000" & $n
+  Else
+    $codigo = "MOV00" & $n
+  End If
+  End If
+  inventario.codmovimiento = $codigo
+  
+End
+
+Public Sub codigomovimientos()
+
+  
+   'Generando el codigo de movimiento de emergencia'
+  Dim i As Integer
+  Dim $codigo As String
+  Dim $n As Integer
+  Dim deposito2 As String
+  deposito2 = LCase$(Combo_inventariodeposito.Text)
+  
+  
+  i = 1
+  Conexion.Connect()
+  query = "Select cmov from movimientos"
+  result = Conexion.Con.Exec(query)
+  
+  If result.Count == 0
+    $codigo = "MOV00000"
+   Else
+    $n = result.Count
+  End If
+  
+  If $n < 10
+    $codigo = "MOV0000" & $n
+  Else            
+    If $n >= 10 And $n < 100
+    $codigo = "MOV000" & $n
+  Else
+    $codigo = "MOV00" & $n
+  End If
+  End If
+  inventario.codmovimientos = $codigo
+  
+End
+
+
+Public Sub Button25_Click()
+
+Dim seccion As String
+Dim suma As Integer
+
+If str_codigoinsumotraslado.text = "" Or Combo_depositoatrasladar.Text = "" Or str_cantidadatrasladar.text = "" 
+
+Message.Info("AGREGAR DATOS")
+
+Else
+  
+If Val(str_cantidadatrasladar.Text) >= Val(str_cantidadinsumotraslado.Text)
+
+Message.Info("LA CANTIDAD SUPERA O IGUALA A LA EXISTENTE EN EL INVENTARIO " & UCase$(deposito2) & " INDIQUE OTRA CANTIDAD")
+str_cantidadatrasladar.Text = ""
+str_cantidadatrasladar.SetFocus
+
+Else
+
+restatraslado
+
+existente
+
+limpiartraslado
+
+inventario
+End If
+End If
+
+End
+
+
+Public Sub existente()
+
+  
+  Dim cantidadinsumo As String
+  Dim modulo As String
+  Dim codigoinsumo As String
+  Dim suma As String
+  
+  deposito3 = LCase$(Combo_depositoatrasladar.Text)
+  modulo = "traslado insumo"
+  
+  query = "select * from inv" & deposito3 & " where codigo ='" & str_codigoinsumotraslado.Text & "'"
+  Result = conexion.Con.Exec(query)
+  
+  If Result.Available
+  
+  codigoinsumo = Result!codigo
+  cantidadinsumo = Result!cantidadinsumo  
+  
+  suma = str_cantidadatrasladar.Text + cantidadinsumo
+  
+  query = "UPDATE inv" & deposito3 & " SET cantidadinsumo= '" & suma & "' where codigo = '" & codigoinsumo & "'"
+  result = Conexion.Con.Exec(query)
+  
+  codigomovimiento
+  query = "insert into " & deposito3 & "(cmov, cinsumo, insumo, cantidadmov, fechamov, modulo, usuariomov, unidadmedida, enviado, recibido, tipoinsumo)values( '" & inventario.codmovimiento & "', '" & str_codigoinsumotraslado.Text & "',  '" & str_insumotraslado.Text & "','" & str_cantidadatrasladar.Text & "', '" & Format$(DateBox1.Value, "dd/mm/yy") & "',  '" & UCase$(modulo) & "','" & UCase$(str_ingresousuario.Text) & "','" & UCase$(label32.Text) & "', '" & Combo_depositoatrasladar.text & "', '" & Combo_inventariodeposito.text & "', '" & str_tipoinsumotraslado.Text & "')"
+  result = Conexion.Con.Exec(query)
+  Message.Info("ENVIADO")
+  
+  codigomovimientos
+  query = "insert into movimientos (cmov, cinsumo,  insumo, cantidadmov, fechamov, modulo, usuariomov, unidadmedida,  enviado, recibido,tipoinsumo)values( '" & inventario.codmovimientos & "', '" & str_codigoinsumo.Text & "', '" & str_insumotraslado.Text & "',  '" & str_cantidadatrasladar.Text & "', '" & Format$(DateBox1.Value, "dd/mm/yy") & "', '" & UCase$(modulo) & "','" & UCase$(str_ingresousuario.Text) & "', '" & UCase$(label32.text) & "', '" & Combo_depositoatrasladar.text & "', '" & Combo_inventariodeposito.text & "','" & str_tipoinsumotraslado.Text & "')"
+  result = Conexion.Con.Exec(query)
+  
+  Message.Info("INSUMO VIEJO")
+  
+  Else
+    
+  query = "insert into inv" & deposito3 & " (insumo, codigo, cantidadinsumo, fechainsumo, usuario, unidadmedida, tipoinsumo, proceinsumo)values( '" & str_insumotraslado.text & "', '" & str_codigoinsumotraslado.Text & "','" & str_cantidadatrasladar.Text & "' , '" & Format$(DateBox1.Value, "dd/mm/yy") & "' ,'" & UCase$(str_ingresousuario.Text) & "','" & UCase$(label32.text) & "', '" & str_tipoinsumotraslado.Text & "', '" & str_procedenciainsumotraslado.text & "')"
+  result = Conexion.Con.Exec(query)
+  
+  codigomovimiento
+  query = "insert into " & deposito3 & "(cmov, cinsumo, insumo, cantidadmov, fechamov, modulo, usuariomov, unidadmedida, enviado, recibido, tipoinsumo)values( '" & inventario.codmovimiento & "', '" & str_codigoinsumotraslado.Text & "',  '" & str_insumotraslado.Text & "','" & str_cantidadatrasladar.Text & "', '" & Format$(DateBox1.Value, "dd/mm/yy") & "',  '" & UCase$(modulo) & "','" & UCase$(str_ingresousuario.Text) & "','" & UCase$(label32.Text) & "', '" & Combo_depositoatrasladar.text & "', '" & Combo_inventariodeposito.text & "', '" & str_tipoinsumotraslado.Text & "')"
+  result = Conexion.Con.Exec(query)
+  Message.Info("ENVIADO")
+  
+  codigomovimientos
+  query = "insert into movimientos (cmov, cinsumo,  insumo, cantidadmov, fechamov, modulo, usuariomov, unidadmedida,  enviado, recibido,  tipoinsumo)values( '" & inventario.codmovimientos & "', '" & str_codigoinsumo.Text & "', '" & str_insumotraslado.Text & "',  '" & str_cantidadatrasladar.Text & "', '" & Format$(DateBox1.Value, "dd/mm/yy") & "', '" & UCase$(modulo) & "','" & UCase$(str_ingresousuario.Text) & "', '" & UCase$(label32.text) & "', '" & Combo_depositoatrasladar.text & "', '" & Combo_inventariodeposito.text & "','" & str_tipoinsumotraslado.text & "')"
+  result = Conexion.Con.Exec(query)
+  
+  Message.Info("INSUMO NUEVO")
+End If
+End
+
+Public Sub limpiartraslado()
+  
+  str_codigoinsumotraslado.Text = ""
+  str_insumotraslado.Text = ""
+  str_cantidadinsumotraslado.Text = ""
+  Combo_depositoatrasladar.Text = ""
+  str_cantidadatrasladar.Text = ""
+  DateBox1.Value = ""
+ CheckBox2.Value = False
+End
+
+
+
+Public Sub str_cantidadatrasladar_KeyPress()
+   
+If (Key.Code >= Asc("a") And Key.Code <= Asc("z")) Or (Key.Code >= Asc("A") And Key.Code <= Asc("Z"))
+Message.Warning("Disculpe,ingresar solo valores numéricos")
+Stop Event
+Endif  
+
+
+End

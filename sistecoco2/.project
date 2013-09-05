@@ -1,0 +1,16 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.4.0
+Title=contraloriayconsumo
+Startup=INVENTARIO
+Version=0.0.1
+Component=gb.image
+Component=gb.gui
+Component=gb.form
+Component=gb.db
+Component=gb.db.form
+Component=gb.db.mysql
+Component=gb.report
+Component=gb.xml
+Component=gb.xml.html
+TabSize=2
+Packager=1
