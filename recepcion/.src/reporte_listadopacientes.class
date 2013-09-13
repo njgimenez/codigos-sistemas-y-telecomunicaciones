@@ -1,0 +1,77 @@
+' Gambas class file
+
+Public query As String
+Public result As Result
+
+Public piso As String
+Public fecha As String
+Public hora As String
+Public usuario As String
+
+
+Public Sub _new()
+
+Dim RHBox As ReportHBox 
+Dim Rep2, Rep3, Rep4, Rep5, Rep6, Rep7, Rep8, Rep9 As Reportlabel
+
+
+fecha = Format$(Date, "dd/mm/yy")
+hora = Format$(Time, "hh:nn")
+Rptefecha.Text = fecha
+Reporhora.Text = hora
+Reportusuario.Text = FMain.usuarioreportepacientes
+
+conexion.Connect()
+
+query = "SELECt * FROM listadopacientes where retirado = '" & 0 & "' order by piso"
+result = conexion.Con.Exec(query)
+
+For Each result
+
+RHBox = New ReportHBox(listabox)
+RHBox.Height = "7mm"
+RHBox.Font.Size = "1"
+
+Rep2 = New ReportLabel(RHBox)
+Rep2.Width = "70mm"
+Rep2.Alignment = Align.Left
+Rep2.Text = result!apellidos
+ 
+Rep3 = New ReportLabel(RHBox)
+Rep3.Width = "70mm"
+Rep3.Alignment = Align.Left
+Rep3.Text = result!nombres
+
+Rep4 = New ReportLabel(RHBox)
+Rep4.Width = "80mm"
+Rep4.Alignment = Align.left
+Rep4.Text = result!acompanante
+
+Rep5 = New ReportLabel(RHBox)
+Rep5.Width = "12mm"
+Rep5.Alignment = Align.left
+Rep5.Text = result!piso
+
+Rep6 = New ReportLabel(RHBox)
+Rep6.Width = "10mm"
+Rep6.Alignment = Align.left
+Rep6.Text = result!habitacion
+
+Rep7 = New ReportLabel(RHBox)
+Rep7.Width = "12mm"
+Rep7.Alignment = Align.Left
+Rep7.Text = result!cama
+
+Rep8 = New ReportLabel(RHBox)
+Rep8.Width = "12mm"
+Rep8.Alignment = Align.Left
+Rep8.Text = result!visitas
+
+Rep9 = New ReportLabel(RHBox)
+Rep9.Width = "25mm"
+Rep9.Alignment = Align.Justify
+Rep9.Text = result!fechaingreso
+
+Next
+
+End
