@@ -5,7 +5,7 @@
   Background = Color.SelectedForeground
   Text = ("RECEPCIÓN")
   { IconPanel1 IconPanel
-    MoveScaled(3,26,195,58)
+    MoveScaled(2,26,195,58)
     Font = Font["DejaVu Serif,Bold"]
     Background = &HFFFFFF&
     Count = 7
@@ -34,7 +34,7 @@
     Index = 1
     Text = ("Área administrativa")
     { Label9 Label
-      MoveScaled(31,19,18,4)
+      MoveScaled(22,19,18,4)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("Departamento:")
     }
@@ -44,7 +44,7 @@
       Text = ("Persona a visitar:")
     }
     { str_departamentoa ComboBox
-      MoveScaled(49,19,26,4)
+      MoveScaled(40,19,36,4)
       Enabled = False
     }
     { str_personavisitara TextBox
@@ -56,7 +56,7 @@
       Enabled = False
     }
     { Label12 Label
-      MoveScaled(14,25,8,4)
+      MoveScaled(14,25,8,3)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("Fecha:")
     }
@@ -86,7 +86,7 @@
       Picture = Picture["icon:/22/forward"]
     }
     { Label18 Label
-      MoveScaled(41,24,7,4)
+      MoveScaled(41,25,7,3)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("Hora:")
     }
@@ -104,12 +104,12 @@
       Text = ("VISITANTE:")
     }
     { Label27 Label
-      MoveScaled(16,19,6,4)
+      MoveScaled(8,19,6,4)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("Piso:")
     }
     { str_pisoa TextBox
-      MoveScaled(22,19,6,4)
+      MoveScaled(14,19,6,4)
       Enabled = False
       Text = ("PB")
     }
@@ -184,16 +184,16 @@
       Enabled = False
     }
     { Label14 Label
-      MoveScaled(17,18,6,5)
+      MoveScaled(12,18,6,5)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("Hab:")
     }
     { str_camah ComboBox
-      MoveScaled(40,18,13,4)
+      MoveScaled(35,18,13,4)
       Enabled = False
     }
     { Label15 Label
-      MoveScaled(32,19,8,3)
+      MoveScaled(27,19,8,3)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("Cama:")
     }
@@ -240,22 +240,22 @@
       Font = Font["DejaVu Serif,Bold,+1"]
     }
     { Label26 Label
-      MoveScaled(17,14,6,3)
+      MoveScaled(12,14,6,3)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("Piso:")
     }
     { str_pisoh ComboBox
-      MoveScaled(23,13,8,4)
+      MoveScaled(18,13,8,4)
       Enabled = False
       List = [("PB"), ("1"), ("2"), ("3"), ("s1"), ("s2"), ("s3")]
     }
     { Label31 Label
-      MoveScaled(33,14,7,3)
+      MoveScaled(28,14,7,3)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("Área:")
     }
     { str_areah ComboBox
-      MoveScaled(40,13,26,4)
+      MoveScaled(35,13,39,4)
       Enabled = False
     }
     { Label40 Label
@@ -293,7 +293,7 @@
       Foreground = &HBF0003&
     }
     { str_habitacionh TextBox
-      MoveScaled(23,18,8,4)
+      MoveScaled(18,18,8,4)
       Enabled = False
     }
     { TextBox3 TextBox
@@ -357,21 +357,21 @@
       Enabled = False
     }
     { Label35 Label
-      MoveScaled(33,19,18,4)
+      MoveScaled(22,19,18,4)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("Departamento:")
     }
     { str_departamentod ComboBox
-      MoveScaled(51,19,24,4)
+      MoveScaled(40,19,36,4)
       Enabled = False
     }
     { Label36 Label
-      MoveScaled(16,19,6,4)
+      MoveScaled(6,19,6,4)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("Piso:")
     }
     { Label37 Label
-      MoveScaled(14,25,8,4)
+      MoveScaled(14,25,8,3)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("Fecha:")
     }
@@ -380,7 +380,7 @@
       Enabled = False
     }
     { Label38 Label
-      MoveScaled(41,24,8,4)
+      MoveScaled(41,25,8,3)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("Hora:")
     }
@@ -393,7 +393,7 @@
       Enabled = False
     }
     { Label39 Label
-      MoveScaled(6,31,16,4)
+      MoveScaled(6,32,16,4)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("Observación:")
     }
@@ -408,7 +408,7 @@
       Picture = Picture["icon:/22/forward"]
     }
     { str_pisod ComboBox
-      MoveScaled(22,19,9,4)
+      MoveScaled(12,19,9,4)
       Enabled = False
       List = [("1"), ("2"), ("3"), ("S1"), ("S2"), ("S3")]
     }
@@ -677,12 +677,13 @@
       Enabled = False
     }
     { Button15 Button
-      MoveScaled(42,52,5,5)
-      Picture = Picture["icon:/32/floppy"]
+      MoveScaled(20,53,16,3)
+      Text = ("INGRESAR")
+      Picture = Picture["icon:/22/forward"]
     }
     { Button16 Button
-      MoveScaled(49,52,5,5)
-      Picture = Picture["icon:/32/erase"]
+      MoveScaled(29,6,5,4)
+      Picture = Picture["icon:/22/erase"]
     }
     { DrawingArea8 DrawingArea
       MoveScaled(64,6,102,50)
@@ -715,7 +716,7 @@
   { Label8 Label
     MoveScaled(1,21,17,4)
     Font = Font["DejaVu Serif,Bold,+1"]
-    Foreground = &H0000BF&
+    Foreground = &HBF0003&
     Text = ("SE DIRIGE A:")
   }
   { Separator4 Separator

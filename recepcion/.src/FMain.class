@@ -67,16 +67,19 @@ End
 Public Sub b_guardarvisitante_Click()
   
   Dim Preg As Integer
+  
   If str_nombresv.Text = "" Or str_cedulav.Text = ""
   Message.Info("LLENAR TODAS LAS CASILLAS")
-  Else
-  Preg = 0
-
-  Preg = Message.Question(" ¿DESEA AGREGAR UN NUEVO VISITANTE?", "SI", "NO")
-  If Preg = 1
-  conexion.Connect()
   
-  query = "insert into listadovisitantes (nombres, apellidos, cedula, fecharegistro, numtelefono, direccion,estado,municipio)values('" & UCase$(str_nombresv.Text) & " ', '" & UCase$(str_apellidosv.Text) & " ', '" & str_cedulav.Text & "'," &
+  Else
+  
+  Preg = 0
+  Preg = Message.Question(" ¿DESEA AGREGAR UN NUEVO VISITANTE?", "SI", "NO")
+  
+  If Preg = 1
+  
+  conexion.Connect()
+    query = "insert into listadovisitantes (nombres, apellidos, cedula, fecharegistro, numtelefono, direccion,estado,municipio)values('" & UCase$(str_nombresv.Text) & " ', '" & UCase$(str_apellidosv.Text) & " ', '" & str_cedulav.Text & "'," &
   " '" & Format$(date_fecharegistrov.Value, "dd/mm/yy") & "','" & str_telefonov.Text & "', '" & str_direccionv.Text & "','" & combo_estado.Text & "','" & Combo_municipio.Text & "')"
   Result = conexion.Con.Exec(query)
   
@@ -85,6 +88,7 @@ Public Sub b_guardarvisitante_Click()
   Endif
    b_guardarvisitante.Enabled = False
    DrawingArea1.Visible = False
+   limpiarregistrodevisitantes
 End If
 End If
 End
@@ -97,7 +101,7 @@ Public Sub B_buscarvisitante_Click()
   Endif
   visitas
 End
-Public Sub limpiar()
+Public Sub limpiarregistrodevisitantes()
   
   str_cedulab.Text = ""
   str_cedulav.Text = ""
@@ -108,7 +112,7 @@ Public Sub limpiar()
   str_telefonov.Text = ""
   date_fecharegistrov.Value = ""
   Label20.Text = ""
- str_nombresv.Enabled = False
+  str_nombresv.Enabled = False
   str_apellidosv.Enabled = False
   str_cedulav.Enabled = False
   str_telefonov.Enabled = False
@@ -122,25 +126,25 @@ Public Sub limpiar()
 
 Public Sub b_limpiardatosvisitantes_Click()
 
-  limpiar
+  limpiarregistrodevisitantes
   str_cedulab.SetFocus
-   Label41.Text = ""
-  label45.Text = ""
-  label46.Text = ""
+  
 End
 
 Public Sub Button13_Click()
 
 Dim Preg As Integer
 
+If Label46.Text = "" Or label45.Text = "" Or Label41.Text = "" 
+Message.Info("INGRESE CEDULA DEL VISITANTE")
+str_cedulab.SetFocus
+Else
+
 Preg = 0
 
 Preg = Message.Question(" ¿DESEA INGRESAR UN NUEVO VISITANTE?", "SI", "NO")
 If Preg = 1
 
-If Label46.Text = "" Or label45.Text = "" Or Label41.Text = "" Then
-Message.Info("Ingrese datos obligatorios del visitante")
-Else
 codigovisitante
 str_nombrevisitantea.Caption = Label41.Text & "" & "" & label45.Text
 str_personavisitara.Enabled = True
@@ -158,15 +162,18 @@ Public Sub Button12_Click()
 
 Dim Preg As Integer
 
+If Label46.Text = "" Or label45.Text = "" Or Label41.Text = "" 
+Message.Info("INGRESE CEDULA DEL VISITANTE")
+str_cedulab.SetFocus
+Else
+
 Preg = 0
 
 Preg = Message.Question(" ¿DESEA INGRESAR UN NUEVO VISITANTE?", "SI", "NO")
 If Preg = 1
 
 
-If Label46.Text = "" Or label45.Text = "" Or Label41.Text = "" Then
-Message.Info("Ingrese datos obligatorios del visitante")
-Else  
+  
 codigovisitante
 TextBox3.Text = "hospitalizacion"
 str_nombrevisitanteh.Caption = Label41.Text & "" & label45.Text
@@ -188,7 +195,7 @@ End
 Public Sub str_cedulab_KeyRelease()
 
   If str_cedulab.Text = "" Then
-    limpiar
+    limpiarregistrodevisitantes
     DrawingArea1.Visible = False
     DrawingArea2.Visible = False
     str_nombrevisitantea.Text = ""
@@ -216,15 +223,17 @@ End
 
 Public Sub Button4_Click()
 Dim Preg As Integer
-
+If Label46.Text = "" Or label45.Text = "" Or Label41.Text = "" 
+Message.Info("INGRESE CEDULA DEL VISITANTE")
+str_cedulab.SetFocus
+Else
+  
 Preg = 0
 
 Preg = Message.Question(" ¿DESEA INGRESAR UN NUEVO VISITANTE?", "SI", "NO")
 If Preg = 1
 
-If Label46.Text = "" Or label45.Text = "" Or Label41.Text = "" Then
-Message.Info("Ingrese datos obligatorios del visitante")
-Else
+
 codigovisitante
 moddepartamento.Text = "departamentos"
 str_nombrevisitanted.Caption = Label41.Text & "" & label45.Text
@@ -309,7 +318,7 @@ Date_fechaa.Enabled = False
 str_observaciona.Enabled = False
 Button2.Enabled = False
 DrawingArea2.Visible = False
-limpiar
+limpiardatosvisitantes
 End If  
 visitas
 areaadministrativa
@@ -380,7 +389,7 @@ Date_fechad.Enabled = False
 str_observaciond.Enabled = False
 str_pisod.Enabled = False
 Button3.Enabled = False
-limpiar
+limpiardatosvisitantes
 DrawingArea2.Visible = False
 End If
 visitas
@@ -442,7 +451,7 @@ Button6.Enabled = False
 DrawingArea2.Visible = False
 Button11.Enabled = False
 DrawingArea7.Visible = False
-limpiar
+limpiardatosvisitantes
 End If
 visitas
 hospitalizacion
@@ -1381,10 +1390,9 @@ End
 Public Sub Button10_Click()
 
   DrawingArea2.Visible = False
-  Label41.Text = ""
-  Label45.Text = ""
-  Label46.Text = ""
-End
+ limpiardatosvisitantes
+ str_cedulab.SetFocus
+End 
 
 Public Sub Timer1_Timer()
 
@@ -1402,14 +1410,29 @@ Message.Warning("Disculpe,ingresar solo valores numéricos")
 Stop Event
 Endif
 
+  If Key.Code = Key.Enter Or Key.Code = Key.Return Then
+  B_buscarvisitante.SetFocus
+  Else
+  Return
+  Endif
+
+
+
 End
 
 Public Sub str_cedulab2_KeyPress()
 
-  If (Key.Code >= Asc("a") And Key.Code <= Asc("z")) Or (Key.Code >= Asc("A") And Key.Code <= Asc("Z"))
+If (Key.Code >= Asc("a") And Key.Code <= Asc("z")) Or (Key.Code >= Asc("A") And Key.Code <= Asc("Z"))
 Message.Warning("Disculpe,ingresar solo valores numéricos")
 Stop Event
 Endif
+
+  If Key.Code = Key.Enter Or Key.Code = Key.Return Then
+  B_buscarvisitante2.SetFocus
+  Else
+  Return
+  Endif
+
 
 End
 
@@ -1472,6 +1495,12 @@ Public Sub str_telefonov_KeyPress()
 If (Key.Code >= Asc("a") And Key.Code <= Asc("z")) Or (Key.Code >= Asc("A") And Key.Code <= Asc("Z"))
 Message.Warning("Disculpe,ingresar solo valores numéricos")
 Stop Event
+Endif
+
+If Key.Code = Key.Enter Or Key.Code = Key.Return Then
+b_guardarvisitante.SetFocus
+Else
+Return
 Endif
 
 End
@@ -1898,7 +1927,7 @@ End
 Public Sub Button19_Click()
 
   DrawingArea1.Visible = False
-  limpiar
+  limpiarregistrodevisitantes
 End
 
 Public Sub button_editarv_Click()
@@ -1991,7 +2020,6 @@ End
 
 
 Public Sub TextBox6_KeyRelease()
-
 Dim $linea As Integer
 Dim busqueda As String
 
@@ -2023,14 +2051,64 @@ End If
 
 End
 
-Public Sub TextBox6_KeyPress()
 
-  
-
-End
 
 Public Sub TextBox5_MouseUp()
 
   TextBox5.Text = ""
+
+End
+
+Public Sub limpiardatosvisitantes()
+  
+  Label41.Text = ""
+  label45.Text = ""
+  label46.Text = ""
+str_cedulab.Text = ""
+  
+End
+
+
+Public Sub str_observaciona_KeyPress()
+  If Key.Code = Key.Enter Or Key.Code = Key.Return Then
+  Button2.SetFocus
+  Else
+  Return
+  Endif
+End
+
+Public Sub str_observacionh_KeyPress()
+  If Key.Code = Key.Enter Or Key.Code = Key.Return Then
+  Button6.SetFocus
+  Else
+  Return
+  Endif
+End
+
+Public Sub str_observaciond_KeyPress()
+
+  If Key.Code = Key.Enter Or Key.Code = Key.Return Then
+  Button3.SetFocus
+  Else
+  Return
+  Endif
+
+
+End
+
+Public Sub Combo_parentescorepresentante_KeyPress()
+
+  If Key.Code = Key.Enter Or Key.Code = Key.Return Then
+  Button15.SetFocus
+  Else
+  Return
+  Endif
+
+
+End
+
+Public Sub Combo_parentescorepresentante_Click()
+
+  
 
 End
