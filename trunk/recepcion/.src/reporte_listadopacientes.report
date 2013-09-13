@@ -1,14 +1,12 @@
 # Gambas Form File 3.0
 
 { Report Report
-  #MoveScaled(0,0,120,107)
-  Padding = ReportPadding["Top:10mm;Bottom:10mm;Left:10mm;Right:10mm"]
-  Paper = Printer.Letter
+  #MoveScaled(0,0,99,64)
   Orientation = Printer.Landscape
   Index = 0
   Text = ("")
   { ReportHBox1 ReportHBox
-    #MoveScaled(8,0,93,15)
+    #MoveScaled(2,0,93,15)
     Width = "2cm"
     Height = "30mm"
     Fixed = True
@@ -42,7 +40,7 @@
     }
   }
   { ReportVBox1 ReportVBox
-    #MoveScaled(8,15,93,6)
+    #MoveScaled(2,15,93,6)
     Height = "10mm"
     Fixed = True
     Border = ReportBorder["Top:1pt #DF0003;Bottom:1pt #DF0003;Left:1pt #DF0003;Right:1pt #DF0003"]
@@ -50,12 +48,12 @@
       #MoveScaled(1,0,91,6)
       Font = Font["Bold,+2"]
       Expand = True
-      Text = ("CONTROL DE VISITAS")
+      Text = ("LISTADO PACIENTES")
       Alignment = Align.Center
     }
   }
   { ReportVBox2 ReportVBox
-    #MoveScaled(8,21,93,76)
+    #MoveScaled(2,21,93,76)
     Expand = True
     Border = ReportBorder["Top:1pt #DF0003;Bottom:1pt #DF0003;Left:1pt #DF0003;Right:1pt #DF0003"]
     { ReportHBox3 ReportHBox
@@ -65,7 +63,7 @@
       Border = ReportBorder["Top:1pt #DF0003;Bottom:1pt #DF0003;Left:1pt #DF0003;Right:1pt #DF0003"]
       { Reporfehca ReportLabel
         #MoveScaled(2,1,8,4)
-        Width = "20mm"
+        Width = "15mm"
         Font = Font["Bold"]
         Border = ReportBorder["Top:1pt #BF0003;Bottom:1pt #BF0003;Left:1pt #BF0003;Right:1pt #BF0003"]
         Text = ("FECHA:")
@@ -73,22 +71,23 @@
       { Rptefecha ReportLabel
         #MoveScaled(11,1,15,4)
         Width = "25mm"
+        Font = Font["Bold"]
       }
       { ReportLabel11 ReportLabel
         #MoveScaled(28,1,12,4)
-        Width = "20mm"
+        Width = "16mm"
         Font = Font["DejaVu Serif,Bold"]
         Border = ReportBorder["Top:1pt #BF0003;Bottom:1pt #BF0003;Left:1pt #BF0003;Right:1pt #BF0003"]
         Text = ("HORA:")
       }
       { Reporhora ReportLabel
         #MoveScaled(41,1,12,4)
-        Width = "20mm"
-        Font = Font["Bitstream Charter,Bold"]
+        Width = "15mm"
+        Font = Font["DejaVu Serif,Bold"]
       }
       { ReportLabel12 ReportLabel
         #MoveScaled(55,1,10,4)
-        Width = "20mm"
+        Width = "23mm"
         Font = Font["DejaVu Serif,Bold"]
         Border = ReportBorder["Top:1pt #BF0003;Bottom:1pt #BF0003;Left:1pt #BF0003;Right:1pt #BF0003"]
         Text = ("USUARIO:")
@@ -96,7 +95,7 @@
       { Reportusuario ReportLabel
         #MoveScaled(66,1,12,4)
         Width = "80mm"
-        Font = Font["Bitstream Charter,Bold"]
+        Font = Font["DejaVu Serif,Bold"]
       }
     }
     { ReportHBox2 ReportHBox
@@ -105,40 +104,40 @@
       Fixed = True
       Background = ReportBrush["#DF0003"]
       { ReportLabel4 ReportLabel
-        #MoveScaled(11,1,11,4)
-        Width = "20mm"
+        #MoveScaled(1,1,13,4)
+        Width = "70mm"
         Fixed = True
         Font = Font["Bold"]
         AutoResize = True
         Border = ReportBorder["Top:1pt #000000;Bottom:1pt #000000;Left:1pt #000000;Right:1pt #000000"]
         Background = ReportBrush["#DF0003"]
-        Text = ("CEDULA")
+        Text = ("APELLIDOS")
         Alignment = Align.Center
       }
       { ReportLabel5 ReportLabel
-        #MoveScaled(22,1,23,4)
+        #MoveScaled(14,1,14,4)
+        Width = "70mm"
+        Fixed = True
+        Font = Font["Bold"]
+        AutoResize = True
+        Border = ReportBorder["Top:1pt #000000;Bottom:1pt #000000;Left:1pt #000000;Right:1pt #000000"]
+        Background = ReportBrush["#DF0003"]
+        Text = ("NOMBRES")
+        Alignment = Align.Center
+      }
+      { ReportLabel10 ReportLabel
+        #MoveScaled(28,1,26,4)
         Width = "80mm"
         Fixed = True
         Font = Font["Bold"]
         AutoResize = True
         Border = ReportBorder["Top:1pt #000000;Bottom:1pt #000000;Left:1pt #000000;Right:1pt #000000"]
         Background = ReportBrush["#DF0003"]
-        Text = ("NOMBRES Y APELLIDOS")
-        Alignment = Align.Center
-      }
-      { ReportLabel10 ReportLabel
-        #MoveScaled(45,1,10,4)
-        Width = "65mm"
-        Fixed = True
-        Font = Font["Bold"]
-        AutoResize = True
-        Border = ReportBorder["Top:1pt #000000;Bottom:1pt #000000;Left:1pt #000000;Right:1pt #000000"]
-        Background = ReportBrush["#DF0003"]
-        Text = ("DEPARTAMENTO")
+        Text = ("ACOMPAÑANTE")
         Alignment = Align.Center
       }
       { ReportLabel6 ReportLabel
-        #MoveScaled(55,1,10,4)
+        #MoveScaled(55,1,4,4)
         Width = "10mm"
         Fixed = True
         Font = Font["Bold"]
@@ -149,7 +148,7 @@
         Alignment = Align.Center
       }
       { ReportLabel7 ReportLabel
-        #MoveScaled(65,1,5,4)
+        #MoveScaled(60,1,5,4)
         Width = "10mm"
         Fixed = True
         Font = Font["Bold"]
@@ -160,7 +159,7 @@
         Alignment = Align.Center
       }
       { ReportLabel8 ReportLabel
-        #MoveScaled(71,1,5,4)
+        #MoveScaled(66,1,5,4)
         Width = "10mm"
         Fixed = True
         Font = Font["Bold"]
@@ -170,14 +169,26 @@
         Text = ("C")
         Alignment = Align.Center
       }
-      { ReportLabel9 ReportLabel
-        #MoveScaled(76,1,15,4)
-        Width = "60mm"
+      { ReportLabel3 ReportLabel
+        #MoveScaled(72,1,5,4)
+        Width = "10mm"
         Fixed = True
         Font = Font["Bold"]
         AutoResize = True
+        Border = ReportBorder["Top:1pt #000000;Bottom:1pt #000000;Left:1pt #000000;Right:1pt #000000"]
         Background = ReportBrush["#DF0003"]
-        Text = ("PACIENTE / PERSONAL")
+        Text = ("V")
+        Alignment = Align.Center
+      }
+      { ReportLabel9 ReportLabel
+        #MoveScaled(78,1,15,4)
+        Width = "35mm"
+        Fixed = True
+        Font = Font["Bold"]
+        AutoResize = True
+        Border = ReportBorder["Top:1pt #000000;Bottom:1pt #000000;Left:1pt #000000;Right:1pt #000000"]
+        Background = ReportBrush["#DF0003"]
+        Text = ("FECHA INGRESO")
         Alignment = Align.Center
       }
     }

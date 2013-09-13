@@ -7,6 +7,8 @@ Public pacientenombre As String
 Public resultadosuma As String
 Public resultadoresta As String
 Public usuario1 As String
+Public usuarioreportepacientes As String
+Public usuarioreportevisitantes As String 
 
 Public Sub Form_Open()
 
@@ -18,6 +20,7 @@ Label44.Caption = "administrativa"
 visitas
 visitaspediatrico
 pacientes
+listadoperfilvisitantes
 Label83.Caption = inicio.usuarionombre
 Label84.Caption = inicio.usuarioapellido
 Label85.Caption = inicio.nombreusuario
@@ -1196,7 +1199,7 @@ Select Case Key.Code
     End Select   
 
 End
-Public Sub Button8_Click()
+Public Sub limpiarperfildelvisitante()
 
   str_nombresv2.Text = ""
   str_apellidosv2.Text = ""
@@ -1841,8 +1844,10 @@ Public Sub Button17_Click()
 
     Dim reporte As Report
 
-    reporte = New RptMilicia
-    reporte.Preview
+usuarioreportevisitantes = UCase(Label85.Text)
+
+ reporte = New RptMilicia
+ reporte.Preview
    
   End
 
@@ -2110,5 +2115,126 @@ End
 Public Sub Combo_parentescorepresentante_Click()
 
   
+
+End
+
+Public Sub Button18_Click()
+
+
+Dim reportepacientes As Report
+
+usuarioreportepacientes = UCase(Label85.Text)
+      reportepacientes = New Reporte_listadopacientes
+      reportepacientes.Preview
+End
+
+Public Sub listadoperfilvisitantes()
+  
+Dim $linea As Integer
+  
+Grid_visitantesperfil.columns.count = 3
+Grid_visitantesperfil.Rows.count = 50 
+Grid_visitantesperfil.columns.width = 100 
+Grid_visitantesperfil.rows.height = 20
+
+Grid_visitantesperfil.header = 1 '0 -> none 1 -> horizontal 2 -> vertical 3 -> both 
+Grid_visitantesperfil.columns[0].text = "CEDULA" 
+Grid_visitantesperfil.columns[0].width = 100
+Grid_visitantesperfil.columns[1].text = "APELLIDOS" 
+Grid_visitantesperfil.columns[1].width = 250
+Grid_visitantesperfil.columns[2].text = "NOMBRES" 
+Grid_visitantesperfil.columns[2].width = 250
+
+conexion.Connect()
+
+query = "select * from listadovisitantes order by cedula"
+Result = conexion.Con.exec(query)
+
+Grid_visitantesperfil.Clear
+Grid_visitantesperfil.rows.count = Result.count + 1 
+For $linea = 0 To Result.Count - 1 Step 1   
+Grid_visitantesperfil[$linea, 0].text = Result!cedula
+Grid_visitantesperfil[$linea, 1].text = Result!apellidos
+Grid_visitantesperfil[$linea, 2].text = Result!nombres
+
+Result.MoveNext()
+Next 
+End
+
+
+
+Public Sub str_cedulab2_KeyRelease()
+
+Dim $linea As Integer
+Dim busqueda As String
+
+If str_cedulab2.Text = ""
+Grid_visitantesperfil.Visible = False
+Else
+Query = "select * From listadovisitantes where cedula Like '%" & str_cedulab2.Text & "%'" 
+Result = Conexion.Con.Exec(Query)
+Grid_visitantesperfil.Clear
+If Result.Available Then
+Grid_visitantesperfil.Visible = True
+For $linea = 0 To Result.Count - 1 Step 1   
+Grid_visitantesperfil[$linea, 0].text = Result!cedula
+Grid_visitantesperfil[$linea, 1].text = Result!apellidos
+Grid_visitantesperfil[$linea, 2].text = Result!nombres
+Result.MoveNext()
+Next 
+Else
+  Grid_visitantesperfil.Visible = False
+End If
+End If
+
+
+
+
+End
+
+Public Sub Grid_visitantesperfil_Click()
+
+Dim i As Integer
+Dim Preg As Integer
+Dim fechaegresp As String
+Dim codigopac As String
+
+If Grid_visitantesperfil[Grid_visitantesperfil.Row, 0].text = ""
+Return
+End If
+
+limpiarperfildelvisitante
+
+conexion.Connect()
+
+  query = "SELECT *  FROM  listadovisitantes Where cedula = '" & Grid_visitantesperfil[Grid_visitantesperfil.Row, 0].text & "' "
+  result = conexion.Con.Exec(query)
+ 
+Preg = 0
+
+      Preg = Message.Question("¿SELECCIONAR CEDULA?", "Si", "No")
+
+ If Preg = 1 
+    
+    str_cedulab2.Text = Grid_visitantesperfil[Grid_visitantesperfil.Row, 0].text
+    str_cedulab2.SetFocus
+End If
+
+End
+
+Public Sub Button8_Click()
+
+  limpiarperfildelvisitante
+  Grid_visitantesperfil.Visible = False
+End
+
+Public Sub IconPanel1_KeyPress()
+
+  If Key.Code = Key.Enter Or Key.Code = Key.Return Then
+  Button13.SetFocus
+  Else
+  Return
+  Endif
+
 
 End

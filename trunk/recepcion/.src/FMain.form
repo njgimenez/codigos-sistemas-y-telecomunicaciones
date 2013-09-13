@@ -3,7 +3,7 @@
 { Form Form
   MoveScaled(0,0,203,122)
   Background = Color.SelectedForeground
-  Text = ("RECEPCIÓN")
+  Text = ("SISTEMA DE CONTROL DE VISITAS")
   { IconPanel1 IconPanel
     MoveScaled(2,26,195,58)
     Font = Font["DejaVu Serif,Bold"]
@@ -32,84 +32,85 @@
       Picture = Picture["icon:/22/print"]
     }
     Index = 1
-    Text = ("Área administrativa")
+    Text = ("AREÁ ADMINISTRATIVA")
     { Label9 Label
-      MoveScaled(22,19,18,4)
+      MoveScaled(22,16,18,4)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("Departamento:")
     }
     { Label10 Label
-      MoveScaled(1,14,21,3)
+      MoveScaled(1,11,21,3)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("Persona a visitar:")
     }
     { str_departamentoa ComboBox
-      MoveScaled(40,19,36,4)
+      MoveScaled(40,16,36,4)
       Enabled = False
     }
     { str_personavisitara TextBox
-      MoveScaled(22,13,39,4)
+      MoveScaled(22,10,39,4)
       Enabled = False
     }
     { Date_fechaa DateBox
-      MoveScaled(22,24,17,4)
+      MoveScaled(22,21,17,4)
       Enabled = False
     }
     { Label12 Label
-      MoveScaled(14,25,8,3)
+      MoveScaled(14,22,8,3)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("Fecha:")
     }
     { Label13 Label
-      MoveScaled(6,32,15,4)
+      MoveScaled(6,29,15,4)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("Observación:")
     }
     { str_observaciona TextBox
-      MoveScaled(22,30,52,9)
+      MoveScaled(22,27,52,9)
       Enabled = False
     }
     { Button2 Button
-      MoveScaled(35,40,16,3)
+      MoveScaled(41,37,16,3)
       Enabled = False
       ToolTip = ("INGRESAR NUEVA VISITA AL AREA ADMÓN")
       Text = ("INGRESAR")
       Picture = Picture["icon:/22/forward"]
     }
     { Button5 Button
-      MoveScaled(29,40,5,3)
+      MoveScaled(35,37,5,3)
       Picture = Picture["icon:/22/erase"]
     }
     { Button13 Button
       MoveScaled(0,0,18,4)
+      ToolTip = ("INGRESAR NUEVO VISITANTE")
       Text = ("INGRESAR")
       Picture = Picture["icon:/22/forward"]
     }
     { Label18 Label
-      MoveScaled(41,25,7,3)
+      MoveScaled(41,22,7,3)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("Hora:")
     }
     { str_horaa TextBox
-      MoveScaled(48,24,11,4)
+      MoveScaled(48,21,11,4)
       Enabled = False
     }
     { str_nombrevisitantea Label
-      MoveScaled(22,9,55,3)
+      MoveScaled(22,6,55,3)
       Font = Font["Bold,+1"]
     }
     { Label22 Label
-      MoveScaled(7,9,14,3)
+      MoveScaled(7,6,14,3)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("VISITANTE:")
     }
     { Label27 Label
-      MoveScaled(8,19,6,4)
+      MoveScaled(8,16,6,4)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("Piso:")
     }
     { str_pisoa TextBox
-      MoveScaled(14,19,6,4)
+      MoveScaled(14,16,6,4)
       Enabled = False
       Text = ("PB")
     }
@@ -167,13 +168,13 @@
       Visible = False
     }
     { Label110 Label
-      MoveScaled(31,1,34,4)
+      MoveScaled(31,0,34,4)
       Font = Font["Bold,+2"]
       Foreground = &HBF0003&
       Text = ("AREA ADMINISTRATIVA")
     }
     Index = 2
-    Text = ("Hospitalización")
+    Text = ("HOSPITALIZACIÓN")
     { Label11 Label
       MoveScaled(2,8,21,4)
       Font = Font["DejaVu Serif,Bold,+1"]
@@ -218,6 +219,7 @@
     }
     { Button12 Button
       MoveScaled(0,0,18,4)
+      ToolTip = ("INGRESAR NUEVO VISITANTE")
       Text = ("INGRESAR")
       Picture = Picture["icon:/22/forward"]
     }
@@ -331,89 +333,90 @@
       }
     }
     { Label111 Label
-      MoveScaled(33,1,26,4)
+      MoveScaled(33,0,26,4)
       Font = Font["Bold,+2"]
       Foreground = &HBF0003&
       Text = ("HOSPITALIZACIÓN")
     }
     Index = 3
-    Text = ("Departamentos")
+    Text = ("DEPARTAMENTOS")
     { Label32 Label
-      MoveScaled(7,9,14,3)
+      MoveScaled(7,6,14,3)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("VISITANTE:")
     }
     { str_nombrevisitanted Label
-      MoveScaled(22,9,55,3)
+      MoveScaled(22,6,55,3)
       Font = Font["Bold,+1"]
     }
     { Label34 Label
-      MoveScaled(1,14,21,3)
+      MoveScaled(1,11,21,3)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("Persona a visitar:")
     }
     { str_personavisitard TextBox
-      MoveScaled(22,13,39,4)
+      MoveScaled(22,10,39,4)
       Enabled = False
     }
     { Label35 Label
-      MoveScaled(22,19,18,4)
+      MoveScaled(22,16,18,4)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("Departamento:")
     }
     { str_departamentod ComboBox
-      MoveScaled(40,19,36,4)
+      MoveScaled(40,16,36,4)
       Enabled = False
     }
     { Label36 Label
-      MoveScaled(6,19,6,4)
+      MoveScaled(6,16,6,4)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("Piso:")
     }
     { Label37 Label
-      MoveScaled(14,25,8,3)
+      MoveScaled(14,22,8,3)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("Fecha:")
     }
     { date_fechad DateBox
-      MoveScaled(22,24,17,4)
+      MoveScaled(22,21,17,4)
       Enabled = False
     }
     { Label38 Label
-      MoveScaled(41,25,8,3)
+      MoveScaled(41,22,8,3)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("Hora:")
     }
     { str_horad TextBox
-      MoveScaled(48,24,11,4)
+      MoveScaled(48,21,11,4)
       Enabled = False
     }
     { str_observaciond TextBox
-      MoveScaled(22,30,51,9)
+      MoveScaled(22,27,51,9)
       Enabled = False
     }
     { Label39 Label
-      MoveScaled(6,32,16,4)
+      MoveScaled(6,29,16,4)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("Observación:")
     }
     { Button1 Button
-      MoveScaled(29,41,5,3)
+      MoveScaled(35,37,5,3)
       Picture = Picture["icon:/22/erase"]
     }
     { Button3 Button
-      MoveScaled(35,41,16,3)
+      MoveScaled(41,37,16,3)
       Enabled = False
       Text = ("INGRESAR")
       Picture = Picture["icon:/22/forward"]
     }
     { str_pisod ComboBox
-      MoveScaled(12,19,9,4)
+      MoveScaled(12,16,9,4)
       Enabled = False
       List = [("1"), ("2"), ("3"), ("S1"), ("S2"), ("S3")]
     }
     { Button4 Button
       MoveScaled(0,0,18,4)
+      ToolTip = ("INGRESAR NUEVO VISITANTE")
       Text = ("INGRESAR")
       Picture = Picture["icon:/22/forward"]
     }
@@ -460,13 +463,13 @@
       Text = ("NOMBRE VISITANTE")
     }
     { Label112 Label
-      MoveScaled(32,1,28,4)
+      MoveScaled(32,0,28,4)
       Font = Font["Bold,+2"]
       Foreground = &HBF0003&
       Text = ("DEPARTAMENTOS...")
     }
     Index = 4
-    Text = ("Perfil Visitante")
+    Text = ("PERFIL DEL VISITANTE")
     { Label73 Label
       MoveScaled(5,10,11,4)
       Font = Font["DejaVu Serif,Bold,+1"]
@@ -569,8 +572,12 @@
       Text = ("GUARDAR")
       Picture = Picture["icon:/22/floppy"]
     }
+    { Grid_visitantesperfil GridView
+      MoveScaled(83,2,78,53)
+      Visible = False
+    }
     Index = 5
-    Text = ("Registro de Pacientes")
+    Text = ("REGISTRO DE PACIENTES")
     { Label92 Label
       MoveScaled(6,11,13,3)
       Text = ("Nombres:")
@@ -628,7 +635,7 @@
       Enabled = False
     }
     { Label102 Label
-      MoveScaled(21,2,36,4)
+      MoveScaled(21,0,36,4)
       Font = Font["Bold,+2"]
       Foreground = &HBF0003&
       Text = ("REGISTRO DE PACIENTES")
@@ -686,11 +693,21 @@
       Picture = Picture["icon:/22/erase"]
     }
     { DrawingArea8 DrawingArea
-      MoveScaled(64,6,102,50)
+      MoveScaled(64,6,102,51)
       Background = &H0000BF&
-      { Grid_pacientes2 GridView
-        MoveScaled(1,1,100,48)
-        Font = Font["Bitstream Charter"]
+      { DrawingArea9 DrawingArea
+        MoveScaled(1,1,100,49)
+        Background = &HFFFFFF&
+        { Button18 Button
+          MoveScaled(1,44,39,4)
+          ToolTip = ("IMPRIMIR LISTADO DE PACIENTES")
+          Text = ("IMPRIMIR LISTADO PACIENTES")
+          Picture = Picture["icon:/22/print"]
+        }
+        { Grid_pacientes2 GridView
+          MoveScaled(0,0,101,43)
+          Font = Font["Bitstream Charter"]
+        }
       }
     }
     { Label107 Label
@@ -710,7 +727,7 @@
       Font = Font["Bold"]
     }
     Index = 6
-    Text = ("Reportes")
+    Text = ("")
     Index = 0
   }
   { Label8 Label

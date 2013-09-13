@@ -14,12 +14,11 @@ Public Sub _new()
 Dim RHBox As ReportHBox 
 Dim Rep2, Rep3, Rep4, Rep5, Rep6, Rep7, Rep8 As Reportlabel
 
-usuario = UCase(inicio.nombreusuario)
 fecha = Format$(Date, "dd/mm/yy")
 hora = Format$(Time, "hh:nn")
 Rptefecha.Text = fecha
 Reporhora.Text = hora
-Reportusuario.Text = usuario
+Reportusuario.Text = UCase$(FMain.usuarioreportevisitantes)
 
 conexion.Connect()
 
