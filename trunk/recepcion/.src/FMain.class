@@ -5,18 +5,17 @@ Public result As Result
 Public pacientecodigo As String
 Public pacientenombre As String
 Public resultadosuma As String
- Public resultadoresta As String
-Public Enviar As String
-Public Enviar1 As String
+Public resultadoresta As String
+Public usuario1 As String
 
 Public Sub Form_Open()
 
 llenarcombos
 
-CheckBox6.Value = True
 moddepartamento.Text = "departamentos"
 TextBox3.Text = "hospitalizacion"
 Label44.Caption = "administrativa"
+visitas
 visitaspediatrico
 pacientes
 Label83.Caption = inicio.usuarionombre
@@ -68,7 +67,9 @@ End
 Public Sub b_guardarvisitante_Click()
   
   Dim Preg As Integer
-
+  If str_nombresv.Text = "" Or str_cedulav.Text = ""
+  Message.Info("LLENAR TODAS LAS CASILLAS")
+  Else
   Preg = 0
 
   Preg = Message.Question(" ¿DESEA AGREGAR UN NUEVO VISITANTE?", "SI", "NO")
@@ -85,14 +86,16 @@ Public Sub b_guardarvisitante_Click()
    b_guardarvisitante.Enabled = False
    DrawingArea1.Visible = False
 End If
+End If
 End
 Public Sub B_buscarvisitante_Click()
   If str_cedulab.Text = "" Or Len(str_cedulab.Text) < 7 Then
-    Message.Info("Ingrese correctamente la cedula cedula")
+    Message.Info("Ingrese correctamente la cedula")
     DrawingArea2.Visible = False
   Else
     existente
   Endif
+  visitas
 End
 Public Sub limpiar()
   
@@ -111,13 +114,19 @@ Public Sub limpiar()
   str_telefonov.Enabled = False
   str_direccionv.Enabled = False
   date_fecharegistrov.Enabled = False
-  
-End
+  combo_estado.Text = ""
+  Combo_municipio.Enabled = False
+  Combo_estado.Enabled = False
+  Combo_municipio.Text = ""
+ End
 
 Public Sub b_limpiardatosvisitantes_Click()
 
   limpiar
   str_cedulab.SetFocus
+   Label41.Text = ""
+  label45.Text = ""
+  label46.Text = ""
 End
 
 Public Sub Button13_Click()
@@ -456,6 +465,7 @@ End If
   result = conexion.Con.Exec(query)
 
   Preg = 0
+  
       Preg = Message.Question("¿El visitante se retira?", "Si", "No")
 
  If Preg = 1 Then
@@ -465,6 +475,7 @@ End If
    conexion.Connect()
    query = "UPDATE visitas SET retirado='" & 1 & "', horasalida='" & Mid$(str_horasalida.Text, 1, 5) & "' where codigovisita='" & Label50.Text & "'"
    result = Conexion.Con.Exec(query)
+   visitas
    areaadministrativa
    visitaspediatrico
  Endif
@@ -554,11 +565,15 @@ Next
 Query = "select * from estados"
 Result = conexion.Con.Exec(Query)    
 Combo_estado.Clear
+Combo_estado2.Clear
 For i = 0 To Result.Count - 1 Step 1
 Combo_estado.Add(Result!nombre) 
+Combo_estado2.Add(Result!nombre) 
 Combo_estado.Refresh()
+Combo_estado2.Refresh()
 Result.MoveNext()
 Next
+
 End
 
 Public Sub hospitalizacion()
@@ -713,7 +728,7 @@ End If
   
   query = "update listadopacientes SET visitas='" & Val(resultadoresta) & "' where codigo ='" & pacientecodigo & "'"
   result = conexion.Con.Exec(query)
- 
+  visitas
    pacientes
    hospitalizacion
    visitaspediatrico
@@ -721,16 +736,7 @@ End If
 
 End
 
-Public Sub CheckBox6_Click()
 
-  If CheckBox6.Value = True
-  Label51.Visible = True
-  visitas
-  Else
-  Label51.Visible = False
-  Grid_visitas.Visible = False
-  End If
-End
 Public Sub str_horad_DblClick()
 str_horad.Text = Format$(Time, "hh:nn")
 End
@@ -846,6 +852,7 @@ End If
    conexion.Connect()
    query = "UPDATE visitas SET retirado='" & 1 & "', horasalida='" & Mid$(str_horasalida.Text, 1, 5) & "' where codigovisita='" & Label54.Text & "'"
    result = Conexion.Con.Exec(query)
+   visitas
    departamentos
    visitaspediatrico
  Endif
@@ -865,6 +872,7 @@ areaadministrativa
 Else
 Query = "select * From visitas where nombrevisitante Like '%" & busqueda & "%' and modulo='" & Label44.Text & "' and retirado='" & 0 & "'" 
 Result = Conexion.Con.Exec(Query)
+Grid_areaadministrativa.Clear
 For $linea = 0 To Result.Count - 1 Step 1      
 Grid_areaadministrativa[$linea, 0].text = Result!codigovisita
 Grid_areaadministrativa[$linea, 1].text = Result!cedulavisitante
@@ -914,6 +922,7 @@ hospitalizacion
 Else
 Query = "select * From visitas where nombrevisitante Like '%" & busqueda & "%' and modulo='" & textbox3.Text & "' and retirado='" & 0 & "'" 
 Result = Conexion.Con.Exec(Query)
+Grid_hospitalizacion.Clear
 For $linea = 0 To Result.Count - 1 Step 1   
 Grid_hospitalizacion[$linea, 0].text = Result!codigovisita
 Grid_hospitalizacion[$linea, 1].text = Result!cedulavisitante
@@ -944,6 +953,7 @@ departamentos
 Else
 Query = "select * From visitas where nombrevisitante Like '%" & busqueda & "%' and modulo='" & Label49.Text & "' and retirado='" & 0 & "'" 
 Result = Conexion.Con.Exec(Query)
+Grid_departamentos.Clear
 For $linea = 0 To Result.Count - 1 Step 1   
 Grid_departamentos[$linea, 0].text = Result!codigovisita
 Grid_departamentos[$linea, 1].text = Result!cedulavisitante
@@ -1047,8 +1057,7 @@ Grid_visitas[$linea, 13].text = Result!modulo
 Result.MoveNext()
 Next 
 Grid_visitas.Visible = True
-Label51.text = Result.Count
-  
+ 
 End
 
 
@@ -1121,10 +1130,11 @@ Public Sub CheckBox2_Click()
   str_telefonov2.Text = Result!numtelefono
   str_direccionv2.Text = Result!direccion
   combo_estado2.Text = Result!estado
-  Combo_municipio2.Text = Result!municipio
-  
+  combo_municipio2.Text = Result!municipio
+  button_editarv.Enabled = True
   Else
-    IconPanel1.Index = 0
+    
+  IconPanel1.Index = 0
   str_nombresv2.Text = ""
   str_apellidosv2.Text = ""
   str_cedulav2.Text = ""
@@ -1133,17 +1143,20 @@ Public Sub CheckBox2_Click()
   str_direccionv2.Text = ""
   combo_estado2.Text = ""
   Combo_municipio2.Text = ""
-
+  button_editarv.Enabled = True
 End If
 End
 
 Public Sub B_buscarvisitante2_Click()
 
+  
+  If str_cedulab2.Text = ""
+  Message.Info("INGRESE CEDULA")
+  Else
   conexion.Connect()
   Query = " Select * from listadovisitantes where cedula = '" & str_cedulab2.Text & "'" 
   Result = conexion.Con.Exec(Query)
-  IconPanel1.Index = 4
-  
+  If Result.Available Then  
   str_nombresv2.Text = Result!nombres
   str_apellidosv2.Text = Result!apellidos
   str_cedulav2.Text = Result!cedula
@@ -1151,8 +1164,13 @@ Public Sub B_buscarvisitante2_Click()
   str_telefonov2.Text = Result!numtelefono
   str_direccionv2.Text = Result!direccion
   combo_estado2.Text = Result!estado
-  Combo_municipio2.Text = Result!municipio
-
+  combo_municipio2.Text = Result!municipio
+  button_editarv.Enabled = True
+  Else
+  Message.Info("NO EXISTE VISITANTE CON ESTA CEDULA")
+  str_cedulab2.Text = ""
+  End If
+  End If
 End
 
 
@@ -1363,7 +1381,9 @@ End
 Public Sub Button10_Click()
 
   DrawingArea2.Visible = False
-
+  Label41.Text = ""
+  Label45.Text = ""
+  Label46.Text = ""
 End
 
 Public Sub Timer1_Timer()
@@ -1512,15 +1532,18 @@ Dim Preg As Integer
 
 Dim i As Integer
 
+  If str_pacienteapellido.Text = "" Or str_pacientenombre.Text = "" Or Date_pacientefechaing.Value = "" Or Date_pacientefechana.Value = "" Or Combo_pacientepiso.Text = "" Or Combo_pacientearea.Text = "" Or str_pacientehab.text = "" Or Combo_pacientecama.text = ""
+    Message.Info("LLENAR TODAS LAS CASILLAS")
+  Else
+
+
 Preg = 0
 
 Preg = Message.Question("SE REGISTRARA UN NUEVO PACIENTE ¿ESTÁ DE ACUERDO?", "SI", "NO")
 
 If Preg = 1
 
-  If str_pacienteapellido.Text = "" Or str_pacientenombre.Text = "" Or Date_pacientefechaing.Value = "" Or Date_pacientefechana.Value = "" Or Combo_pacientepiso.Text = "" Or Combo_pacientearea.Text = "" Or str_pacientehab.text = "" Or Combo_pacientecama.text = ""
-    Message.Info("LLENAR TODAS LAS CASILLAS")
-  Else
+
   
     query = "insert into listadopacientes (codigo,nombres,apellidos,fechanacimiento, acompanante, parentesco,fechaingreso,piso,area,habitacion,cama,recepcionista,retirado,visitas)VALUES('" & str_codigopaciente.Text & "', '" & UCase$(str_pacientenombre.Text) & " ', '" & UCase$(str_pacienteapellido.Text) & " ', " &
     "'" & Format$(Date_pacientefechana.Value, "dd/mm/yy") & "','" & UCase$(str_pacienterepresentate.Text) & "','" & UCase$(Combo_parentescorepresentante.Text) & "','" & Format$(Date_pacientefechaing.Value, "dd/mm/yy") & "','" & Combo_pacientepiso.Text & "','" & UCase$(Combo_pacientearea.Text) & "'," &
@@ -1786,13 +1809,13 @@ Public Sub restavisitaspacientes()
 End
 
 Public Sub Button17_Click()
-Dim Rpt1 As Report
-Enviar = CboxConsulta.Text
-Enviar1 = Format$(DateBox1.Value, "dd/mm/yyyy")
-Rpt1 = New RptMiliciailicia
-Rpt1.Preview
 
-End
+    Dim reporte As Report
+
+    reporte = New RptMilicia
+    reporte.Preview
+   
+  End
 
 
 
@@ -1808,6 +1831,7 @@ pacientes
 Else
 Query = "select * From listadopacientes where nombres Like '%" & busqueda & "%' and retirado='" & 0 & "'" 
 Result = Conexion.Con.Exec(Query)
+Grid_pacientes.Clear
 If Result.Available Then
 DrawingArea7.Visible = True
 For $linea = 0 To Result.Count - 1 Step 1   
@@ -1837,11 +1861,10 @@ Dim $linea As Integer
 Dim busqueda As String
 
 busqueda = UCase$(TextBox5.Text)
-If TextBox5.Text = ""
-visitas
-Else
+
 Query = "select * From visitas where nombrevisitante Like '%" & busqueda & "%' and retirado='" & 0 & "'" 
 Result = Conexion.Con.Exec(Query)
+Grid_visitas.Clear
 For $linea = 0 To Result.Count - 1 Step 1   
 Grid_visitas[$linea, 0].text = Result!codigovisita
 Grid_visitas[$linea, 1].text = Result!cedulavisitante
@@ -1859,8 +1882,155 @@ Grid_visitas[$linea, 12].text = Result!observacion
 Grid_visitas[$linea, 13].text = Result!modulo
 Result.MoveNext()
 Next 
+
+
+
+End
+
+
+Public Sub str_horah_KeyPress()
+
+  
+
+End
+
+
+Public Sub Button19_Click()
+
+  DrawingArea1.Visible = False
+  limpiar
+End
+
+Public Sub button_editarv_Click()
+
+  str_nombresv2.Enabled = True
+  str_apellidosv2.Enabled = True
+  str_telefonov2.Enabled = True
+  str_direccionv2.Enabled = True
+  combo_estado2.Enabled = True
+  Combo_municipio2.Enabled = True
+  button_guardarv.Enabled = True
+  llenarcombos
+End
+
+Public Sub button_guardarv_Click()
+
+  If str_cedulav2.Text = "" Or date_fecharegistrov2.Value = ""
+  Message.Info("INGRESAR TODOS LOS DATOS")
+  Else
+  query = "update listadovisitantes SET nombres='" & UCase$(str_nombresv2.Text) & "', apellidos='" & UCase$(str_apellidosv2.Text) & "', numtelefono='" & str_telefonov2.Text & "'," &
+  " direccion ='" & UCase$(str_direccionv2.Text) & "', estado='" & UCase$(combo_estado2.Text) & "',  municipio='" & UCase$(Combo_municipio2.Text) & "' where cedula = '" & str_cedulav2.Text & "'" 
+  result = conexion.Con.Exec(query)
+  Message.Info("DATOS EDITADOS")
+  End If
+  str_nombresv2.Text = ""
+  str_nombresv2.Enabled = False
+  str_apellidosv2.Text = ""
+  str_cedulav2.Text = ""
+  date_fecharegistrov2.value = ""
+  str_telefonov2.Text = ""
+  str_direccionv2.Text = ""
+  combo_estado2.Text = ""
+  Combo_municipio2.Text = ""
+  str_cedulab2.Text = ""
+  str_apellidosv2.Enabled = False
+  str_telefonov2.Enabled = False
+  str_direccionv2.Enabled = False
+  combo_estado2.Enabled = False
+  Combo_municipio2.Enabled = False
+  button_guardarv.Enabled = False
+  
+End
+
+
+Public Sub Combo_municipio2_MouseUp()
+
+  
+  Dim i As Integer
+
+conexion.Connect()
+
+Query = "select * from municipios where estado='" & combo_estado2.text & "'"
+Result = conexion.Con.Exec(Query)    
+Combo_municipio2.Clear
+For i = 0 To Result.Count - 1 Step 1
+Combo_municipio2.Add(Result!nombre) 
+Combo_municipio2.Refresh()
+Result.MoveNext()
+Next
+
+
+End
+
+Public Sub Grid_pacientes2_Click()
+
+Dim i As Integer
+Dim Preg As Integer
+
+If Grid_pacientes2[Grid_pacientes2.Row, 0].text = ""
+Return
+End If
+
+  query = "SELECT *  FROM listadopacientes Where codigo = '" & Grid_pacientes2[Grid_pacientes2.Row, 0].text & "'"
+  result = conexion.Con.Exec(query)
+
+  Preg = 0
+  
+      Preg = Message.Question("¿EL PACIENTE SE RETIRA?", "SI", "NO")
+
+ If Preg = 1 Then
+   
+   conexion.Connect()
+   query = "UPDATE listadopacientes SET retirado='" & 1 & "', fechaegreso='" & Format$(Date, "dd/mm/yy") & "' where codigo='" & Grid_pacientes2[Grid_pacientes2.Row, 0].text & "'"
+   result = Conexion.Con.Exec(query)
+pacientes
+visitaspediatrico
+ Endif
+
+End
+
+
+Public Sub TextBox6_KeyRelease()
+
+Dim $linea As Integer
+Dim busqueda As String
+
+busqueda = UCase$(TextBox6.Text)
+If TextBox6.Text = ""
+pacientes
+Else
+Query = "select * From listadopacientes where nombres Like '%" & busqueda & "%' and retirado='" & 0 & "'" 
+Result = Conexion.Con.Exec(Query)
+Grid_pacientes2.Clear
+If Result.Available Then
+For $linea = 0 To Result.Count - 1 Step 1   
+Grid_pacientes2[$linea, 0].text = Result!codigo
+Grid_pacientes2[$linea, 1].text = Result!nombres
+Grid_pacientes2[$linea, 2].text = Result!apellidos
+Grid_pacientes2[$linea, 3].text = Result!fechaingreso
+Grid_pacientes2[$linea, 4].text = Result!piso
+Grid_pacientes2[$linea, 5].text = Result!area
+Grid_pacientes2[$linea, 6].text = Result!habitacion
+Grid_pacientes2[$linea, 7].text = Result!cama
+Grid_pacientes2[$linea, 8].text = Result!acompanante
+Grid_pacientes2[$linea, 9].text = Result!parentesco
+Grid_pacientes2[$linea, 10].text = Result!visitas
+Result.MoveNext()
+Next 
+End If
 End If
 
 
 End
 
+Public Sub TextBox6_KeyPress()
+
+  
+
+End
+
+Public Sub TextBox5_MouseUp()
+
+  TextBox5.Text = ""
+
+End

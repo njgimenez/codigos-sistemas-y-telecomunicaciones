@@ -26,6 +26,7 @@ Public Sub Button1_Click()
   usuarionombre = Result!nombres
   usuarioapellido = Result!apellidos
   nombreusuario = Result!nombreusuario
+
   End If
   
   If Result.Count = 0 Then 

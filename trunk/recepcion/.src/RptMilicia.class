@@ -1,28 +1,30 @@
 ' Gambas class file
 
+
 Public $sql As String
 Public $result As Result
 Private Hcox As Connection
-Public Caso As String
-Public Caso1 As String
+Public piso As String
+Public fecha As String
+Public hora As String
+Public usuario As String
 
 Public Sub _new()
 
 Dim RHBox As ReportHBox 
-Dim Rep1, Rep2, Rep3, Rep4, Rep5, Rep6, Rep7 As Reportlabel
+Dim Rep2, Rep3, Rep4, Rep5, Rep6, Rep7, Rep8 As Reportlabel
 
-'Hcox = New Connection
-
+usuario = UCase(inicio.nombreusuario)
+fecha = Format$(Date, "dd/mm/yy")
+hora = Format$(Time, "hh:nn")
+Rptefecha.Text = fecha
+Reporhora.Text = hora
+Reportusuario.Text = usuario
 
 conexion.Connect()
-Caso = FMain.Enviar
-Caso1 = FMain.Enviar1
 
-$sql = "SELECt *FROM visitas WHERE piso ='" & Caso & "' AND fechavisita='" & Caso1 & "'"
+$sql = "SELECt * FROM visitas where retirado ='" & 0 & "' order by piso"
 $result = conexion.Con.Exec($sql)
-If $result.Available 
-
-Rptefecha.Text = Format$($result!fechavisita, "dd/mm/yyyy")
 
 For Each $result
 
@@ -30,48 +32,41 @@ RHBox = New ReportHBox(listabox)
 RHBox.Height = "5mm"
 RHBox.Font.Size = "1"
 
-Rep1 = New ReportLabel(RHBox)
-Rep1.Width = "20mm"
-Rep1.Alignment = Align.Justify
-Rep1.Text = $result!codigovisita
-
 Rep2 = New ReportLabel(RHBox)
-Rep2.Width = "30mm"
-Rep2.Alignment = Align.Justify
+Rep2.Width = "20mm"
+Rep2.Alignment = Align.Left
 Rep2.Text = $result!cedulavisitante
  
 Rep3 = New ReportLabel(RHBox)
 Rep3.Width = "80mm"
-Rep3.Alignment = Align.Justify
+Rep3.Alignment = Align.Left
 Rep3.Text = $result!nombrevisitante
 
 Rep4 = New ReportLabel(RHBox)
-Rep4.Width = "20mm"
-Rep4.Alignment = Align.Justify
-Rep4.Text = $result!piso
+Rep4.Width = "63mm"
+Rep4.Alignment = Align.Left
+Rep4.Text = $result!departamento
 
 Rep5 = New ReportLabel(RHBox)
-Rep5.Width = "10mm"
-Rep5.Alignment = Align.Justify
-Rep5.Text = $result!habitacion
+Rep5.Width = "15mm"
+Rep5.Alignment = Align.Center
+Rep5.Text = $result!piso
 
 Rep6 = New ReportLabel(RHBox)
-Rep6.Width = "10mm"
+Rep6.Width = "8mm"
 Rep6.Alignment = Align.Justify
-Rep6.Text = $result!cama
+Rep6.Text = $result!habitacion
 
 Rep7 = New ReportLabel(RHBox)
-Rep7.Width = "80mm"
+Rep7.Width = "10mm"
 Rep7.Alignment = Align.Justify
-Rep7.Text = $result!personavisitar
+Rep7.Text = $result!cama
+
+Rep8 = New ReportLabel(RHBox)
+Rep8.Width = "60mm"
+Rep8.Alignment = Align.Justify
+Rep8.Text = $result!personavisitar
 
 Next
 
-Else
-  Message.Info("NO HAY REGISTRO")
-  
-  
-  End If
-  
-End ' Gambas class file
-
+End

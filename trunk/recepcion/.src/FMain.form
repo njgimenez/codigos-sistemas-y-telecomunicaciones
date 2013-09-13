@@ -5,26 +5,31 @@
   Background = Color.SelectedForeground
   Text = ("RECEPCIÓN")
   { IconPanel1 IconPanel
-    MoveScaled(3,26,196,58)
+    MoveScaled(3,26,195,58)
     Font = Font["DejaVu Serif,Bold"]
     Background = &HFFFFFF&
     Count = 7
     Index = 0
     Text = ("VISITAS:")
-    { CheckBox6 CheckBox
-      MoveScaled(2,1,22,5)
-      Font = Font["DejaVu Serif,Bold,+1"]
-      Text = ("TOTAL VISITAS:")
-    }
-    { Label51 Label
-      MoveScaled(25,2,10,3)
-      Font = Font["DejaVu Serif,Bold,+1"]
-    }
     { Grid_visitas GridView
-      MoveScaled(2,10,165,43)
+      MoveScaled(2,8,165,43)
     }
     { TextBox5 TextBox
-      MoveScaled(2,6,33,4)
+      MoveScaled(2,4,52,4)
+      ToolTip = ("INGRESE NOMBRE DE VISITANTE")
+      Text = ("NOMBRE VISITANTE")
+    }
+    { Label91 Label
+      MoveScaled(62,0,44,4)
+      Font = Font["Bold,+2"]
+      Foreground = &HBF0003&
+      Text = ("CUADRO DE VISITAS GENERAL")
+    }
+    { Button17 Button
+      MoveScaled(2,52,25,4)
+      ToolTip = ("IMPRIMIR LISTADO DE VISITANTES ")
+      Text = ("IMPRIMIR LISTADO")
+      Picture = Picture["icon:/22/print"]
     }
     Index = 1
     Text = ("Área administrativa")
@@ -67,6 +72,7 @@
     { Button2 Button
       MoveScaled(35,40,16,3)
       Enabled = False
+      ToolTip = ("INGRESAR NUEVA VISITA AL AREA ADMÓN")
       Text = ("INGRESAR")
       Picture = Picture["icon:/22/forward"]
     }
@@ -124,18 +130,21 @@
     { CheckBox1 CheckBox
       MoveScaled(89,1,29,3)
       Font = Font["DejaVu Serif,Bold,+1"]
+      Foreground = &HBF0003&
       Text = ("Área administrativa")
     }
     { Label25 Label
       MoveScaled(93,4,15,3)
       Visible = False
       Font = Font["DejaVu Serif,Bold,+1"]
+      Foreground = &HBF0003&
       Text = ("VISITANTES:")
     }
     { Label47 Label
       MoveScaled(109,4,5,3)
       Visible = False
       Font = Font["Bold,+1"]
+      Foreground = &HBF0003&
     }
     { Label50 Label
       MoveScaled(122,33,14,2)
@@ -145,6 +154,7 @@
     { TextBox1 TextBox
       MoveScaled(77,7,44,4)
       Visible = False
+      ToolTip = ("INGRESAR NOMBRE VISITANTE")
       Text = ("NOMBRE VISITANTE")
     }
     { str_horasalida TextBox
@@ -153,8 +163,14 @@
       Text = ("TextBox4")
     }
     { Grid_areaadministrativa GridView
-      MoveScaled(77,11,92,46)
+      MoveScaled(77,11,90,45)
       Visible = False
+    }
+    { Label110 Label
+      MoveScaled(31,1,34,4)
+      Font = Font["Bold,+2"]
+      Foreground = &HBF0003&
+      Text = ("AREA ADMINISTRATIVA")
     }
     Index = 2
     Text = ("Hospitalización")
@@ -254,35 +270,39 @@
     { CheckBox5 CheckBox
       MoveScaled(89,1,22,3)
       Font = Font["DejaVu Serif,Bold,+1"]
+      Foreground = &HBF0003&
       Text = ("Hospitalización")
     }
     { TextBox2 TextBox
-      MoveScaled(74,7,47,4)
+      MoveScaled(75,7,47,4)
       Visible = False
+      ToolTip = ("INGRESAR NOMBRE VISITANTE")
       Text = ("NOMBRE PACIENTE")
     }
     { Label42 Label
       MoveScaled(93,4,16,3)
       Visible = False
       Font = Font["DejaVu Serif,Bold,+1"]
+      Foreground = &HBF0003&
       Text = ("VISITANTES:")
     }
     { Label43 Label
       MoveScaled(109,4,5,3)
       Visible = False
       Font = Font["DejaVu Serif,Bold,+1"]
+      Foreground = &HBF0003&
     }
     { str_habitacionh TextBox
       MoveScaled(23,18,8,4)
       Enabled = False
     }
     { TextBox3 TextBox
-      MoveScaled(74,48,27,4)
+      MoveScaled(77,48,27,4)
       Visible = False
       Text = ("hospitalizacion")
     }
     { Grid_hospitalizacion GridView
-      MoveScaled(74,12,92,45)
+      MoveScaled(75,12,91,45)
       Visible = False
     }
     { Label48 Label
@@ -302,13 +322,19 @@
       Text = ("codigopaciente")
     }
     { DrawingArea7 DrawingArea
-      MoveScaled(0,39,74,19)
+      MoveScaled(1,40,73,17)
       Visible = False
       Background = &HFFFFFF&
       { Grid_pacientes GridView
-        MoveScaled(0,1,74,18)
+        MoveScaled(0,0,73,17)
         Font = Font["Bitstream Charter"]
       }
+    }
+    { Label111 Label
+      MoveScaled(33,1,26,4)
+      Font = Font["Bold,+2"]
+      Foreground = &HBF0003&
+      Text = ("HOSPITALIZACIÓN")
     }
     Index = 3
     Text = ("Departamentos")
@@ -398,12 +424,14 @@
     { CheckBox7 CheckBox
       MoveScaled(89,1,22,3)
       Font = Font["Bold,+1"]
+      Foreground = &HBF0003&
       Text = ("Departamentos")
     }
     { Label52 Label
       MoveScaled(93,4,16,3)
       Visible = False
       Font = Font["Bold,+1"]
+      Foreground = &HBF0003&
       Text = ("VISITANTES:")
     }
     { Label53 Label
@@ -428,7 +456,14 @@
     { TextBox4 TextBox
       MoveScaled(77,7,42,5)
       Visible = False
+      ToolTip = ("INGRESAR NOMBRE VISITANTE")
       Text = ("NOMBRE VISITANTE")
+    }
+    { Label112 Label
+      MoveScaled(32,1,28,4)
+      Font = Font["Bold,+2"]
+      Foreground = &HBF0003&
+      Text = ("DEPARTAMENTOS...")
     }
     Index = 4
     Text = ("Perfil Visitante")
@@ -451,7 +486,7 @@
       Enabled = False
     }
     { Label75 Label
-      MoveScaled(8,23,10,2)
+      MoveScaled(7,22,10,2)
       Font = Font["DejaVu Serif,Bold,+1"]
       Text = ("Cedula:")
     }
@@ -507,20 +542,32 @@
       Enabled = False
     }
     { Label81 Label
-      MoveScaled(4,3,30,3)
+      MoveScaled(4,4,25,3)
       Font = Font["Bold,+1"]
-      Text = ("Ver perfil, ingrese cedula:")
+      Text = ("INGRESAR CEDULA:")
     }
     { str_cedulab2 TextBox
-      MoveScaled(35,3,23,4)
+      MoveScaled(30,3,23,4)
     }
     { B_buscarvisitante2 Button
-      MoveScaled(60,3,7,4)
+      MoveScaled(54,3,7,4)
       Picture = Picture["icon:/32/find"]
     }
     { Button8 Button
-      MoveScaled(69,3,6,4)
+      MoveScaled(62,3,6,4)
       Picture = Picture["icon:/22/erase"]
+    }
+    { button_editarv Button
+      MoveScaled(36,50,13,5)
+      Enabled = False
+      Text = ("EDITAR")
+      Picture = Picture["icon:/22/edit"]
+    }
+    { button_guardarv Button
+      MoveScaled(18,50,17,5)
+      Enabled = False
+      Text = ("GUARDAR")
+      Picture = Picture["icon:/22/floppy"]
     }
     Index = 5
     Text = ("Registro de Pacientes")
@@ -549,11 +596,11 @@
       Enabled = False
     }
     { Label95 Label
-      MoveScaled(2,48,15,3)
+      MoveScaled(2,44,15,3)
       Text = ("Acompañante:")
     }
     { Label96 Label
-      MoveScaled(5,53,13,3)
+      MoveScaled(5,49,13,3)
       Text = ("Parentesco:")
     }
     { Label97 Label
@@ -573,7 +620,7 @@
       Text = ("Hab:")
     }
     { Label101 Label
-      MoveScaled(10,43,7,3)
+      MoveScaled(25,38,7,3)
       Text = ("Cama:")
     }
     { Date_pacientefechaing DateBox
@@ -583,15 +630,15 @@
     { Label102 Label
       MoveScaled(21,2,36,4)
       Font = Font["Bold,+2"]
-      Foreground = &H0000FF&
+      Foreground = &HBF0003&
       Text = ("REGISTRO DE PACIENTES")
     }
     { str_pacienterepresentate TextBox
-      MoveScaled(18,47,38,4)
+      MoveScaled(17,43,38,4)
       Enabled = False
     }
     { Combo_parentescorepresentante ComboBox
-      MoveScaled(18,52,23,4)
+      MoveScaled(17,48,23,4)
       Enabled = False
       List = [("Papá"), ("Mamá"), ("Tio"), ("Hermano"), ("Abuelo"), ("Familiar")]
     }
@@ -601,7 +648,7 @@
       List = [("1"), ("2"), ("3")]
     }
     { Combo_pacientearea ComboBox
-      MoveScaled(17,32,28,4)
+      MoveScaled(17,32,39,4)
       Enabled = False
     }
     { str_pacientehab TextBox
@@ -609,12 +656,12 @@
       Enabled = False
     }
     { Combo_pacientecama ComboBox
-      MoveScaled(17,42,11,4)
+      MoveScaled(32,37,11,4)
       Enabled = False
     }
     { Separator7 Separator
       MoveScaled(62,0,1,58)
-      Background = &HDF0003&
+      Background = &H0000BF&
     }
     { Button14 Button
       MoveScaled(0,0,18,4)
@@ -630,65 +677,45 @@
       Enabled = False
     }
     { Button15 Button
-      MoveScaled(50,28,5,5)
+      MoveScaled(42,52,5,5)
       Picture = Picture["icon:/32/floppy"]
     }
     { Button16 Button
-      MoveScaled(56,28,5,5)
+      MoveScaled(49,52,5,5)
       Picture = Picture["icon:/32/erase"]
     }
     { DrawingArea8 DrawingArea
       MoveScaled(64,6,102,50)
-      Background = &HDF0003&
+      Background = &H0000BF&
       { Grid_pacientes2 GridView
         MoveScaled(1,1,100,48)
         Font = Font["Bitstream Charter"]
       }
     }
     { Label107 Label
-      MoveScaled(75,1,19,4)
+      MoveScaled(64,1,19,4)
       Text = ("Nombre paciente:")
     }
     { TextBox6 TextBox
-      MoveScaled(94,1,23,4)
+      MoveScaled(83,1,37,4)
+      ToolTip = ("INGRESAR NOMBRE DEL PACIENTE")
     }
     { Label108 Label
-      MoveScaled(121,2,17,3)
+      MoveScaled(122,2,17,3)
       Text = ("Total Pacientes:")
     }
     { Label109 Label
-      MoveScaled(138,2,4,3)
+      MoveScaled(139,2,4,3)
       Font = Font["Bold"]
     }
     Index = 6
     Text = ("Reportes")
-    { Label110 Label
-      MoveScaled(3,3,9,4)
-      Font = Font["DejaVu Serif,Bold,+1"]
-      Text = ("Pisos")
-    }
-    { CboxConsulta ComboBox
-      MoveScaled(13,3,10,4)
-      List = [("PB"), ("1"), ("2"), ("3"), ("")]
-    }
-    { Label111 Label
-      MoveScaled(3,9,8,4)
-      Text = ("Desde")
-    }
-    { DateBox1 DateBox
-      MoveScaled(13,9,18,4)
-    }
-    { Button17 Button
-      MoveScaled(13,14,18,5)
-      Text = ("IMPRIMIR")
-      Picture = Picture["icon:/22/print"]
-    }
     Index = 0
   }
   { Label8 Label
     MoveScaled(1,21,17,4)
     Font = Font["DejaVu Serif,Bold,+1"]
-    Foreground = &H0000FF&
+    Foreground = &H0000BF&
     Text = ("SE DIRIGE A:")
   }
   { Separator4 Separator
@@ -701,35 +728,35 @@
   }
   { Separator9 Separator
     MoveScaled(30,1,40,1)
-    Background = &HFF0000&
+    Background = &HBF0003&
   }
   { Separator10 Separator
     MoveScaled(30,3,40,1)
-    Background = &H0000FF&
+    Background = &H0000DF&
   }
   { Separator11 Separator
     MoveScaled(30,20,40,1)
-    Background = &H0000FF&
+    Background = &H0000DF&
   }
   { Separator12 Separator
     MoveScaled(30,18,40,1)
-    Background = &HFF0000&
+    Background = &HBF0003&
   }
   { Separator2 Separator
     MoveScaled(2,25,196,1)
-    Background = &HDF0003&
+    Background = &H0000BF&
   }
   { Separator3 Separator
     MoveScaled(2,84,197,1)
-    Background = &HDF0003&
+    Background = &H0000BF&
   }
   { Separator5 Separator
     MoveScaled(1,25,1,60)
-    Background = &HDF0003&
+    Background = &H0000BF&
   }
   { Separator6 Separator
     MoveScaled(198,25,1,60)
-    Background = &HDF0003&
+    Background = &H0000BF&
   }
   { B_buscarvisitante Button
     MoveScaled(55,9,7,4)
@@ -739,15 +766,17 @@
   { Label20 Label
     MoveScaled(31,14,36,3)
     Font = Font["DejaVu Serif,Bold,+1"]
-    Foreground = &H0000FF&
+    Foreground = &HBF0003&
   }
   { str_cedulab TextBox
     MoveScaled(31,9,23,4)
+    ToolTip = ("INGRESAR CEDULA VISITANTES")
     MaxLength = 8
   }
   { Label57 Label
     MoveScaled(31,5,20,3)
     Font = Font["Bold,+1"]
+    Foreground = &HBF0003&
     Text = ("Ingresar Cedula:")
   }
   { PictureBox1 PictureBox
@@ -758,13 +787,13 @@
   { DrawingArea1 DrawingArea
     MoveScaled(1,86,118,34)
     Visible = False
-    Background = &HDF0003&
+    Background = &H0000BF&
     { ScrollArea1 ScrollArea
       MoveScaled(1,1,116,32)
       Visible = False
       Background = &HFFFFFF&
       { Panel1 Panel
-        MoveScaled(1,1,113,30)
+        MoveScaled(0,1,110,30)
         Visible = False
         { str_cedulav TextBox
           MoveScaled(14,10,20,4)
@@ -822,10 +851,12 @@
         { b_guardarvisitante Button
           MoveScaled(83,8,6,5)
           Enabled = False
+          ToolTip = ("GUARDAR NUEVO VISITANTES")
           Picture = Picture["icon:/32/floppy"]
         }
         { b_limpiardatosvisitantes Button
           MoveScaled(90,8,6,5)
+          ToolTip = ("LIMIPAR CASILLAS")
           Picture = Picture["icon:/32/erase"]
         }
         { Label19 Label
@@ -843,7 +874,7 @@
           Text = ("*")
         }
         { ScrollArea2 ScrollArea
-          MoveScaled(71,14,26,6)
+          MoveScaled(75,14,26,6)
           Background = Color.SelectedForeground
           { Label29 Label
             MoveScaled(1,2,1,2)
@@ -857,7 +888,7 @@
           }
         }
         { Label55 Label
-          MoveScaled(4,19,9,5)
+          MoveScaled(4,21,9,3)
           Font = Font["DejaVu Serif,Bold,+1"]
           Text = ("Estado:")
         }
@@ -866,7 +897,7 @@
           Enabled = False
         }
         { Label56 Label
-          MoveScaled(31,19,13,5)
+          MoveScaled(31,21,13,3)
           Font = Font["DejaVu Serif,Bold,+1"]
           Text = ("Municipio:")
         }
@@ -877,62 +908,15 @@
         { Label58 Label
           MoveScaled(71,1,36,4)
           Font = Font["Bold,+2"]
-          Foreground = &H0000FF&
+          Foreground = &HBF0003&
           Text = ("REGISTRO DE VISITANTES")
         }
       }
-    }
-  }
-  { DrawingArea2 DrawingArea
-    MoveScaled(75,1,46,22)
-    Visible = False
-    Background = &HDF0003&
-    { DrawingArea3 DrawingArea
-      MoveScaled(1,1,44,18)
-      Background = Color.SelectedForeground
-      { Label21 Label
-        MoveScaled(2,5,11,3)
-        Font = Font["Bold,+1"]
-        Text = ("Nombres:")
-      }
-      { Label41 Label
-        MoveScaled(15,4,38,5)
-        Font = Font["DejaVu Serif,Bold,+1"]
-      }
-      { Label24 Label
-        MoveScaled(2,9,11,3)
-        Font = Font["Bold,+1"]
-        Text = ("Apellidos:")
-      }
-      { Label45 Label
-        MoveScaled(15,8,38,5)
-        Font = Font["DejaVu Serif,Bold,+1"]
-      }
-      { Label33 Label
-        MoveScaled(4,13,9,4)
-        Font = Font["Bold,+1"]
-        Text = ("Cedula:")
-      }
-      { Label46 Label
-        MoveScaled(15,13,23,4)
-        Font = Font["DejaVu Serif,Bold,+1"]
-      }
-      { Label59 Label
-        MoveScaled(6,1,32,3)
-        Font = Font["DejaVu Serif,Bold,+2"]
-        Foreground = &H0000FF&
-        Text = ("DATOS DEL VISITANTE")
-      }
-      { Button10 Button
-        MoveScaled(40,0,4,4)
+      { Button19 Button
+        MoveScaled(112,0,4,4)
         ToolTip = ("CERRAR")
         Picture = Picture["icon:/22/quit"]
       }
-    }
-    { CheckBox2 CheckBox
-      MoveScaled(1,19,27,3)
-      Font = Font["Bold"]
-      Text = ("VER PEFIL COMPLETO")
     }
   }
   { PictureBox2 PictureBox
@@ -942,78 +926,83 @@
   }
   { DrawingArea4 DrawingArea
     MoveScaled(126,1,46,22)
-    Background = &HDF0003&
+    Background = &H0000BF&
     { DrawingArea5 DrawingArea
-      MoveScaled(1,1,44,18)
+      MoveScaled(1,1,44,20)
       Background = Color.SelectedForeground
       { Label66 Label
         MoveScaled(3,1,39,5)
         Font = Font["DejaVu Serif,Bold"]
-        Foreground = &H0000FF&
+        Foreground = &HBF0003&
         Text = ("VISITAS DEL HOSPITAL PEDIATRICO\nFUNDACIÓN NIÑO JESUS")
         Alignment = Align.Center
       }
       { Label60 Label
-        MoveScaled(1,6,15,3)
+        MoveScaled(1,7,15,3)
         Text = ("Visitas general:")
       }
       { Label61 Label
-        MoveScaled(3,9,12,3)
+        MoveScaled(3,10,12,3)
         Text = ("Area Admón:")
       }
       { Label62 Label
-        MoveScaled(1,12,15,5)
+        MoveScaled(1,13,15,5)
         Text = ("Hospitalización:\n      (P 2-3)")
       }
       { Label63 Label
-        MoveScaled(21,6,7,3)
+        MoveScaled(21,7,7,3)
         Text = ("Piso 1:")
       }
       { Label64 Label
-        MoveScaled(21,9,7,3)
+        MoveScaled(21,10,7,3)
         Text = ("Piso 2:")
       }
       { Label65 Label
-        MoveScaled(21,12,7,3)
+        MoveScaled(21,13,7,3)
         Text = ("Piso 3:")
       }
       { Label67 Label
-        MoveScaled(16,6,4,3)
+        MoveScaled(16,7,4,3)
         Font = Font["Bold"]
         Text = ("Label67")
       }
       { Label68 Label
-        MoveScaled(16,9,4,3)
+        MoveScaled(16,10,4,3)
         Font = Font["Bold"]
         Text = ("Label67")
       }
       { Label69 Label
-        MoveScaled(16,12,4,3)
+        MoveScaled(16,13,4,3)
         Font = Font["Bold"]
         Text = ("Label67")
       }
       { Label70 Label
-        MoveScaled(28,6,4,3)
+        MoveScaled(28,7,4,3)
         Font = Font["Bold"]
         Text = ("Label67")
       }
       { Label71 Label
-        MoveScaled(28,9,4,3)
+        MoveScaled(28,10,4,3)
         Font = Font["Bold"]
         Text = ("Label67")
       }
       { Label72 Label
-        MoveScaled(28,12,4,3)
+        MoveScaled(28,13,4,3)
         Font = Font["Bold"]
         Text = ("Label67")
       }
       { Label104 Label
-        MoveScaled(13,15,15,3)
+        MoveScaled(13,16,15,3)
         Text = ("Total Pacientes:")
       }
       { Label105 Label
-        MoveScaled(28,15,4,3)
+        MoveScaled(28,16,4,3)
         Font = Font["Bold"]
+      }
+      { PictureBox3 PictureBox
+        MoveScaled(34,8,9,11)
+        Picture = Picture["Mision.jpg"]
+        Stretch = True
       }
     }
   }
@@ -1024,27 +1013,27 @@
     Picture = Picture["icon:/48/delete"]
   }
   { DrawingArea6 DrawingArea
-    MoveScaled(122,86,49,27)
-    Background = &HDF0003&
+    MoveScaled(122,86,49,28)
+    Background = &H0000BF&
     { ScrollArea3 ScrollArea
-      MoveScaled(1,1,47,23)
+      MoveScaled(1,1,47,26)
       Background = &HFFFFFF&
       { Label83 Label
         MoveScaled(18,7,29,3)
         Font = Font["DejaVu Serif,Bold,+2"]
-        Foreground = &H0000FF&
+        Foreground = &HBF0003&
         Text = ("Label83")
       }
       { Label84 Label
         MoveScaled(18,11,29,3)
         Font = Font["DejaVu Serif,Bold,+2"]
-        Foreground = &H0000FF&
+        Foreground = &HBF0003&
         Text = ("Label84")
       }
       { Label85 Label
         MoveScaled(18,17,30,3)
         Font = Font["DejaVu Serif,Bold,+2"]
-        Foreground = &H0000FF&
+        Foreground = &HBF0003&
         Text = ("Label85")
       }
       { Label86 Label
@@ -1064,22 +1053,24 @@
         Alignment = Align.Right
       }
       { Label89 Label
-        MoveScaled(14,1,23,4)
+        MoveScaled(13,1,23,4)
         Font = Font["Bold,+2"]
-        Foreground = &H0000FF&
+        Foreground = &HBF0003&
         Text = ("DATOS USUARIO")
       }
-    }
-    { CheckBox3 CheckBox
-      MoveScaled(2,24,12,3)
-      Font = Font["Bold,+1"]
-      Text = ("Ocultar")
+      { CheckBox3 CheckBox
+        MoveScaled(30,22,16,3)
+        Font = Font["DejaVu Serif,Bold,+1"]
+        Foreground = &HBF0003&
+        ToolTip = ("OCULTAR")
+        Text = ("OCULTAR")
+      }
     }
   }
   { Label82 Label
-    MoveScaled(122,116,79,4)
+    MoveScaled(122,115,79,4)
     Font = Font["Bold,+2"]
-    Foreground = &H0000FF&
+    Foreground = &HBF0003&
     Text = ("DESARROLLADO POR SISTEMAS Y TELECOMUNICACIONES")
   }
   { CheckBox8 CheckBox
@@ -1092,14 +1083,67 @@
     #MoveScaled(1,1)
   }
   { str_reloj TextBox
-    MoveScaled(44,21,17,4)
-    Enabled = False
+    MoveScaled(40,21,14,4)
     Font = Font["DejaVu Serif,Bold,+3"]
     Foreground = &H0000FF&
   }
   { Label90 Label
-    MoveScaled(34,22,10,3)
+    MoveScaled(30,22,10,3)
     Font = Font["Bold,Italic,+2"]
     Text = ("HORA:")
+  }
+  { DrawingArea2 DrawingArea
+    MoveScaled(75,1,46,22)
+    Visible = False
+    Font = Font["Bold,+1"]
+    Background = &H0000BF&
+    { DrawingArea3 DrawingArea
+      MoveScaled(1,1,44,20)
+      Background = Color.SelectedForeground
+      { Label21 Label
+        MoveScaled(2,5,11,3)
+        Font = Font["Bold,+1"]
+        Text = ("Nombres:")
+      }
+      { Label41 Label
+        MoveScaled(15,5,38,3)
+        Font = Font["DejaVu Serif,Bold,+1"]
+      }
+      { Label24 Label
+        MoveScaled(2,9,11,3)
+        Font = Font["Bold,+1"]
+        Text = ("Apellidos:")
+      }
+      { Label45 Label
+        MoveScaled(15,9,38,3)
+        Font = Font["DejaVu Serif,Bold,+1"]
+      }
+      { Label33 Label
+        MoveScaled(4,13,9,3)
+        Font = Font["Bold,+1"]
+        Text = ("Cedula:")
+      }
+      { Label46 Label
+        MoveScaled(15,13,23,3)
+        Font = Font["DejaVu Serif,Bold,+1"]
+      }
+      { Label59 Label
+        MoveScaled(6,1,32,3)
+        Font = Font["DejaVu Serif,Bold,+2"]
+        Foreground = &HBF0003&
+        Text = ("DATOS DEL VISITANTE")
+      }
+      { Button10 Button
+        MoveScaled(40,0,4,4)
+        ToolTip = ("CERRAR")
+        Picture = Picture["icon:/22/quit"]
+      }
+      { CheckBox2 CheckBox
+        MoveScaled(1,17,30,2)
+        Font = Font["Bold,+1"]
+        Foreground = &HBF0003&
+        Text = ("VER PEFIL COMPLETO")
+      }
+    }
   }
 }
