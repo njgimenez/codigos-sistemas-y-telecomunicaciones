@@ -1,7 +1,7 @@
 # Gambas Form File 3.0
 
 { Form Form
-  MoveScaled(0,0,199.5714,124.7143)
+  MoveScaled(0,0,199.5,124.6667)
   { Frame1 Frame
     MoveScaled(60,2,41,9)
     Text = ("Periodo")
@@ -53,7 +53,7 @@
     Picture = Picture["icon:/48/make"]
   }
   { TableView1 TableView
-    MoveScaled(3,41,195,45)
+    MoveScaled(3,42,195,45)
   }
   { PictureBox1 PictureBox
     MoveScaled(3,1,8,11)
@@ -103,6 +103,7 @@
     { TituloRpt TextBox
       MoveScaled(2,7,68,3)
       Text = ("Beneficios Percibidos")
+      Alignment = Align.Right
     }
     { Label8 Label
       MoveScaled(2,5,17,2)
@@ -114,11 +115,11 @@
       Text = ("Margenes")
       { superior SpinBox
         MoveScaled(7,5,11,4)
-        Value = 10
+        Value = 11
       }
       { inferior SpinBox
         MoveScaled(21,5,11,4)
-        Value = 15
+        Value = 19
       }
       { derecho SpinBox
         MoveScaled(35,5,11,4)
@@ -162,5 +163,10 @@
     Text = ("000")
     Alignment = Align.Center
     HighlightColor = &H00FFFF&
+  }
+  { ToggleButton1 ToggleButton
+    MoveScaled(87,88,35,9)
+    Text = ("Exportar a hoja de calculo")
+    Picture = Picture["calc-small.png"]
   }
 }

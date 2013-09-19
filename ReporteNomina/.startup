@@ -9,4 +9,6 @@ gb.gui
 gb.form
 gb.db
 gb.db.form
+gb.xml
+gb.xml.html
 
