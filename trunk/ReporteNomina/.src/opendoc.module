@@ -1,0 +1,136 @@
+' Gambas module file
+
+Private pathOpendoc As String = "/tmp/opendocgambas/" ' Ruta temporal donde se crearan los ficheros que componen el ODS
+
+' Funcion que creará los ficheros que componen el ODS, y los empaquetará con el nombre de la variable pathODS
+Public Function saveODS(controlx As Object, pathODS As String)
+  
+  Dim writer As XmlWriter ' Creará los ficheros XML necesarios
+  Dim filex As File       ' Creará los ficheros de texto plano necesarios
+  Dim iCount As Integer   ' Índice para las filas del TableView
+  Dim jCount As Integer   ' Índice para las columnas del TableView
+  
+  ' Ejecutar función solo para GridViews o TableViews
+  If Object.Type(controlx) = "GridView" Or If Object.Type(controlx) = "TableView" Then
+  Try Mkdir pathOpendoc                       ' Crear directorio temporal
+  Try Mkdir pathOpendoc &/ "Configurations2"  ' Crear otros directorios para el ODS
+  Try Mkdir pathOpendoc &/ "META-INF"
+  Try Mkdir pathOpendoc &/ "Thumbnails"
+  ' Crear fichero mimetype
+  filex = Open pathOpendoc &/ "mimetype" For Input Create
+    Print #filex, "application/vnd.oasis.opendocument.spreadsheet"; ' El ";" es para no insertar una terminación de línea
+  Close #filex
+  ' Crear fichero manifest.xml
+  writer = New XmlWriter
+  With writer
+  .Open(pathOpendoc &/ "META-INF/manifest.xml", True, "UTF-8")
+  .StartElement("manifest:manifest", ["xmlns:manifest", "urn:oasis:names:tc:opendocument:xmlns:manifest:1.0"])
+    .StartElement("manifest:file-entry", ["manifest:media-type", "application/vnd.oasis.opendocument.spreadsheet", "manifest:version", "1.2", "manifest:full-path", "/"])
+    .EndElement()
+    .StartElement("manifest:file-entry", ["manifest:media-type", " ", "manifest:full-path", "Configurations2/statusbar/"])
+    .EndElement()
+    .StartElement("manifest:file-entry", ["manifest:media-type", " ", "manifest:full-path", "Configurations2/accelerator/current.xml"])
+    .EndElement()
+    .StartElement("manifest:file-entry", ["manifest:media-type", " ", "manifest:full-path", "Configurations2/accelerator/"])
+    .EndElement()
+    .StartElement("manifest:file-entry", ["manifest:media-type", " ", "manifest:full-path", "Configurations2/floater/"])
+    .EndElement()
+    .StartElement("manifest:file-entry", ["manifest:media-type", " ", "manifest:full-path", "Configurations2/popupmenu/"])
+    .EndElement()
+    .StartElement("manifest:file-entry", ["manifest:media-type", " ", "manifest:full-path", "Configurations2/progressbar/"])
+    .EndElement()
+    .StartElement("manifest:file-entry", ["manifest:media-type", " ", "manifest:full-path", "Configurations2/menubar/"])
+    .EndElement()
+    .StartElement("manifest:file-entry", ["manifest:media-type", " ", "manifest:full-path", "Configurations2/toolbar/"])
+    .EndElement()
+    .StartElement("manifest:file-entry", ["manifest:media-type", " ", "manifest:full-path", "Configurations2/images/Bitmaps/"])
+    .EndElement()
+    .StartElement("manifest:file-entry", ["manifest:media-type", " ", "manifest:full-path", "Configurations2/images/"])
+    .EndElement()
+    .StartElement("manifest:file-entry", ["manifest:media-type", "application/vnd.sun.xml.ui.configuration", "manifest:full-path", "Configurations2/"])
+    .EndElement()
+    .StartElement("manifest:file-entry", ["manifest:media-type", "text/xml", "manifest:full-path", "content.xml"])
+    .EndElement()
+    .StartElement("manifest:file-entry", ["manifest:media-type", "text/xml", "manifest:full-path", "styles.xml"])
+    .EndElement()
+    .StartElement("manifest:file-entry", ["manifest:media-type", "text/xml", "manifest:full-path", "meta.xml"])
+    .EndElement()
+    .StartElement("manifest:file-entry", ["manifest:media-type", " ", "manifest:full-path", "Thumbnails/thumbnail.png"])
+    .EndElement()
+    .StartElement("manifest:file-entry", ["manifest:media-type", " ", "manifest:full-path", "Thumbnails/"])
+    .EndElement()
+    .StartElement("manifest:file-entry", ["manifest:media-type", "text/xml", "manifest:full-path", "settings.xml"])
+    .EndElement()
+  .EndElement
+  .EndDocument
+  End With
+  
+  ' Crear fichero content.xml. En este fichero se encuentra la data del TableView
+  writer = New XmlWriter
+  writer.Open(pathOpendoc &/ "content.xml", True, "UTF-8")
+  writer.StartElement("office:document-content")
+   writer.Attribute("xmlns:office", "urn:oasis:names:tc:opendocument:xmlns:office:1.0")
+   writer.Attribute("xmlns:style", "urn:oasis:names:tc:opendocument:xmlns:style:1.0")
+   writer.Attribute("xmlns:text", "urn:oasis:names:tc:opendocument:xmlns:text:1.0")
+   writer.Attribute("xmlns:table", "urn:oasis:names:tc:opendocument:xmlns:table:1.0")
+   writer.Attribute("xmlns:number", "urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0")
+   writer.Attribute("xmlns:chart", "urn:oasis:names:tc:opendocument:xmlns:chart:1.0")
+   writer.Attribute("xmlns:form", "urn:oasis:names:tc:opendocument:xmlns:form:1.0")
+   writer.Attribute("xmlns:oooc", "http://openoffice.org/2004/calc")
+   writer.Attribute("xmlns:field", "urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0")
+   writer.Attribute("xmlns:formx", "urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0")
+   writer.Attribute("office:version", "1.2")
+   
+   writer.StartElement("office:body")
+     writer.StartElement("office:spreadsheet")
+     writer.StartElement("table:table", ["table:name", CStr(controlx.Name), "table:print", "false"])
+     ' Si existen headers, también vaciarlos a la hoja de cálculo
+     If controlx.Header = GridView.Horizontal Or If controlx.Header = GridView.Both Then
+       writer.StartElement("table:table-row")
+       For jCount = 0 To controlx.Columns.Count - 1
+         writer.StartElement("table:table-cell", ["office:value-type", "string"])
+         writer.Element("text:p", controlx.Columns[jCount].Text)
+         writer.EndElement()
+       Next
+       writer.EndElement()
+     Endif
+     ' Vaciar la info de las celdas del TableView a la hoja de cálculo
+     For iCount = 0 To controlx.Rows.Count - 1 ' Recorremos las filas
+       writer.StartElement("table:table-row")
+       For jCount = 0 To controlx.Columns.Count - 1  ' Recorremos las columnas
+         writer.StartElement("table:table-cell")
+         ' Indentificar si el dato es una string o un dato numerico
+         If Str$(Val(controlx[iCount, jCount].Text)) = controlx[iCount, jCount].Text Then
+           writer.Attribute("office:value-type", "float")
+           writer.Attribute("office:value", Str$(controlx[iCount, jCount].Text))
+         Else
+           writer.Attribute("office:value-type", "string")
+         Endif
+         writer.Element("text:p", Str$(controlx[iCount, jCount].Text))
+         writer.EndElement()
+       Next
+       writer.EndElement()
+     Next
+     writer.EndElement()
+   writer.EndElement()
+  writer.EndElement()
+  writer.EndDocument()
+  
+  ' Creamos un script bash para empaquetar los ficheros y directorios del ODS
+  filex = Open pathOpendoc &/ "pckods" For Input Create
+    Print #filex, "#!/bin/bash"
+    Print #filex, "# Script creado con gambas, comprime ficheros para crear un documento ODS"
+    Print #filex, "cd $(dirname $0)"
+    Print #filex, "zip -r $1 Configurations2 META-INF Thumbnails content.xml mimetype"
+  Close #filex
+  Exec ["chmod", "+x", pathOpendoc &/ "pckods"] Wait
+  Exec [pathOpendoc &/ "pckods", pathODS] Wait ' Ejecutamos el script
+  Else
+    Error "El control no es un GridView o TableView"
+  Endif
+  
+End
+
+' aztk
+' Tenochtitlan. Febrero del 2011
+' CopyLeft
