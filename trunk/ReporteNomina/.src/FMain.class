@@ -112,7 +112,7 @@ Public Sub ToggleButton2_Click()
   Dim $Query, a As String
   Dim $Result As Result
   Dim i As Integer
-  Dim cadenasql As String
+  Dim cadenasql, cadenaaux As String
   Dim codigos As New String[ListBox1.Count]
   Dim encontrados As New String[ListBox1.Count]
   Dim totales As New Float[ListBox1.Count]
@@ -127,7 +127,7 @@ Public Sub ToggleButton2_Click()
   Next
   cadenasql = Mid(cadenasql, 1, Len(cadenasql) - 4)
   
- $Query = "drop table reporte1; Select " & 
+  $Query = "drop table reporte1; Select " & 
     "nom018.cod_empleado, nom018.cod_concepto,nom018.des_concepto,SUM(nom018.monto) As MONTO " &
     "into reporte1 From " &
     "(nom018 Left join nom006 On (nom018.cod_empleado = nom006.cod_empleado)), nom001 " &
@@ -169,7 +169,7 @@ Public Sub ToggleButton2_Click()
     codigos[i] = Mid(ListBox1[i].Text, 1, 3)
   Next 
   
- $Query = "Select " & 
+  $Query = "Select " & 
     "nom018.cod_empleado " &
     "From " &
     "(nom018 Left join nom006 On (nom018.cod_empleado = nom006.cod_empleado)), nom001 " &
@@ -209,7 +209,7 @@ Public Sub ToggleButton2_Click()
     $Cedulas.MoveNext
   Next
   
- $Query = "drop table reporte2; Select * " &
+  $Query = "drop table reporte2; Select * " &
     "into reporte2 From reporte1 " &
     "ORDER BY " &
     "cod_empleado,cod_concepto"
@@ -263,7 +263,7 @@ Public Sub ToggleButton2_Click()
     TableView1[i, $Result.Fields.Count + 4].Text = Format$(Acumulado, ",#.##")
     grantotal += Acumulado
     If Acumulado == 0 Then 
-     TableView1[i, j + 4].Text = "0,00"
+      TableView1[i, j + 4].Text = "0,00"
     Endif
     $Result.MoveNext()
   Next
@@ -275,37 +275,33 @@ Public Sub ToggleButton2_Click()
     Endif
   Next
   $Query = "DROP TABLE If EXISTS REPORTE; " &
-           "CREATE TABLE REPORTE( "
-           For i = 0 To TableView1.Columns.Count - 1 Step 1 
-            If i <> TableView1.Columns.Count - 1
-            $Query &= "camp" & i & " char(60),"
-            Else
-             $Query &= "camp" & i & " char(60)"  
-            Endif
-           Next
-           $Query &= ");"
-  conexion.$Con.Exec($Query)
-  
-  For i = 0 To TableView1.Rows.Count - 1 Step 1
-    cadena = "INSERT INTO REPORTE( "
-    For j = 0 To TableView1.Columns.Count - 1 Step 1
-            If i <> TableView1.Columns.Count - 1
-              cadenaaux &= "camp" & i & ","
-              cadenasql &= "'" & TableView1[i, j].Text & "',"
-            Else
-              cadenaaux &= "camp" & i & ""
-              cadenasql &= "'" & TableView1[i, j].Text & "'"
-            Endif
-            
-      cadenaaux &= "("
-      cadenasql &= "("
-    Next
+    "CREATE TABLE REPORTE( "
+  For i = 0 To TableView1.Columns.Count - 1 Step 1 
+    If i <> TableView1.Columns.Count - 1
+      $Query &= "camp" & i & " char(60),"
+    Else
+      $Query &= "camp" & i & " char(60)"  
+    Endif
   Next
-  ' "INSERT INTO REPORTE (cod_empleado, cod_concepto, des_concepto, monto) values ('" & $Cedulas!cod_empleado & "','" & codigos[K] & "','',0)"
-  
-  
-  
-  
+  $Query &= ");"
+  conexion.$Con.Exec($Query)
+  cadenaaux = ""
+  cadenasql = ""
+  For i = 0 To TableView1.Rows.Count - 2 Step 1
+    For j = 0 To TableView1.Columns.Count - 1 Step 1
+      If j <> TableView1.Columns.Count - 1
+        cadenaaux &= "camp" & j & ","
+        cadenasql &= "'" & TableView1[i, j].Text & "',"
+      Else
+        cadenaaux &= "camp" & j & ""
+        cadenasql &= "'" & TableView1[i, j].Text & "'"
+      Endif
+    Next 
+    $Query = "INSERT INTO REPORTE(" & cadenaaux & ") values (" & cadenasql & ")"
+    conexion.$Con.Exec($Query)
+    cadenaaux = ""
+    cadenasql = ""
+  Next
   
   TableView1[TableView1.Rows.Count - 1, TableView1.Columns.Count - 1].Text = Format$(grantotal, ",#.##")
   LCDLabel1.Text = Str$(TableView1.Rows.Count - 1)
@@ -340,9 +336,11 @@ Public Function BuscarDato(codigo As String, DatoaBuscar As String) As String
 End
 
 Public Sub ToggleButton1_Click()
+
   opendoc.saveODS(TableView1, User.Home &/ "test.ods") 
   Shell "ls" Wait
   Shell "libreoffice -calc " & User.Home &/ "test.ods"
+
 End
 
 Public Sub Botones_Click()
@@ -350,8 +348,8 @@ Public Sub Botones_Click()
   Dim sentencia, cadenaaux As String
   Dim btn As Button
   Dim i, j As Integer
-  
-
+  Dim $Query As String
+  Dim $Result As Result
   
   Dim contador As Integer
   'Hoja de Estilo CCS
@@ -399,13 +397,13 @@ Public Sub Botones_Click()
   'Encabezados de las columnas
   cadena &= "<table  align='center' class ='myTable'> \n"
   cadena &= "<tr> \n"
-  cadena &= "<td><font size=1pt font-family='arial' color='blue'>index</font></td> \n"
+  cadena &= "<td><font size=1pt font-family='arial' color='blue'>INDEX</font></td> \n"
   For i = 0 To 4 - 1 Step 1 
-       If (j = 1) Or (j = 2)
-        cadenaaux = "WIDTH=250pt"
-      Else
-        cadenaaux = ""
-      Endif 
+    If (j = 1) Or (j = 2)
+      cadenaaux = "WIDTH=250pt"
+    Else
+      cadenaaux = ""
+    Endif 
     Try cadena &= "<td" & cadenaaux & "><small><font size=1pt font-family='arial' color='blue'>" & Upper$(TableView1.Columns[i].Text) & "</font></small></td> \n"
     If Error Then 
       Message.Error(Mid(Error.Text, 1, 40) & "...\n Data para la impresión no esta definida!")
@@ -418,41 +416,40 @@ Public Sub Botones_Click()
   cadena &= "<td><small><font size=1pt font-family='arial' color='blue'>TOTAL</font></small></th> \n"
   cadena &= " </tr> \n" 'fin del tr de los encabezados de columnas
   
+  $Query = "Select * From REPORTE order by camp3"
+  $Result = conexion.$Con.Exec($Query) 
   
-  
-  For i = 0 To TableView1.Rows.Count - 1 Step 1     
+  For i = 0 To $Result.Count - 1 Step 1
     cadena &= " <tr> \n"
     cadena &= " <td WIDTH=5pt><small><font size=1pt <font face='serif'>" & (i + 1) & "</font></small></td> \n"
-    For j = 0 To TableView1.Columns.Count - 1 Step 1      
-     If (j = 1) Or (j = 2)
+    For j = 0 To $Result.Fields.Count - 1 Step 1      
+      If (j = 1) Or (j = 2)
         cadenaaux = "WIDTH=250pt"
       Else
         cadenaaux = ""
       Endif
-      cadena &= " <td " & cadenaaux & "><small><font size=1pt <font face='serif'>" & TableView1[i, j].Text & "</font></small></td> \n"
-    Next   
-    cadena &= " </Tr> \n"
+      cadena &= " <td " & cadenaaux & "><small><font size=1pt <font face='serif'>" & $Result[j] & "</font></small></td> \n"
+    Next    
+      $Result.MoveNext   
+      cadena &= " </Tr> \n"
+ 
   Next
-  
-  
-  
-  
-  cadena &= " </table > \n"
-  cadena &= " <tr > \n"
-  cadena &= " </tr > \n"
-  cadena &= " <tr > \n"
-  cadena &= " </tr > \n"
-  cadena &= "<table align='right' border=0> \n" 
-  cadena &= "<tr><td align='right'>Cantidad de Registros: " & LCDLabel1.Text & "</td></tr> \n"
-  cadena &= " </table > \n"
-  
-  cadena &= "</body></html>"
-  File.Save(User.home & "/nuevo.html", cadena)
-  'tamano = ComboBox2.Text
-  sentencia = "wkhtmltopdf " & User.home & "/nuevo.html " & User.home & "/nuevo.pdf  -H -O " & oriente & " -B " & inferior.Value & " -T " & superior.Value & " -R " & derecho.Value & " -L " & izquierdo.Value & " -s " & tamano 
-  Shell sentencia Wait
-  Shell "evince " & User.home & "/nuevo.pdf"
-  
+    cadena &= " </table > \n"
+    cadena &= " <tr > \n"
+    cadena &= " </tr > \n"
+    cadena &= " <tr > \n"
+    cadena &= " </tr > \n"
+    cadena &= "<table align='right' border=0> \n" 
+    cadena &= "<tr><td align='right'>Cantidad de Registros: " & LCDLabel1.Text & "</td></tr> \n"
+    cadena &= " </table > \n"
+    
+    cadena &= "</body></html>"
+    File.Save(User.home & "/nuevo.html", cadena)
+    'tamano = ComboBox2.Text
+    sentencia = "wkhtmltopdf " & User.home & "/nuevo.html " & User.home & "/nuevo.pdf  -H -O " & oriente & " -B " & inferior.Value & " -T " & superior.Value & " -R " & derecho.Value & " -L " & izquierdo.Value & " -s " & tamano 
+    Shell sentencia Wait
+    Shell "evince " & User.home & "/nuevo.pdf"
+    
 End
 
 Public Sub RadioButton1_Click()
@@ -468,7 +465,8 @@ Public Sub RadioButton2_Click()
 End
 
 Public Sub Encabezado()
-Dim i As Integer
+
+  Dim i As Integer
   cadena &= "</table> \n"  
   cadena &= "<hr size = '20' style=' color:#ffffff '/>"
   cadena &= "<table align='center' border=0> \n" 
@@ -502,7 +500,7 @@ Dim i As Integer
   Next
   cadena &= "<td class='ajustar'><font size=1 % font-family='arial' color='blue'>TOTAL</font></th> \n"
   cadena &= " </tr> \n" 'fin del tr de los encabezados de columnas
-
+  
 End
 
 Public Sub ComboBox2_Click()
@@ -519,21 +517,21 @@ Public Sub ComboBox2_Click()
 End
 
 Public Sub TableView1_ColumnClick(Column As Integer)
-
+  
   TableView1.Columns.Sort = True
-
+  
 End
 
 Public Sub Button2_Click()
-
+  
   Dim MyStringArray As String[]
-
-MyStringArray = ["Alphonse", "Zephir", "Raymond", "Loyal", "Richard"]
-
-Print MyStringArray.Join("\n")
-
-MyStringArray.Sort
-
-Print MyStringArray.Join("\n") 
+  
+  MyStringArray = ["Alphonse", "Zephir", "Raymond", "Loyal", "Richard"]
+  
+  Print MyStringArray.Join("\n")
+  
+  MyStringArray.Sort
+  
+  Print MyStringArray.Join("\n") 
 
 End
